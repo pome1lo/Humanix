@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin
+namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,6 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EMPLOYEES()
         {
-            this.EMPLOYEES1 = new HashSet<EMPLOYEES>();
             this.PARTICIPATION = new HashSet<PARTICIPATION>();
             this.VACATIONS = new HashSet<VACATIONS>();
         }
@@ -37,9 +36,6 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin
     
         public virtual DEPARTMENTS DEPARTMENTS { get; set; }
         public virtual JOBS JOBS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EMPLOYEES> EMPLOYEES1 { get; set; }
-        public virtual EMPLOYEES EMPLOYEES2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PARTICIPATION> PARTICIPATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

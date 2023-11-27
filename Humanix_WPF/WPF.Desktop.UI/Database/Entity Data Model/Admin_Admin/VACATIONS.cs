@@ -7,19 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin
+namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class TASKS
+    public partial class VACATIONS
     {
-        public int TASK_ID { get; set; }
-        public string TASK_NAME { get; set; }
-        public string DESCRIPTION { get; set; }
-        public short DURATION { get; set; }
-        public short PROJECT_ID { get; set; }
+        public int VACATION_ID { get; set; }
+        public string EMP_EMAIL { get; set; }
+        public System.DateTime START_DATE { get; set; }
+        public System.DateTime END_DATE { get; set; }
+        public string REASON { get; set; }
     
-        public virtual PROJECTS PROJECTS { get; set; }
+        public virtual EMPLOYEES EMPLOYEES { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "D:\FILES\University\3 course\1 term\Курсач_2.0\Humanix_WPF\WPF.Desktop.UI\Database\Entity Data Model\Admin\MainAdminModel.edmx" включено. 
+﻿// Создание кода T4 для модели "D:\FILES\University\3 course\1 term\Курсач_2.0\Humanix_WPF\WPF.Desktop.UI\Database\Entity Data Model\Admin_Admin\MainAdminModel.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

@@ -128,46 +128,46 @@
     </Compile>
     <Compile Include="Commands\CommandReference.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
-    <Compile Include="Database\Entity Data Model\Admin\COUNTRIES.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\COUNTRIES.cs">
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\DEPARTMENTS.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\DEPARTMENTS.cs">
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\EMPLOYEES.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\EMPLOYEES.cs">
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\JOBS.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\JOBS.cs">
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\LOCATIONS.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\LOCATIONS.cs">
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\MainAdminModel.Context.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MainAdminModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\MainAdminModel.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\MainAdminModel.Designer.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MainAdminModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\PARTICIPATION.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\PARTICIPATION.cs">
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\PROJECTS.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\PROJECTS.cs">
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\TASKS.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\TASKS.cs">
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Entity Data Model\Admin\VACATIONS.cs">
+    <Compile Include="Database\Entity Data Model\Admin_Admin\VACATIONS.cs">
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Entity Data Model\Admin_User\AdminModel.Context.cs">
@@ -240,11 +240,11 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>AdminModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="Database\Entity Data Model\Admin\MainAdminModel.edmx">
+    <EntityDeploy Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MainAdminModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Database\Entity Data Model\Admin\MainAdminModel.edmx.diagram">
+    <None Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.edmx.diagram">
       <DependentUpon>MainAdminModel.edmx</DependentUpon>
     </None>
     <None Include="Database\Entity Data Model\Admin_User\AdminModel.edmx.diagram">
@@ -273,12 +273,12 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database\Entity Data Model\Admin\MainAdminModel.Context.tt">
+    <Content Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MainAdminModel.edmx</DependentUpon>
       <LastGenOutput>MainAdminModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Database\Entity Data Model\Admin\MainAdminModel.tt">
+    <Content Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MainAdminModel.edmx</DependentUpon>
       <LastGenOutput>MainAdminModel.cs</LastGenOutput>

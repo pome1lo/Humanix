@@ -11,7 +11,11 @@
     <Window.DataContext>
         <vm:LoginViewModel/>
     </Window.DataContext>
-    <Grid>
+    <StackPanel>
         <Button Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=LoginView}">Login</Button>
-    </Grid>
+
+        <TextBlock>Input your data</TextBlock>
+        <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+        <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+    </StackPanel>
 </Window>

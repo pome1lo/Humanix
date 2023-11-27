@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPF.Desktop.UI.Database.Entity_Data_Model.Admin;
-
-namespace WPF.Desktop.UI.ViewModels
+﻿namespace WPF.Desktop.UI.ViewModels
 {
     internal class ProfileViewModel : ViewModelBase
     {
 
         #region Fields
 
-        
-        
+
+
         #endregion
 
         #region Property

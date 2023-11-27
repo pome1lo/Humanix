@@ -7,14 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin
+namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
 {
     using System;
     using System.Collections.Generic;
     
     public partial class PARTICIPATION
     {
-        public int EMP_ID { get; set; }
+        public string EMP_EMAIL { get; set; }
         public short PROJECT_ID { get; set; }
         public string ROLE { get; set; }
         public Nullable<short> HOURS { get; set; }

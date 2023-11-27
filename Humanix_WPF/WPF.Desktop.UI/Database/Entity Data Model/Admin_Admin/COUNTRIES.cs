@@ -7,19 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin
+namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class VACATIONS
+    public partial class COUNTRIES
     {
-        public int VACATION_ID { get; set; }
-        public int EMP_ID { get; set; }
-        public System.DateTime START_DATE { get; set; }
-        public System.DateTime END_DATE { get; set; }
-        public string REASON { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public COUNTRIES()
+        {
+            this.LOCATIONS = new HashSet<LOCATIONS>();
+        }
     
-        public virtual EMPLOYEES EMPLOYEES { get; set; }
+        public string COUNTRY_ID { get; set; }
+        public string COUNTRY_NAME { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LOCATIONS> LOCATIONS { get; set; }
     }
 }

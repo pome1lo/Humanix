@@ -306,9 +306,9 @@ EXCEPTION
 END insert_into_participation;
 /
 -- Процедура для удаления данных
-CREATE OR REPLACE PROCEDURE delete_from_participation (p_emp_id NUMBER, p_project_id NUMBER) IS
+CREATE OR REPLACE PROCEDURE delete_from_participation (p_emp_email VARCHAR2, p_project_id NUMBER) IS
 BEGIN
-  DELETE FROM participation WHERE emp_id = p_emp_id AND project_id = p_project_id;
+  DELETE FROM participation WHERE EMP_EMAIL = p_emp_email AND project_id = p_project_id;
   COMMIT;
 EXCEPTION
   WHEN OTHERS THEN
@@ -317,12 +317,12 @@ EXCEPTION
 END delete_from_participation;
 /
 -- Процедура для изменения данных
-CREATE OR REPLACE PROCEDURE update_participation (p_emp_id NUMBER, p_project_id NUMBER, p_role VARCHAR2, p_hours NUMBER) IS
+CREATE OR REPLACE PROCEDURE update_participation (p_emp_email NVARCHAR2, p_project_id NUMBER, p_role VARCHAR2, p_hours NUMBER) IS
 BEGIN
   UPDATE participation
   SET role = p_role,
       hours = p_hours
-  WHERE emp_id = p_emp_id AND project_id = p_project_id;
+  WHERE EMP_EMAIL = p_emp_email AND project_id = p_project_id;
   COMMIT;
 EXCEPTION
   WHEN OTHERS THEN
@@ -382,10 +382,10 @@ END promote_employee;
 
 
 -- Процедура для вставки данных
-CREATE OR REPLACE PROCEDURE insert_into_vacations (p_vacation_id NUMBER, p_emp_id NUMBER, p_start_date DATE, p_end_date DATE, p_reason VARCHAR2) IS
+CREATE OR REPLACE PROCEDURE insert_into_vacations (p_vacation_id NUMBER, p_emp_email NVARCHAR2, p_start_date DATE, p_end_date DATE, p_reason VARCHAR2) IS
 BEGIN
-  INSERT INTO vacations (vacation_id, emp_id, start_date, end_date, reason)
-  VALUES (p_vacation_id, p_emp_id, p_start_date, p_end_date, p_reason);
+  INSERT INTO vacations (vacation_id, EMP_EMAIL, start_date, end_date, reason)
+  VALUES (p_vacation_id, p_emp_email, p_start_date, p_end_date, p_reason);
   COMMIT;
 EXCEPTION
   WHEN OTHERS THEN
@@ -405,10 +405,10 @@ EXCEPTION
 END delete_from_vacations;
 /
 -- Процедура для изменения данных
-CREATE OR REPLACE PROCEDURE update_vacations (p_vacation_id NUMBER, p_emp_id NUMBER, p_start_date DATE, p_end_date DATE, p_reason VARCHAR2) IS
+CREATE OR REPLACE PROCEDURE update_vacations (p_vacation_id NUMBER, p_emp_email NVARCHAR2, p_start_date DATE, p_end_date DATE, p_reason VARCHAR2) IS
 BEGIN
   UPDATE vacations
-  SET emp_id = p_emp_id,
+  SET EMP_EMAIL = p_emp_email,
       start_date = p_start_date,
       end_date = p_end_date,
       reason = p_reason
@@ -518,33 +518,39 @@ EXCEPTION
 END import_json;
 /
 
-CREATE OR REPLACE FUNCTION get_employee_id (p_email IN VARCHAR2(25), p_password_hash IN VARCHAR2(128))
-RETURN NUMBER IS
-  v_emp_id NUMBER(6);
+CREATE OR REPLACE FUNCTION login_employee(p_email VARCHAR2, p_password VARCHAR2) RETURN NUMBER IS
+    l_employee employees%ROWTYPE;
+    l_password_hash VARCHAR2(128);
 BEGIN
+    SELECT * into l_employee FROM employees WHERE email = p_email;
+    l_password_hash := decrypt(l_employee.PASSWORD_HASH);
 
-    SELECT emp_id INTO v_emp_id
-      FROM employees
-      WHERE email = p_email AND password_hash = encrypt(p_password_hash);
-        RETURN v_emp_id;
-
+    IF l_password_hash = p_password THEN
+        RETURN l_employee.EMP_ID;
+    ELSE
+        RETURN 0;
+    END IF;
 EXCEPTION
-  WHEN OTHERS THEN
-    RETURN 0;
-END get_employee_id;
+    WHEN NO_DATA_FOUND THEN
+        RETURN 0;
+END login_employee;
+COMMIT;
 /
 
 begin
-    login_employee('vvv@example.com', 'password1137');
-end;
-INSERT INTO employees (emp_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id, PASSWORD_HASH) VALUES (1002, 'Петр', 'Петров', 'test@example.com', '0987654321', TO_DATE('2023-02-01', 'YYYY-MM-DD'), 'AD_PRES', 60000, 0.15, 1001, 20, ENCRYPT('password69'));
-begin
-    insert_into_employees('Иван', 'Иванов', 'vvv@example.com', '1234567890', TO_DATE('2023-01-01', 'YYYY-MM-DD'), 'AD_PRES', 50000, 0.1, NULL, 10, ENCRYPT('password1137'));
+    DBMS_OUTPUT.PUT_LINE(login_employee('vvv@example.com', 'password1137'));
 end;
 
-SELECT emp_id FROM employees WHERE email = 'vvv@example.com' AND password_hash = encrypt('password1137');
-SELECT * FROM EMPLOYEES WHERE EMAIL = 'vvv@example.com' FETCH FIRST 1 ROW ONLY;
-SELECT * FROM EMPLOYEES;
+begin
+    insert_into_employees('Иван', 'Иванов', 'vvv@example.com', '1234567890', TO_DATE('2023-01-01', 'YYYY-MM-DD'), 'AD_PRES', 50000, 0.1, NULL, 10, 'password1137');
+end;
+
+DELETE FROM EMPLOYEES;
+SELECT * from EMPLOYEES;
+
+-- SELECT emp_id FROM employees WHERE email = 'vvv@example.com' AND password_hash = encrypt('password1137');
+-- SELECT * FROM EMPLOYEES WHERE EMAIL = 'vvv@example.com' FETCH FIRST 1 ROW ONLY;
+-- SELECT * FROM EMPLOYEES;
 
 DROP PROCEDURE insert_into_employees;
 DROP PROCEDURE delete_from_employees;

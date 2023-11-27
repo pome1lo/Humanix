@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin
+namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
 {
     using System;
     using System.Collections.Generic;

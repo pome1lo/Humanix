@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище MainAdminModel" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище Model" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="COUNTRIES">
           <Key>
             <PropertyRef Name="COUNTRY_ID" />
@@ -23,12 +23,12 @@
         </EntityType>
         <EntityType Name="EMPLOYEES">
           <Key>
-            <PropertyRef Name="EMP_ID" />
+            <PropertyRef Name="EMAIL" />
           </Key>
           <Property Name="EMP_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="FIRST_NAME" Type="varchar2" MaxLength="20" />
           <Property Name="LAST_NAME" Type="varchar2" MaxLength="25" Nullable="false" />
-          <Property Name="EMAIL" Type="varchar2" MaxLength="25" />
+          <Property Name="EMAIL" Type="varchar2" MaxLength="25" Nullable="false" />
           <Property Name="PHONE_NUMBER" Type="varchar2" MaxLength="15" />
           <Property Name="HIRE_DATE" Type="date" Nullable="false" />
           <Property Name="JOB_ID" Type="varchar2" MaxLength="10" Nullable="false" />
@@ -60,10 +60,10 @@
         </EntityType>
         <EntityType Name="PARTICIPATION">
           <Key>
-            <PropertyRef Name="EMP_ID" />
+            <PropertyRef Name="EMP_EMAIL" />
             <PropertyRef Name="PROJECT_ID" />
           </Key>
-          <Property Name="EMP_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="EMP_EMAIL" Type="varchar2" MaxLength="25" Nullable="false" />
           <Property Name="PROJECT_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
           <Property Name="ROLE" Type="varchar2" MaxLength="50" />
           <Property Name="HOURS" Type="number" Precision="4" Scale="0" />
@@ -94,7 +94,7 @@
             <PropertyRef Name="VACATION_ID" />
           </Key>
           <Property Name="VACATION_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="EMP_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="EMP_EMAIL" Type="varchar2" MaxLength="25" />
           <Property Name="START_DATE" Type="date" Nullable="false" />
           <Property Name="END_DATE" Type="date" Nullable="false" />
           <Property Name="REASON" Type="varchar2" MaxLength="500" />
@@ -135,18 +135,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EMPLOYEES_MANAGERS">
-          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="0..1" />
-          <End Role="EMPLOYEES1" Type="Self.EMPLOYEES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLOYEES">
-              <PropertyRef Name="EMP_ID" />
-            </Principal>
-            <Dependent Role="EMPLOYEES1">
-              <PropertyRef Name="MANAGER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LOCATIONS_COUNTRIES">
           <End Role="COUNTRIES" Type="Self.COUNTRIES" Multiplicity="1" />
           <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="*" />
@@ -164,10 +152,10 @@
           <End Role="PARTICIPATION" Type="Self.PARTICIPATION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EMPLOYEES">
-              <PropertyRef Name="EMP_ID" />
+              <PropertyRef Name="EMAIL" />
             </Principal>
             <Dependent Role="PARTICIPATION">
-              <PropertyRef Name="EMP_ID" />
+              <PropertyRef Name="EMP_EMAIL" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -208,14 +196,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VACATIONS_EMP_ID">
-          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="0..1" />
           <End Role="VACATIONS" Type="Self.VACATIONS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EMPLOYEES">
-              <PropertyRef Name="EMP_ID" />
+              <PropertyRef Name="EMAIL" />
             </Principal>
             <Dependent Role="VACATIONS">
-              <PropertyRef Name="EMP_ID" />
+              <PropertyRef Name="EMP_EMAIL" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -238,7 +226,7 @@
           <Parameter Name="P_LOCATION_ID" Type="number" Mode="In" />
         </Function>
         <Function Name="DELETE_FROM_PARTICIPATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_EMP_EMAIL" Type="varchar2" Mode="In" />
           <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
         </Function>
         <Function Name="DELETE_FROM_PROJECTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
@@ -272,11 +260,9 @@
         </Function>
         <Function Name="IMPORT_JSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" />
         <Function Name="INSERT_INTO_COUNTRIES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
           <Parameter Name="P_COUNTRY_NAME" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="INSERT_INTO_DEPARTMENTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
           <Parameter Name="P_DEPARTMENT_NAME" Type="varchar2" Mode="In" />
           <Parameter Name="P_MANAGER_ID" Type="number" Mode="In" />
           <Parameter Name="P_LOCATION_ID" Type="number" Mode="In" />
@@ -295,13 +281,11 @@
           <Parameter Name="P_PASSWORD_HASH" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="INSERT_INTO_JOBS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
           <Parameter Name="P_JOB_TITLE" Type="varchar2" Mode="In" />
           <Parameter Name="P_MIN_SALARY" Type="number" Mode="In" />
           <Parameter Name="P_MAX_SALARY" Type="number" Mode="In" />
         </Function>
         <Function Name="INSERT_INTO_LOCATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_LOCATION_ID" Type="number" Mode="In" />
           <Parameter Name="P_STREET_ADDRESS" Type="varchar2" Mode="In" />
           <Parameter Name="P_POSTAL_CODE" Type="varchar2" Mode="In" />
           <Parameter Name="P_CITY" Type="varchar2" Mode="In" />
@@ -309,13 +293,11 @@
           <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
         </Function>
         <Function Name="INSERT_INTO_PARTICIPATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
           <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
           <Parameter Name="P_ROLE" Type="varchar2" Mode="In" />
           <Parameter Name="P_HOURS" Type="number" Mode="In" />
         </Function>
         <Function Name="INSERT_INTO_PROJECTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
           <Parameter Name="P_PROJECT_NAME" Type="varchar2" Mode="In" />
           <Parameter Name="P_START_DATE" Type="date" Mode="In" />
           <Parameter Name="P_END_DATE" Type="date" Mode="In" />
@@ -323,7 +305,6 @@
           <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
         </Function>
         <Function Name="INSERT_INTO_TASKS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_TASK_ID" Type="number" Mode="In" />
           <Parameter Name="P_TASK_NAME" Type="varchar2" Mode="In" />
           <Parameter Name="P_DESCRIPTION" Type="varchar2" Mode="In" />
           <Parameter Name="P_DURATION" Type="number" Mode="In" />
@@ -331,7 +312,7 @@
         </Function>
         <Function Name="INSERT_INTO_VACATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
           <Parameter Name="P_VACATION_ID" Type="number" Mode="In" />
-          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_EMP_EMAIL" Type="nvarchar2" Mode="In" />
           <Parameter Name="P_START_DATE" Type="date" Mode="In" />
           <Parameter Name="P_END_DATE" Type="date" Mode="In" />
           <Parameter Name="P_REASON" Type="varchar2" Mode="In" />
@@ -382,7 +363,7 @@
           <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
         </Function>
         <Function Name="UPDATE_PARTICIPATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_EMP_EMAIL" Type="nvarchar2" Mode="In" />
           <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
           <Parameter Name="P_ROLE" Type="varchar2" Mode="In" />
           <Parameter Name="P_HOURS" Type="number" Mode="In" />
@@ -404,12 +385,12 @@
         </Function>
         <Function Name="UPDATE_VACATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
           <Parameter Name="P_VACATION_ID" Type="number" Mode="In" />
-          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_EMP_EMAIL" Type="nvarchar2" Mode="In" />
           <Parameter Name="P_START_DATE" Type="date" Mode="In" />
           <Parameter Name="P_END_DATE" Type="date" Mode="In" />
           <Parameter Name="P_REASON" Type="varchar2" Mode="In" />
         </Function>
-        <EntityContainer Name="Хранилище MainAdminModelContainer">
+        <EntityContainer Name="Хранилище ModelContainer">
           <EntitySet Name="COUNTRIES" EntityType="Self.COUNTRIES" Schema="ADMIN" store:Type="Tables" />
           <EntitySet Name="DEPARTMENTS" EntityType="Self.DEPARTMENTS" Schema="ADMIN" store:Type="Tables" />
           <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" Schema="ADMIN" store:Type="Tables" />
@@ -430,10 +411,6 @@
           <AssociationSet Name="FK_EMPLOYEES_JOBS" Association="Self.FK_EMPLOYEES_JOBS">
             <End Role="JOBS" EntitySet="JOBS" />
             <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EMPLOYEES_MANAGERS" Association="Self.FK_EMPLOYEES_MANAGERS">
-            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
-            <End Role="EMPLOYEES1" EntitySet="EMPLOYEES" />
           </AssociationSet>
           <AssociationSet Name="FK_LOCATIONS_COUNTRIES" Association="Self.FK_LOCATIONS_COUNTRIES">
             <End Role="COUNTRIES" EntitySet="COUNTRIES" />
@@ -464,7 +441,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MainAdminModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="COUNTRIES">
           <Key>
             <PropertyRef Name="COUNTRY_ID" />
@@ -487,12 +464,12 @@
         </EntityType>
         <EntityType Name="EMPLOYEES">
           <Key>
-            <PropertyRef Name="EMP_ID" />
+            <PropertyRef Name="EMAIL" />
           </Key>
           <Property Name="EMP_ID" Type="Int32" Nullable="false" />
           <Property Name="FIRST_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="LAST_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EMAIL" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PHONE_NUMBER" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="HIRE_DATE" Type="DateTime" Nullable="false" />
           <Property Name="JOB_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
@@ -503,8 +480,6 @@
           <Property Name="PASSWORD_HASH" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DEPARTMENTS" Relationship="Self.FK_EMPLOYEES_DEPARTMENTS" FromRole="EMPLOYEES" ToRole="DEPARTMENTS" />
           <NavigationProperty Name="JOBS" Relationship="Self.FK_EMPLOYEES_JOBS" FromRole="EMPLOYEES" ToRole="JOBS" />
-          <NavigationProperty Name="EMPLOYEES1" Relationship="Self.FK_EMPLOYEES_MANAGERS" FromRole="EMPLOYEES" ToRole="EMPLOYEES1" />
-          <NavigationProperty Name="EMPLOYEES2" Relationship="Self.FK_EMPLOYEES_MANAGERS" FromRole="EMPLOYEES1" ToRole="EMPLOYEES" />
           <NavigationProperty Name="PARTICIPATION" Relationship="Self.FK_PARTICIPATION_EMPLOYEES" FromRole="EMPLOYEES" ToRole="PARTICIPATION" />
           <NavigationProperty Name="VACATIONS" Relationship="Self.FK_VACATIONS_EMP_ID" FromRole="EMPLOYEES" ToRole="VACATIONS" />
         </EntityType>
@@ -533,10 +508,10 @@
         </EntityType>
         <EntityType Name="PARTICIPATION">
           <Key>
-            <PropertyRef Name="EMP_ID" />
+            <PropertyRef Name="EMP_EMAIL" />
             <PropertyRef Name="PROJECT_ID" />
           </Key>
-          <Property Name="EMP_ID" Type="Int32" Nullable="false" />
+          <Property Name="EMP_EMAIL" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PROJECT_ID" Type="Int16" Nullable="false" />
           <Property Name="ROLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="HOURS" Type="Int16" />
@@ -573,7 +548,7 @@
             <PropertyRef Name="VACATION_ID" />
           </Key>
           <Property Name="VACATION_ID" Type="Int32" Nullable="false" />
-          <Property Name="EMP_ID" Type="Int32" Nullable="false" />
+          <Property Name="EMP_EMAIL" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="START_DATE" Type="DateTime" Nullable="false" />
           <Property Name="END_DATE" Type="DateTime" Nullable="false" />
           <Property Name="REASON" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
@@ -639,39 +614,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EMPLOYEES_MANAGERS">
-          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="0..1" />
-          <End Role="EMPLOYEES1" Type="Self.EMPLOYEES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLOYEES">
-              <PropertyRef Name="EMP_ID" />
-            </Principal>
-            <Dependent Role="EMPLOYEES1">
-              <PropertyRef Name="MANAGER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PARTICIPATION_EMPLOYEES">
           <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
           <End Role="PARTICIPATION" Type="Self.PARTICIPATION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EMPLOYEES">
-              <PropertyRef Name="EMP_ID" />
+              <PropertyRef Name="EMAIL" />
             </Principal>
             <Dependent Role="PARTICIPATION">
-              <PropertyRef Name="EMP_ID" />
+              <PropertyRef Name="EMP_EMAIL" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VACATIONS_EMP_ID">
-          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="0..1" />
           <End Role="VACATIONS" Type="Self.VACATIONS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EMPLOYEES">
-              <PropertyRef Name="EMP_ID" />
+              <PropertyRef Name="EMAIL" />
             </Principal>
             <Dependent Role="VACATIONS">
-              <PropertyRef Name="EMP_ID" />
+              <PropertyRef Name="EMP_EMAIL" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -729,10 +692,6 @@
             <End Role="JOBS" EntitySet="JOBS" />
             <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
           </AssociationSet>
-          <AssociationSet Name="FK_EMPLOYEES_MANAGERS" Association="Self.FK_EMPLOYEES_MANAGERS">
-            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
-            <End Role="EMPLOYEES1" EntitySet="EMPLOYEES" />
-          </AssociationSet>
           <AssociationSet Name="FK_PARTICIPATION_EMPLOYEES" Association="Self.FK_PARTICIPATION_EMPLOYEES">
             <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
             <End Role="PARTICIPATION" EntitySet="PARTICIPATION" />
@@ -765,7 +724,7 @@
             <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="DELETE_FROM_PARTICIPATION">
-            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_EMP_EMAIL" Mode="In" Type="String" />
             <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="DELETE_FROM_PROJECTS">
@@ -796,11 +755,9 @@
           </FunctionImport>
           <FunctionImport Name="IMPORT_JSON" />
           <FunctionImport Name="INSERT_INTO_COUNTRIES">
-            <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
             <Parameter Name="P_COUNTRY_NAME" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_DEPARTMENTS">
-            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
             <Parameter Name="P_DEPARTMENT_NAME" Mode="In" Type="String" />
             <Parameter Name="P_MANAGER_ID" Mode="In" Type="Decimal" />
             <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
@@ -819,13 +776,11 @@
             <Parameter Name="P_PASSWORD_HASH" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_JOBS">
-            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
             <Parameter Name="P_JOB_TITLE" Mode="In" Type="String" />
             <Parameter Name="P_MIN_SALARY" Mode="In" Type="Decimal" />
             <Parameter Name="P_MAX_SALARY" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_LOCATIONS">
-            <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
             <Parameter Name="P_STREET_ADDRESS" Mode="In" Type="String" />
             <Parameter Name="P_POSTAL_CODE" Mode="In" Type="String" />
             <Parameter Name="P_CITY" Mode="In" Type="String" />
@@ -833,13 +788,11 @@
             <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_PARTICIPATION">
-            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
             <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
             <Parameter Name="P_ROLE" Mode="In" Type="String" />
             <Parameter Name="P_HOURS" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_PROJECTS">
-            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
             <Parameter Name="P_PROJECT_NAME" Mode="In" Type="String" />
             <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
@@ -847,7 +800,6 @@
             <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_TASKS">
-            <Parameter Name="P_TASK_ID" Mode="In" Type="Decimal" />
             <Parameter Name="P_TASK_NAME" Mode="In" Type="String" />
             <Parameter Name="P_DESCRIPTION" Mode="In" Type="String" />
             <Parameter Name="P_DURATION" Mode="In" Type="Decimal" />
@@ -855,7 +807,7 @@
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_VACATIONS">
             <Parameter Name="P_VACATION_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_EMP_EMAIL" Mode="In" Type="String" />
             <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_REASON" Mode="In" Type="String" />
@@ -902,7 +854,7 @@
             <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UPDATE_PARTICIPATION">
-            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_EMP_EMAIL" Mode="In" Type="String" />
             <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
             <Parameter Name="P_ROLE" Mode="In" Type="String" />
             <Parameter Name="P_HOURS" Mode="In" Type="Decimal" />
@@ -924,7 +876,7 @@
           </FunctionImport>
           <FunctionImport Name="UPDATE_VACATIONS">
             <Parameter Name="P_VACATION_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_EMP_EMAIL" Mode="In" Type="String" />
             <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_REASON" Mode="In" Type="String" />
@@ -935,9 +887,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище MainAdminModelContainer" CdmEntityContainer="MainAdminEntity">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="MainAdminEntity">
           <EntitySetMapping Name="COUNTRIES">
-            <EntityTypeMapping TypeName="MainAdminModel.COUNTRIES">
+            <EntityTypeMapping TypeName="Model.COUNTRIES">
               <MappingFragment StoreEntitySet="COUNTRIES">
                 <ScalarProperty Name="COUNTRY_ID" ColumnName="COUNTRY_ID" />
                 <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
@@ -945,7 +897,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DEPARTMENTS">
-            <EntityTypeMapping TypeName="MainAdminModel.DEPARTMENTS">
+            <EntityTypeMapping TypeName="Model.DEPARTMENTS">
               <MappingFragment StoreEntitySet="DEPARTMENTS">
                 <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
                 <ScalarProperty Name="DEPARTMENT_NAME" ColumnName="DEPARTMENT_NAME" />
@@ -955,7 +907,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EMPLOYEES">
-            <EntityTypeMapping TypeName="MainAdminModel.EMPLOYEES">
+            <EntityTypeMapping TypeName="Model.EMPLOYEES">
               <MappingFragment StoreEntitySet="EMPLOYEES">
                 <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
                 <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
@@ -973,7 +925,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JOBS">
-            <EntityTypeMapping TypeName="MainAdminModel.JOBS">
+            <EntityTypeMapping TypeName="Model.JOBS">
               <MappingFragment StoreEntitySet="JOBS">
                 <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
                 <ScalarProperty Name="JOB_TITLE" ColumnName="JOB_TITLE" />
@@ -983,7 +935,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOCATIONS">
-            <EntityTypeMapping TypeName="MainAdminModel.LOCATIONS">
+            <EntityTypeMapping TypeName="Model.LOCATIONS">
               <MappingFragment StoreEntitySet="LOCATIONS">
                 <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
                 <ScalarProperty Name="STREET_ADDRESS" ColumnName="STREET_ADDRESS" />
@@ -995,9 +947,9 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PARTICIPATION">
-            <EntityTypeMapping TypeName="MainAdminModel.PARTICIPATION">
+            <EntityTypeMapping TypeName="Model.PARTICIPATION">
               <MappingFragment StoreEntitySet="PARTICIPATION">
-                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="EMP_EMAIL" ColumnName="EMP_EMAIL" />
                 <ScalarProperty Name="PROJECT_ID" ColumnName="PROJECT_ID" />
                 <ScalarProperty Name="ROLE" ColumnName="ROLE" />
                 <ScalarProperty Name="HOURS" ColumnName="HOURS" />
@@ -1005,7 +957,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PROJECTS">
-            <EntityTypeMapping TypeName="MainAdminModel.PROJECTS">
+            <EntityTypeMapping TypeName="Model.PROJECTS">
               <MappingFragment StoreEntitySet="PROJECTS">
                 <ScalarProperty Name="PROJECT_ID" ColumnName="PROJECT_ID" />
                 <ScalarProperty Name="PROJECT_NAME" ColumnName="PROJECT_NAME" />
@@ -1017,7 +969,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TASKS">
-            <EntityTypeMapping TypeName="MainAdminModel.TASKS">
+            <EntityTypeMapping TypeName="Model.TASKS">
               <MappingFragment StoreEntitySet="TASKS">
                 <ScalarProperty Name="TASK_ID" ColumnName="TASK_ID" />
                 <ScalarProperty Name="TASK_NAME" ColumnName="TASK_NAME" />
@@ -1028,48 +980,48 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VACATIONS">
-            <EntityTypeMapping TypeName="MainAdminModel.VACATIONS">
+            <EntityTypeMapping TypeName="Model.VACATIONS">
               <MappingFragment StoreEntitySet="VACATIONS">
                 <ScalarProperty Name="VACATION_ID" ColumnName="VACATION_ID" />
-                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="EMP_EMAIL" ColumnName="EMP_EMAIL" />
                 <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
                 <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
                 <ScalarProperty Name="REASON" ColumnName="REASON" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="DELETE_FROM_COUNTRIES" FunctionName="Хранилище MainAdminModel.DELETE_FROM_COUNTRIES" />
-          <FunctionImportMapping FunctionImportName="DELETE_FROM_DEPARTMENTS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_DEPARTMENTS" />
-          <FunctionImportMapping FunctionImportName="DELETE_FROM_EMPLOYEES" FunctionName="Хранилище MainAdminModel.DELETE_FROM_EMPLOYEES" />
-          <FunctionImportMapping FunctionImportName="DELETE_FROM_JOBS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_JOBS" />
-          <FunctionImportMapping FunctionImportName="DELETE_FROM_LOCATIONS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_LOCATIONS" />
-          <FunctionImportMapping FunctionImportName="DELETE_FROM_PARTICIPATION" FunctionName="Хранилище MainAdminModel.DELETE_FROM_PARTICIPATION" />
-          <FunctionImportMapping FunctionImportName="DELETE_FROM_PROJECTS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_PROJECTS" />
-          <FunctionImportMapping FunctionImportName="DELETE_FROM_TASKS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_TASKS" />
-          <FunctionImportMapping FunctionImportName="DELETE_FROM_VACATIONS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_VACATIONS" />
-          <FunctionImportMapping FunctionImportName="EXPORT_JSON" FunctionName="Хранилище MainAdminModel.EXPORT_JSON" />
-          <FunctionImportMapping FunctionImportName="FIRE_EMPLOYEE" FunctionName="Хранилище MainAdminModel.FIRE_EMPLOYEE" />
-          <FunctionImportMapping FunctionImportName="HIRE_EMPLOYEE" FunctionName="Хранилище MainAdminModel.HIRE_EMPLOYEE" />
-          <FunctionImportMapping FunctionImportName="IMPORT_JSON" FunctionName="Хранилище MainAdminModel.IMPORT_JSON" />
-          <FunctionImportMapping FunctionImportName="INSERT_INTO_COUNTRIES" FunctionName="Хранилище MainAdminModel.INSERT_INTO_COUNTRIES" />
-          <FunctionImportMapping FunctionImportName="INSERT_INTO_DEPARTMENTS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_DEPARTMENTS" />
-          <FunctionImportMapping FunctionImportName="INSERT_INTO_EMPLOYEES" FunctionName="Хранилище MainAdminModel.INSERT_INTO_EMPLOYEES" />
-          <FunctionImportMapping FunctionImportName="INSERT_INTO_JOBS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_JOBS" />
-          <FunctionImportMapping FunctionImportName="INSERT_INTO_LOCATIONS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_LOCATIONS" />
-          <FunctionImportMapping FunctionImportName="INSERT_INTO_PARTICIPATION" FunctionName="Хранилище MainAdminModel.INSERT_INTO_PARTICIPATION" />
-          <FunctionImportMapping FunctionImportName="INSERT_INTO_PROJECTS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_PROJECTS" />
-          <FunctionImportMapping FunctionImportName="INSERT_INTO_TASKS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_TASKS" />
-          <FunctionImportMapping FunctionImportName="INSERT_INTO_VACATIONS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_VACATIONS" />
-          <FunctionImportMapping FunctionImportName="PROMOTE_EMPLOYEE" FunctionName="Хранилище MainAdminModel.PROMOTE_EMPLOYEE" />
-          <FunctionImportMapping FunctionImportName="UPDATE_COUNTRIES" FunctionName="Хранилище MainAdminModel.UPDATE_COUNTRIES" />
-          <FunctionImportMapping FunctionImportName="UPDATE_DEPARTMENTS" FunctionName="Хранилище MainAdminModel.UPDATE_DEPARTMENTS" />
-          <FunctionImportMapping FunctionImportName="UPDATE_EMPLOYEES" FunctionName="Хранилище MainAdminModel.UPDATE_EMPLOYEES" />
-          <FunctionImportMapping FunctionImportName="UPDATE_JOBS" FunctionName="Хранилище MainAdminModel.UPDATE_JOBS" />
-          <FunctionImportMapping FunctionImportName="UPDATE_LOCATIONS" FunctionName="Хранилище MainAdminModel.UPDATE_LOCATIONS" />
-          <FunctionImportMapping FunctionImportName="UPDATE_PARTICIPATION" FunctionName="Хранилище MainAdminModel.UPDATE_PARTICIPATION" />
-          <FunctionImportMapping FunctionImportName="UPDATE_PROJECTS" FunctionName="Хранилище MainAdminModel.UPDATE_PROJECTS" />
-          <FunctionImportMapping FunctionImportName="UPDATE_TASKS" FunctionName="Хранилище MainAdminModel.UPDATE_TASKS" />
-          <FunctionImportMapping FunctionImportName="UPDATE_VACATIONS" FunctionName="Хранилище MainAdminModel.UPDATE_VACATIONS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_COUNTRIES" FunctionName="Хранилище Model.DELETE_FROM_COUNTRIES" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_DEPARTMENTS" FunctionName="Хранилище Model.DELETE_FROM_DEPARTMENTS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_EMPLOYEES" FunctionName="Хранилище Model.DELETE_FROM_EMPLOYEES" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_JOBS" FunctionName="Хранилище Model.DELETE_FROM_JOBS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_LOCATIONS" FunctionName="Хранилище Model.DELETE_FROM_LOCATIONS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_PARTICIPATION" FunctionName="Хранилище Model.DELETE_FROM_PARTICIPATION" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_PROJECTS" FunctionName="Хранилище Model.DELETE_FROM_PROJECTS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_TASKS" FunctionName="Хранилище Model.DELETE_FROM_TASKS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_VACATIONS" FunctionName="Хранилище Model.DELETE_FROM_VACATIONS" />
+          <FunctionImportMapping FunctionImportName="EXPORT_JSON" FunctionName="Хранилище Model.EXPORT_JSON" />
+          <FunctionImportMapping FunctionImportName="FIRE_EMPLOYEE" FunctionName="Хранилище Model.FIRE_EMPLOYEE" />
+          <FunctionImportMapping FunctionImportName="HIRE_EMPLOYEE" FunctionName="Хранилище Model.HIRE_EMPLOYEE" />
+          <FunctionImportMapping FunctionImportName="IMPORT_JSON" FunctionName="Хранилище Model.IMPORT_JSON" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_COUNTRIES" FunctionName="Хранилище Model.INSERT_INTO_COUNTRIES" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_DEPARTMENTS" FunctionName="Хранилище Model.INSERT_INTO_DEPARTMENTS" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_EMPLOYEES" FunctionName="Хранилище Model.INSERT_INTO_EMPLOYEES" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_JOBS" FunctionName="Хранилище Model.INSERT_INTO_JOBS" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_LOCATIONS" FunctionName="Хранилище Model.INSERT_INTO_LOCATIONS" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_PARTICIPATION" FunctionName="Хранилище Model.INSERT_INTO_PARTICIPATION" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_PROJECTS" FunctionName="Хранилище Model.INSERT_INTO_PROJECTS" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_TASKS" FunctionName="Хранилище Model.INSERT_INTO_TASKS" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_VACATIONS" FunctionName="Хранилище Model.INSERT_INTO_VACATIONS" />
+          <FunctionImportMapping FunctionImportName="PROMOTE_EMPLOYEE" FunctionName="Хранилище Model.PROMOTE_EMPLOYEE" />
+          <FunctionImportMapping FunctionImportName="UPDATE_COUNTRIES" FunctionName="Хранилище Model.UPDATE_COUNTRIES" />
+          <FunctionImportMapping FunctionImportName="UPDATE_DEPARTMENTS" FunctionName="Хранилище Model.UPDATE_DEPARTMENTS" />
+          <FunctionImportMapping FunctionImportName="UPDATE_EMPLOYEES" FunctionName="Хранилище Model.UPDATE_EMPLOYEES" />
+          <FunctionImportMapping FunctionImportName="UPDATE_JOBS" FunctionName="Хранилище Model.UPDATE_JOBS" />
+          <FunctionImportMapping FunctionImportName="UPDATE_LOCATIONS" FunctionName="Хранилище Model.UPDATE_LOCATIONS" />
+          <FunctionImportMapping FunctionImportName="UPDATE_PARTICIPATION" FunctionName="Хранилище Model.UPDATE_PARTICIPATION" />
+          <FunctionImportMapping FunctionImportName="UPDATE_PROJECTS" FunctionName="Хранилище Model.UPDATE_PROJECTS" />
+          <FunctionImportMapping FunctionImportName="UPDATE_TASKS" FunctionName="Хранилище Model.UPDATE_TASKS" />
+          <FunctionImportMapping FunctionImportName="UPDATE_VACATIONS" FunctionName="Хранилище Model.UPDATE_VACATIONS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -7,23 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin
+namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class COUNTRIES
+    public partial class TASKS
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public COUNTRIES()
-        {
-            this.LOCATIONS = new HashSet<LOCATIONS>();
-        }
+        public int TASK_ID { get; set; }
+        public string TASK_NAME { get; set; }
+        public string DESCRIPTION { get; set; }
+        public short DURATION { get; set; }
+        public short PROJECT_ID { get; set; }
     
-        public string COUNTRY_ID { get; set; }
-        public string COUNTRY_NAME { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LOCATIONS> LOCATIONS { get; set; }
+        public virtual PROJECTS PROJECTS { get; set; }
     }
 }

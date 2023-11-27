@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Data.Entity;
 using System.Windows.Controls;
-using WPF.Desktop.UI.Database.Entity_Data_Model.Admin;
+using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin;
 using WPF.Desktop.UI.Views;
 using WPF.Desktop.UI.Views.Pages;
 
@@ -20,11 +20,11 @@ namespace WPF.Desktop.UI.ViewModels
             }
         }
 
-        protected static EMPLOYEES CurrentUser { get; private set; } 
+        protected static EMPLOYEES CurrentUser { get; private set; }
         protected DbContext db { get; set; }
 
         private static Frame MainFrame = new Frame();
-         
+
 
         protected void SetCurrentUser(EMPLOYEES empl)
         {

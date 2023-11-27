@@ -1,9 +1,9 @@
 -- Создаем таблицу сотрудников с первичным ключом emp_id
 CREATE TABLE employees (
-    emp_id NUMBER(6) PRIMARY KEY , -- Идентификатор сотрудника
+    emp_id NUMBER(6) NOT NULL ,--PRIMARY KEY , -- Идентификатор сотрудника
     first_name VARCHAR2(20), -- Имя сотрудника
     last_name VARCHAR2(25) NOT NULL, -- Фамилия сотрудника
-    email VARCHAR2(25) , -- Электронная почта сотрудника
+    email VARCHAR2(25) PRIMARY KEY , -- Электронная почта сотрудника
     phone_number VARCHAR2(15), -- Номер телефона сотрудника
     hire_date DATE NOT NULL, -- Дата найма сотрудника
     job_id VARCHAR2(10) NOT NULL, -- Идентификатор должности сотрудника
@@ -12,7 +12,7 @@ CREATE TABLE employees (
     manager_id NUMBER(6), -- Идентификатор менеджера сотрудника
     department_id NUMBER(4), -- Идентификатор отдела сотрудника
     password_hash VARCHAR2(128)
-  -- CONSTRAINT employees_pk PRIMARY KEY (emp_id, email)
+  --CONSTRAINT employees_pk PRIMARY KEY (emp_id, email)
 ) TABLESPACE USERS_TBS;
 
 -- Создаем таблицу должностей с первичным ключом job_id
@@ -68,17 +68,19 @@ CREATE TABLE tasks (
 
 -- Создаем таблицу участия сотрудников в проектах с составным первичным ключом из emp_id и project_id
 CREATE TABLE participation (
-    emp_id NUMBER(6) NOT NULL, -- Идентификатор сотрудника, участвующего в проекте
+    emp_email VARCHAR2(25), -- Электронная почта сотрудника
+    --emp_id NUMBER(6) NOT NULL, -- Идентификатор сотрудника, участвующего в проекте
     project_id NUMBER(4) NOT NULL, -- Идентификатор проекта, в котором участвует сотрудник
     role VARCHAR2(50), -- Роль сотрудника в проекте
     hours NUMBER(4), -- Количество часов, затраченных сотрудником на проект
-    PRIMARY KEY (emp_id, project_id) -- Составной первичный ключ из emp_id и project_id
+    PRIMARY KEY (emp_email, project_id) -- Составной первичный ключ из emp_id и project_id
 ) TABLESPACE USERS_TBS;
 
 
 CREATE TABLE vacations (
     vacation_id NUMBER(6) PRIMARY KEY, -- Идентификатор отпуска
-    emp_id NUMBER(6) NOT NULL, -- Идентификатор сотрудника
+    --emp_id NUMBER(6) NOT NULL, -- Идентификатор сотрудника
+    emp_email VARCHAR2(25), -- Электронная почта сотрудника
     start_date DATE NOT NULL, -- Дата начала отпуска
     end_date DATE NOT NULL, -- Дата окончания отпуска
     reason VARCHAR2(500) -- Причина отпуска
@@ -109,13 +111,13 @@ ALTER TABLE projects ADD CONSTRAINT fk_projects_departments FOREIGN KEY (departm
 ALTER TABLE tasks ADD CONSTRAINT fk_tasks_projects FOREIGN KEY (project_id) REFERENCES projects (project_id);
 
 -- Связываем таблицу participation с таблицей employees по атрибуту emp_id
-ALTER TABLE participation ADD CONSTRAINT fk_participation_employees FOREIGN KEY (emp_id) REFERENCES employees (emp_id);
+ALTER TABLE participation ADD CONSTRAINT fk_participation_employees FOREIGN KEY (emp_email) REFERENCES employees(email);
 
 -- Связываем таблицу participation с таблицей projects по атрибуту project_id
 ALTER TABLE participation ADD CONSTRAINT fk_participation_projects FOREIGN KEY (project_id) REFERENCES projects (project_id);
 
 -- Связываем таблицу vacations с таблицей employees по атрибуту emp_id
-ALTER TABLE vacations ADD CONSTRAINT fk_vacations_emp_id FOREIGN KEY (emp_id) REFERENCES employees(emp_id);
+ALTER TABLE vacations ADD CONSTRAINT fk_vacations_emp_id FOREIGN KEY (emp_email) REFERENCES employees(email);
 
 
 DROP TABLE participation;
