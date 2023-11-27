@@ -109,6 +109,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\CommandReference.cs" />
+    <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Database\Entity Data Model\Admin\COUNTRIES.cs">
       <DependentUpon>MainAdminModel.tt</DependentUpon>
     </Compile>
