@@ -1,0 +1,1096 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище MainAdminModel" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="COUNTRIES">
+          <Key>
+            <PropertyRef Name="COUNTRY_ID" />
+          </Key>
+          <Property Name="COUNTRY_ID" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="COUNTRY_NAME" Type="varchar2" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DEPARTMENTS">
+          <Key>
+            <PropertyRef Name="DEPARTMENT_ID" />
+          </Key>
+          <Property Name="DEPARTMENT_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="DEPARTMENT_NAME" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="MANAGER_ID" Type="number" Precision="6" Scale="0" />
+          <Property Name="LOCATION_ID" Type="number" Precision="4" Scale="0" />
+        </EntityType>
+        <EntityType Name="EMPLOYEES">
+          <Key>
+            <PropertyRef Name="EMP_ID" />
+          </Key>
+          <Property Name="EMP_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="LAST_NAME" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar2" MaxLength="25" />
+          <Property Name="PHONE_NUMBER" Type="varchar2" MaxLength="15" />
+          <Property Name="HIRE_DATE" Type="date" Nullable="false" />
+          <Property Name="JOB_ID" Type="varchar2" MaxLength="10" Nullable="false" />
+          <Property Name="SALARY" Type="number" Precision="8" Scale="2" />
+          <Property Name="COMMISSION_PCT" Type="number" Precision="2" Scale="2" />
+          <Property Name="MANAGER_ID" Type="number" Precision="6" Scale="0" />
+          <Property Name="DEPARTMENT_ID" Type="number" Precision="4" Scale="0" />
+          <Property Name="PASSWORD_HASH" Type="varchar2" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="JOBS">
+          <Key>
+            <PropertyRef Name="JOB_ID" />
+          </Key>
+          <Property Name="JOB_ID" Type="varchar2" MaxLength="10" Nullable="false" />
+          <Property Name="JOB_TITLE" Type="varchar2" MaxLength="35" Nullable="false" />
+          <Property Name="MIN_SALARY" Type="number" Precision="6" Scale="0" />
+          <Property Name="MAX_SALARY" Type="number" Precision="6" Scale="0" />
+        </EntityType>
+        <EntityType Name="LOCATIONS">
+          <Key>
+            <PropertyRef Name="LOCATION_ID" />
+          </Key>
+          <Property Name="LOCATION_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="STREET_ADDRESS" Type="varchar2" MaxLength="40" />
+          <Property Name="POSTAL_CODE" Type="varchar2" MaxLength="12" />
+          <Property Name="CITY" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="STATE_PROVINCE" Type="varchar2" MaxLength="25" />
+          <Property Name="COUNTRY_ID" Type="char" MaxLength="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PARTICIPATION">
+          <Key>
+            <PropertyRef Name="EMP_ID" />
+            <PropertyRef Name="PROJECT_ID" />
+          </Key>
+          <Property Name="EMP_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="PROJECT_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="ROLE" Type="varchar2" MaxLength="50" />
+          <Property Name="HOURS" Type="number" Precision="4" Scale="0" />
+        </EntityType>
+        <EntityType Name="PROJECTS">
+          <Key>
+            <PropertyRef Name="PROJECT_ID" />
+          </Key>
+          <Property Name="PROJECT_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="PROJECT_NAME" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="START_DATE" Type="date" Nullable="false" />
+          <Property Name="END_DATE" Type="date" />
+          <Property Name="BUDGET" Type="number" Precision="12" Scale="2" />
+          <Property Name="DEPARTMENT_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TASKS">
+          <Key>
+            <PropertyRef Name="TASK_ID" />
+          </Key>
+          <Property Name="TASK_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="TASK_NAME" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="varchar2" MaxLength="500" />
+          <Property Name="DURATION" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="PROJECT_ID" Type="number" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VACATIONS">
+          <Key>
+            <PropertyRef Name="VACATION_ID" />
+          </Key>
+          <Property Name="VACATION_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="EMP_ID" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="START_DATE" Type="date" Nullable="false" />
+          <Property Name="END_DATE" Type="date" Nullable="false" />
+          <Property Name="REASON" Type="varchar2" MaxLength="500" />
+        </EntityType>
+        <Association Name="FK_DEPARTMENTS_LOCATIONS">
+          <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="0..1" />
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOCATIONS">
+              <PropertyRef Name="LOCATION_ID" />
+            </Principal>
+            <Dependent Role="DEPARTMENTS">
+              <PropertyRef Name="LOCATION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEES_DEPARTMENTS">
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="0..1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEES_JOBS">
+          <End Role="JOBS" Type="Self.JOBS" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBS">
+              <PropertyRef Name="JOB_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="JOB_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEES_MANAGERS">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="0..1" />
+          <End Role="EMPLOYEES1" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMP_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES1">
+              <PropertyRef Name="MANAGER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOCATIONS_COUNTRIES">
+          <End Role="COUNTRIES" Type="Self.COUNTRIES" Multiplicity="1" />
+          <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUNTRIES">
+              <PropertyRef Name="COUNTRY_ID" />
+            </Principal>
+            <Dependent Role="LOCATIONS">
+              <PropertyRef Name="COUNTRY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PARTICIPATION_EMPLOYEES">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="PARTICIPATION" Type="Self.PARTICIPATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMP_ID" />
+            </Principal>
+            <Dependent Role="PARTICIPATION">
+              <PropertyRef Name="EMP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PARTICIPATION_PROJECTS">
+          <End Role="PROJECTS" Type="Self.PROJECTS" Multiplicity="1" />
+          <End Role="PARTICIPATION" Type="Self.PARTICIPATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROJECTS">
+              <PropertyRef Name="PROJECT_ID" />
+            </Principal>
+            <Dependent Role="PARTICIPATION">
+              <PropertyRef Name="PROJECT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROJECTS_DEPARTMENTS">
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="1" />
+          <End Role="PROJECTS" Type="Self.PROJECTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Principal>
+            <Dependent Role="PROJECTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASKS_PROJECTS">
+          <End Role="PROJECTS" Type="Self.PROJECTS" Multiplicity="1" />
+          <End Role="TASKS" Type="Self.TASKS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROJECTS">
+              <PropertyRef Name="PROJECT_ID" />
+            </Principal>
+            <Dependent Role="TASKS">
+              <PropertyRef Name="PROJECT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VACATIONS_EMP_ID">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="VACATIONS" Type="Self.VACATIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMP_ID" />
+            </Principal>
+            <Dependent Role="VACATIONS">
+              <PropertyRef Name="EMP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DECRYPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" ReturnType="varchar2">
+          <Parameter Name="P_ENCRYPTED_TEXT" Type="raw" Mode="In" />
+        </Function>
+        <Function Name="DELETE_FROM_COUNTRIES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
+        </Function>
+        <Function Name="DELETE_FROM_DEPARTMENTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="DELETE_FROM_EMPLOYEES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="DELETE_FROM_JOBS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="DELETE_FROM_LOCATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_LOCATION_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="DELETE_FROM_PARTICIPATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="DELETE_FROM_PROJECTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="DELETE_FROM_TASKS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_TASK_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="DELETE_FROM_VACATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_VACATION_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="ENCRYPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" ReturnType="raw">
+          <Parameter Name="P_PLAIN_TEXT" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="EXPORT_JSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" />
+        <Function Name="FIRE_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="HIRE_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_FIRST_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_LAST_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
+          <Parameter Name="P_PHONE_NUMBER" Type="varchar2" Mode="In" />
+          <Parameter Name="P_HIRE_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
+          <Parameter Name="P_SALARY" Type="number" Mode="In" />
+          <Parameter Name="P_COMMISSION_PCT" Type="number" Mode="In" />
+          <Parameter Name="P_MANAGER_ID" Type="number" Mode="In" />
+          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
+          <Parameter Name="P_PASSWORD_HASH" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="IMPORT_JSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" />
+        <Function Name="INSERT_INTO_COUNTRIES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
+          <Parameter Name="P_COUNTRY_NAME" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INSERT_INTO_DEPARTMENTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
+          <Parameter Name="P_DEPARTMENT_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_MANAGER_ID" Type="number" Mode="In" />
+          <Parameter Name="P_LOCATION_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="INSERT_INTO_EMPLOYEES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_FIRST_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_LAST_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
+          <Parameter Name="P_PHONE_NUMBER" Type="varchar2" Mode="In" />
+          <Parameter Name="P_HIRE_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
+          <Parameter Name="P_SALARY" Type="number" Mode="In" />
+          <Parameter Name="P_COMMISSION_PCT" Type="number" Mode="In" />
+          <Parameter Name="P_MANAGER_ID" Type="number" Mode="In" />
+          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
+          <Parameter Name="P_PASSWORD_HASH" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="INSERT_INTO_JOBS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
+          <Parameter Name="P_JOB_TITLE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_MIN_SALARY" Type="number" Mode="In" />
+          <Parameter Name="P_MAX_SALARY" Type="number" Mode="In" />
+        </Function>
+        <Function Name="INSERT_INTO_LOCATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_LOCATION_ID" Type="number" Mode="In" />
+          <Parameter Name="P_STREET_ADDRESS" Type="varchar2" Mode="In" />
+          <Parameter Name="P_POSTAL_CODE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_CITY" Type="varchar2" Mode="In" />
+          <Parameter Name="P_STATE_PROVINCE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
+        </Function>
+        <Function Name="INSERT_INTO_PARTICIPATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
+          <Parameter Name="P_ROLE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_HOURS" Type="number" Mode="In" />
+        </Function>
+        <Function Name="INSERT_INTO_PROJECTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
+          <Parameter Name="P_PROJECT_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_START_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_END_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_BUDGET" Type="number" Mode="In" />
+          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="INSERT_INTO_TASKS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_TASK_ID" Type="number" Mode="In" />
+          <Parameter Name="P_TASK_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_DESCRIPTION" Type="varchar2" Mode="In" />
+          <Parameter Name="P_DURATION" Type="number" Mode="In" />
+          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="INSERT_INTO_VACATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_VACATION_ID" Type="number" Mode="In" />
+          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_START_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_END_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_REASON" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="LOGIN_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" ReturnType="number">
+          <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
+          <Parameter Name="P_PASSWORD" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="PROMOTE_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_NEW_JOB_ID" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_COUNTRIES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
+          <Parameter Name="P_COUNTRY_NAME" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_DEPARTMENTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
+          <Parameter Name="P_DEPARTMENT_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_MANAGER_ID" Type="number" Mode="In" />
+          <Parameter Name="P_LOCATION_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_EMPLOYEES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_FIRST_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_LAST_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
+          <Parameter Name="P_PHONE_NUMBER" Type="varchar2" Mode="In" />
+          <Parameter Name="P_HIRE_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
+          <Parameter Name="P_SALARY" Type="number" Mode="In" />
+          <Parameter Name="P_COMMISSION_PCT" Type="number" Mode="In" />
+          <Parameter Name="P_MANAGER_ID" Type="number" Mode="In" />
+          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_JOBS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
+          <Parameter Name="P_JOB_TITLE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_MIN_SALARY" Type="number" Mode="In" />
+          <Parameter Name="P_MAX_SALARY" Type="number" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_LOCATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_LOCATION_ID" Type="number" Mode="In" />
+          <Parameter Name="P_STREET_ADDRESS" Type="varchar2" Mode="In" />
+          <Parameter Name="P_POSTAL_CODE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_CITY" Type="varchar2" Mode="In" />
+          <Parameter Name="P_STATE_PROVINCE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_PARTICIPATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
+          <Parameter Name="P_ROLE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_HOURS" Type="number" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_PROJECTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
+          <Parameter Name="P_PROJECT_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_START_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_END_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_BUDGET" Type="number" Mode="In" />
+          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_TASKS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_TASK_ID" Type="number" Mode="In" />
+          <Parameter Name="P_TASK_NAME" Type="varchar2" Mode="In" />
+          <Parameter Name="P_DESCRIPTION" Type="varchar2" Mode="In" />
+          <Parameter Name="P_DURATION" Type="number" Mode="In" />
+          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_VACATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_VACATION_ID" Type="number" Mode="In" />
+          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+          <Parameter Name="P_START_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_END_DATE" Type="date" Mode="In" />
+          <Parameter Name="P_REASON" Type="varchar2" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище MainAdminModelContainer">
+          <EntitySet Name="COUNTRIES" EntityType="Self.COUNTRIES" Schema="ADMIN" store:Type="Tables" />
+          <EntitySet Name="DEPARTMENTS" EntityType="Self.DEPARTMENTS" Schema="ADMIN" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" Schema="ADMIN" store:Type="Tables" />
+          <EntitySet Name="JOBS" EntityType="Self.JOBS" Schema="ADMIN" store:Type="Tables" />
+          <EntitySet Name="LOCATIONS" EntityType="Self.LOCATIONS" Schema="ADMIN" store:Type="Tables" />
+          <EntitySet Name="PARTICIPATION" EntityType="Self.PARTICIPATION" Schema="ADMIN" store:Type="Tables" />
+          <EntitySet Name="PROJECTS" EntityType="Self.PROJECTS" Schema="ADMIN" store:Type="Tables" />
+          <EntitySet Name="TASKS" EntityType="Self.TASKS" Schema="ADMIN" store:Type="Tables" />
+          <EntitySet Name="VACATIONS" EntityType="Self.VACATIONS" Schema="ADMIN" store:Type="Tables" />
+          <AssociationSet Name="FK_DEPARTMENTS_LOCATIONS" Association="Self.FK_DEPARTMENTS_LOCATIONS">
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEES_DEPARTMENTS" Association="Self.FK_EMPLOYEES_DEPARTMENTS">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEES_JOBS" Association="Self.FK_EMPLOYEES_JOBS">
+            <End Role="JOBS" EntitySet="JOBS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEES_MANAGERS" Association="Self.FK_EMPLOYEES_MANAGERS">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="EMPLOYEES1" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOCATIONS_COUNTRIES" Association="Self.FK_LOCATIONS_COUNTRIES">
+            <End Role="COUNTRIES" EntitySet="COUNTRIES" />
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PARTICIPATION_EMPLOYEES" Association="Self.FK_PARTICIPATION_EMPLOYEES">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="PARTICIPATION" EntitySet="PARTICIPATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PARTICIPATION_PROJECTS" Association="Self.FK_PARTICIPATION_PROJECTS">
+            <End Role="PROJECTS" EntitySet="PROJECTS" />
+            <End Role="PARTICIPATION" EntitySet="PARTICIPATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROJECTS_DEPARTMENTS" Association="Self.FK_PROJECTS_DEPARTMENTS">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="PROJECTS" EntitySet="PROJECTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASKS_PROJECTS" Association="Self.FK_TASKS_PROJECTS">
+            <End Role="PROJECTS" EntitySet="PROJECTS" />
+            <End Role="TASKS" EntitySet="TASKS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VACATIONS_EMP_ID" Association="Self.FK_VACATIONS_EMP_ID">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="VACATIONS" EntitySet="VACATIONS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MainAdminModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="COUNTRIES">
+          <Key>
+            <PropertyRef Name="COUNTRY_ID" />
+          </Key>
+          <Property Name="COUNTRY_ID" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="COUNTRY_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="LOCATIONS" Relationship="Self.FK_LOCATIONS_COUNTRIES" FromRole="COUNTRIES" ToRole="LOCATIONS" />
+        </EntityType>
+        <EntityType Name="DEPARTMENTS">
+          <Key>
+            <PropertyRef Name="DEPARTMENT_ID" />
+          </Key>
+          <Property Name="DEPARTMENT_ID" Type="Int16" Nullable="false" />
+          <Property Name="DEPARTMENT_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MANAGER_ID" Type="Int32" />
+          <Property Name="LOCATION_ID" Type="Int16" />
+          <NavigationProperty Name="LOCATIONS" Relationship="Self.FK_DEPARTMENTS_LOCATIONS" FromRole="DEPARTMENTS" ToRole="LOCATIONS" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_EMPLOYEES_DEPARTMENTS" FromRole="DEPARTMENTS" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="PROJECTS" Relationship="Self.FK_PROJECTS_DEPARTMENTS" FromRole="DEPARTMENTS" ToRole="PROJECTS" />
+        </EntityType>
+        <EntityType Name="EMPLOYEES">
+          <Key>
+            <PropertyRef Name="EMP_ID" />
+          </Key>
+          <Property Name="EMP_ID" Type="Int32" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="PHONE_NUMBER" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="HIRE_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="JOB_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SALARY" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="COMMISSION_PCT" Type="Decimal" Precision="2" Scale="2" />
+          <Property Name="MANAGER_ID" Type="Int32" />
+          <Property Name="DEPARTMENT_ID" Type="Int16" />
+          <Property Name="PASSWORD_HASH" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DEPARTMENTS" Relationship="Self.FK_EMPLOYEES_DEPARTMENTS" FromRole="EMPLOYEES" ToRole="DEPARTMENTS" />
+          <NavigationProperty Name="JOBS" Relationship="Self.FK_EMPLOYEES_JOBS" FromRole="EMPLOYEES" ToRole="JOBS" />
+          <NavigationProperty Name="EMPLOYEES1" Relationship="Self.FK_EMPLOYEES_MANAGERS" FromRole="EMPLOYEES" ToRole="EMPLOYEES1" />
+          <NavigationProperty Name="EMPLOYEES2" Relationship="Self.FK_EMPLOYEES_MANAGERS" FromRole="EMPLOYEES1" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="PARTICIPATION" Relationship="Self.FK_PARTICIPATION_EMPLOYEES" FromRole="EMPLOYEES" ToRole="PARTICIPATION" />
+          <NavigationProperty Name="VACATIONS" Relationship="Self.FK_VACATIONS_EMP_ID" FromRole="EMPLOYEES" ToRole="VACATIONS" />
+        </EntityType>
+        <EntityType Name="JOBS">
+          <Key>
+            <PropertyRef Name="JOB_ID" />
+          </Key>
+          <Property Name="JOB_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JOB_TITLE" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MIN_SALARY" Type="Int32" />
+          <Property Name="MAX_SALARY" Type="Int32" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_EMPLOYEES_JOBS" FromRole="JOBS" ToRole="EMPLOYEES" />
+        </EntityType>
+        <EntityType Name="LOCATIONS">
+          <Key>
+            <PropertyRef Name="LOCATION_ID" />
+          </Key>
+          <Property Name="LOCATION_ID" Type="Int16" Nullable="false" />
+          <Property Name="STREET_ADDRESS" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="POSTAL_CODE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="CITY" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="STATE_PROVINCE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="COUNTRY_ID" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="COUNTRIES" Relationship="Self.FK_LOCATIONS_COUNTRIES" FromRole="LOCATIONS" ToRole="COUNTRIES" />
+          <NavigationProperty Name="DEPARTMENTS" Relationship="Self.FK_DEPARTMENTS_LOCATIONS" FromRole="LOCATIONS" ToRole="DEPARTMENTS" />
+        </EntityType>
+        <EntityType Name="PARTICIPATION">
+          <Key>
+            <PropertyRef Name="EMP_ID" />
+            <PropertyRef Name="PROJECT_ID" />
+          </Key>
+          <Property Name="EMP_ID" Type="Int32" Nullable="false" />
+          <Property Name="PROJECT_ID" Type="Int16" Nullable="false" />
+          <Property Name="ROLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HOURS" Type="Int16" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_PARTICIPATION_EMPLOYEES" FromRole="PARTICIPATION" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="PROJECTS" Relationship="Self.FK_PARTICIPATION_PROJECTS" FromRole="PARTICIPATION" ToRole="PROJECTS" />
+        </EntityType>
+        <EntityType Name="PROJECTS">
+          <Key>
+            <PropertyRef Name="PROJECT_ID" />
+          </Key>
+          <Property Name="PROJECT_ID" Type="Int16" Nullable="false" />
+          <Property Name="PROJECT_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="START_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="END_DATE" Type="DateTime" />
+          <Property Name="BUDGET" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="DEPARTMENT_ID" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="DEPARTMENTS" Relationship="Self.FK_PROJECTS_DEPARTMENTS" FromRole="PROJECTS" ToRole="DEPARTMENTS" />
+          <NavigationProperty Name="PARTICIPATION" Relationship="Self.FK_PARTICIPATION_PROJECTS" FromRole="PROJECTS" ToRole="PARTICIPATION" />
+          <NavigationProperty Name="TASKS" Relationship="Self.FK_TASKS_PROJECTS" FromRole="PROJECTS" ToRole="TASKS" />
+        </EntityType>
+        <EntityType Name="TASKS">
+          <Key>
+            <PropertyRef Name="TASK_ID" />
+          </Key>
+          <Property Name="TASK_ID" Type="Int32" Nullable="false" />
+          <Property Name="TASK_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DURATION" Type="Int16" Nullable="false" />
+          <Property Name="PROJECT_ID" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="PROJECTS" Relationship="Self.FK_TASKS_PROJECTS" FromRole="TASKS" ToRole="PROJECTS" />
+        </EntityType>
+        <EntityType Name="VACATIONS">
+          <Key>
+            <PropertyRef Name="VACATION_ID" />
+          </Key>
+          <Property Name="VACATION_ID" Type="Int32" Nullable="false" />
+          <Property Name="EMP_ID" Type="Int32" Nullable="false" />
+          <Property Name="START_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="END_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="REASON" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.FK_VACATIONS_EMP_ID" FromRole="VACATIONS" ToRole="EMPLOYEES" />
+        </EntityType>
+        <Association Name="FK_LOCATIONS_COUNTRIES">
+          <End Role="COUNTRIES" Type="Self.COUNTRIES" Multiplicity="1" />
+          <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUNTRIES">
+              <PropertyRef Name="COUNTRY_ID" />
+            </Principal>
+            <Dependent Role="LOCATIONS">
+              <PropertyRef Name="COUNTRY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DEPARTMENTS_LOCATIONS">
+          <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="0..1" />
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOCATIONS">
+              <PropertyRef Name="LOCATION_ID" />
+            </Principal>
+            <Dependent Role="DEPARTMENTS">
+              <PropertyRef Name="LOCATION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEES_DEPARTMENTS">
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="0..1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROJECTS_DEPARTMENTS">
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="1" />
+          <End Role="PROJECTS" Type="Self.PROJECTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Principal>
+            <Dependent Role="PROJECTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEES_JOBS">
+          <End Role="JOBS" Type="Self.JOBS" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBS">
+              <PropertyRef Name="JOB_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="JOB_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEES_MANAGERS">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="0..1" />
+          <End Role="EMPLOYEES1" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMP_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES1">
+              <PropertyRef Name="MANAGER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PARTICIPATION_EMPLOYEES">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="PARTICIPATION" Type="Self.PARTICIPATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMP_ID" />
+            </Principal>
+            <Dependent Role="PARTICIPATION">
+              <PropertyRef Name="EMP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VACATIONS_EMP_ID">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="VACATIONS" Type="Self.VACATIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMP_ID" />
+            </Principal>
+            <Dependent Role="VACATIONS">
+              <PropertyRef Name="EMP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PARTICIPATION_PROJECTS">
+          <End Role="PROJECTS" Type="Self.PROJECTS" Multiplicity="1" />
+          <End Role="PARTICIPATION" Type="Self.PARTICIPATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROJECTS">
+              <PropertyRef Name="PROJECT_ID" />
+            </Principal>
+            <Dependent Role="PARTICIPATION">
+              <PropertyRef Name="PROJECT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASKS_PROJECTS">
+          <End Role="PROJECTS" Type="Self.PROJECTS" Multiplicity="1" />
+          <End Role="TASKS" Type="Self.TASKS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROJECTS">
+              <PropertyRef Name="PROJECT_ID" />
+            </Principal>
+            <Dependent Role="TASKS">
+              <PropertyRef Name="PROJECT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MainAdminEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="COUNTRIES" EntityType="Self.COUNTRIES" />
+          <EntitySet Name="DEPARTMENTS" EntityType="Self.DEPARTMENTS" />
+          <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" />
+          <EntitySet Name="JOBS" EntityType="Self.JOBS" />
+          <EntitySet Name="LOCATIONS" EntityType="Self.LOCATIONS" />
+          <EntitySet Name="PARTICIPATION" EntityType="Self.PARTICIPATION" />
+          <EntitySet Name="PROJECTS" EntityType="Self.PROJECTS" />
+          <EntitySet Name="TASKS" EntityType="Self.TASKS" />
+          <EntitySet Name="VACATIONS" EntityType="Self.VACATIONS" />
+          <AssociationSet Name="FK_LOCATIONS_COUNTRIES" Association="Self.FK_LOCATIONS_COUNTRIES">
+            <End Role="COUNTRIES" EntitySet="COUNTRIES" />
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DEPARTMENTS_LOCATIONS" Association="Self.FK_DEPARTMENTS_LOCATIONS">
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEES_DEPARTMENTS" Association="Self.FK_EMPLOYEES_DEPARTMENTS">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROJECTS_DEPARTMENTS" Association="Self.FK_PROJECTS_DEPARTMENTS">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="PROJECTS" EntitySet="PROJECTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEES_JOBS" Association="Self.FK_EMPLOYEES_JOBS">
+            <End Role="JOBS" EntitySet="JOBS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEES_MANAGERS" Association="Self.FK_EMPLOYEES_MANAGERS">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="EMPLOYEES1" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PARTICIPATION_EMPLOYEES" Association="Self.FK_PARTICIPATION_EMPLOYEES">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="PARTICIPATION" EntitySet="PARTICIPATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VACATIONS_EMP_ID" Association="Self.FK_VACATIONS_EMP_ID">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="VACATIONS" EntitySet="VACATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PARTICIPATION_PROJECTS" Association="Self.FK_PARTICIPATION_PROJECTS">
+            <End Role="PROJECTS" EntitySet="PROJECTS" />
+            <End Role="PARTICIPATION" EntitySet="PARTICIPATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASKS_PROJECTS" Association="Self.FK_TASKS_PROJECTS">
+            <End Role="PROJECTS" EntitySet="PROJECTS" />
+            <End Role="TASKS" EntitySet="TASKS" />
+          </AssociationSet>
+          <FunctionImport Name="DELETE_FROM_COUNTRIES">
+            <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_FROM_DEPARTMENTS">
+            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_FROM_EMPLOYEES">
+            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_FROM_JOBS">
+            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_FROM_LOCATIONS">
+            <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_FROM_PARTICIPATION">
+            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_FROM_PROJECTS">
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_FROM_TASKS">
+            <Parameter Name="P_TASK_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_FROM_VACATIONS">
+            <Parameter Name="P_VACATION_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="EXPORT_JSON" />
+          <FunctionImport Name="FIRE_EMPLOYEE">
+            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="HIRE_EMPLOYEE">
+            <Parameter Name="P_FIRST_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_LAST_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="P_PHONE_NUMBER" Mode="In" Type="String" />
+            <Parameter Name="P_HIRE_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
+            <Parameter Name="P_SALARY" Mode="In" Type="Decimal" />
+            <Parameter Name="P_COMMISSION_PCT" Mode="In" Type="Decimal" />
+            <Parameter Name="P_MANAGER_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_PASSWORD_HASH" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="IMPORT_JSON" />
+          <FunctionImport Name="INSERT_INTO_COUNTRIES">
+            <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
+            <Parameter Name="P_COUNTRY_NAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_INTO_DEPARTMENTS">
+            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_DEPARTMENT_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_MANAGER_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_INTO_EMPLOYEES">
+            <Parameter Name="P_FIRST_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_LAST_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="P_PHONE_NUMBER" Mode="In" Type="String" />
+            <Parameter Name="P_HIRE_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
+            <Parameter Name="P_SALARY" Mode="In" Type="Decimal" />
+            <Parameter Name="P_COMMISSION_PCT" Mode="In" Type="Decimal" />
+            <Parameter Name="P_MANAGER_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_PASSWORD_HASH" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_INTO_JOBS">
+            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
+            <Parameter Name="P_JOB_TITLE" Mode="In" Type="String" />
+            <Parameter Name="P_MIN_SALARY" Mode="In" Type="Decimal" />
+            <Parameter Name="P_MAX_SALARY" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_INTO_LOCATIONS">
+            <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_STREET_ADDRESS" Mode="In" Type="String" />
+            <Parameter Name="P_POSTAL_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_CITY" Mode="In" Type="String" />
+            <Parameter Name="P_STATE_PROVINCE" Mode="In" Type="String" />
+            <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_INTO_PARTICIPATION">
+            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_ROLE" Mode="In" Type="String" />
+            <Parameter Name="P_HOURS" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_INTO_PROJECTS">
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_PROJECT_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_BUDGET" Mode="In" Type="Decimal" />
+            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_INTO_TASKS">
+            <Parameter Name="P_TASK_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_TASK_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_DESCRIPTION" Mode="In" Type="String" />
+            <Parameter Name="P_DURATION" Mode="In" Type="Decimal" />
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_INTO_VACATIONS">
+            <Parameter Name="P_VACATION_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_REASON" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PROMOTE_EMPLOYEE">
+            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_NEW_JOB_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_COUNTRIES">
+            <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
+            <Parameter Name="P_COUNTRY_NAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_DEPARTMENTS">
+            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_DEPARTMENT_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_MANAGER_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_EMPLOYEES">
+            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_FIRST_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_LAST_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="P_PHONE_NUMBER" Mode="In" Type="String" />
+            <Parameter Name="P_HIRE_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
+            <Parameter Name="P_SALARY" Mode="In" Type="Decimal" />
+            <Parameter Name="P_COMMISSION_PCT" Mode="In" Type="Decimal" />
+            <Parameter Name="P_MANAGER_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_JOBS">
+            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
+            <Parameter Name="P_JOB_TITLE" Mode="In" Type="String" />
+            <Parameter Name="P_MIN_SALARY" Mode="In" Type="Decimal" />
+            <Parameter Name="P_MAX_SALARY" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_LOCATIONS">
+            <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_STREET_ADDRESS" Mode="In" Type="String" />
+            <Parameter Name="P_POSTAL_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_CITY" Mode="In" Type="String" />
+            <Parameter Name="P_STATE_PROVINCE" Mode="In" Type="String" />
+            <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_PARTICIPATION">
+            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_ROLE" Mode="In" Type="String" />
+            <Parameter Name="P_HOURS" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_PROJECTS">
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_PROJECT_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_BUDGET" Mode="In" Type="Decimal" />
+            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_TASKS">
+            <Parameter Name="P_TASK_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_TASK_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_DESCRIPTION" Mode="In" Type="String" />
+            <Parameter Name="P_DURATION" Mode="In" Type="Decimal" />
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_VACATIONS">
+            <Parameter Name="P_VACATION_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+            <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_REASON" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MainAdminModelContainer" CdmEntityContainer="MainAdminEntity">
+          <EntitySetMapping Name="COUNTRIES">
+            <EntityTypeMapping TypeName="MainAdminModel.COUNTRIES">
+              <MappingFragment StoreEntitySet="COUNTRIES">
+                <ScalarProperty Name="COUNTRY_ID" ColumnName="COUNTRY_ID" />
+                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEPARTMENTS">
+            <EntityTypeMapping TypeName="MainAdminModel.DEPARTMENTS">
+              <MappingFragment StoreEntitySet="DEPARTMENTS">
+                <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+                <ScalarProperty Name="DEPARTMENT_NAME" ColumnName="DEPARTMENT_NAME" />
+                <ScalarProperty Name="MANAGER_ID" ColumnName="MANAGER_ID" />
+                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEES">
+            <EntityTypeMapping TypeName="MainAdminModel.EMPLOYEES">
+              <MappingFragment StoreEntitySet="EMPLOYEES">
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="PHONE_NUMBER" ColumnName="PHONE_NUMBER" />
+                <ScalarProperty Name="HIRE_DATE" ColumnName="HIRE_DATE" />
+                <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
+                <ScalarProperty Name="SALARY" ColumnName="SALARY" />
+                <ScalarProperty Name="COMMISSION_PCT" ColumnName="COMMISSION_PCT" />
+                <ScalarProperty Name="MANAGER_ID" ColumnName="MANAGER_ID" />
+                <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+                <ScalarProperty Name="PASSWORD_HASH" ColumnName="PASSWORD_HASH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JOBS">
+            <EntityTypeMapping TypeName="MainAdminModel.JOBS">
+              <MappingFragment StoreEntitySet="JOBS">
+                <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
+                <ScalarProperty Name="JOB_TITLE" ColumnName="JOB_TITLE" />
+                <ScalarProperty Name="MIN_SALARY" ColumnName="MIN_SALARY" />
+                <ScalarProperty Name="MAX_SALARY" ColumnName="MAX_SALARY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOCATIONS">
+            <EntityTypeMapping TypeName="MainAdminModel.LOCATIONS">
+              <MappingFragment StoreEntitySet="LOCATIONS">
+                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
+                <ScalarProperty Name="STREET_ADDRESS" ColumnName="STREET_ADDRESS" />
+                <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="STATE_PROVINCE" ColumnName="STATE_PROVINCE" />
+                <ScalarProperty Name="COUNTRY_ID" ColumnName="COUNTRY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PARTICIPATION">
+            <EntityTypeMapping TypeName="MainAdminModel.PARTICIPATION">
+              <MappingFragment StoreEntitySet="PARTICIPATION">
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="PROJECT_ID" ColumnName="PROJECT_ID" />
+                <ScalarProperty Name="ROLE" ColumnName="ROLE" />
+                <ScalarProperty Name="HOURS" ColumnName="HOURS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROJECTS">
+            <EntityTypeMapping TypeName="MainAdminModel.PROJECTS">
+              <MappingFragment StoreEntitySet="PROJECTS">
+                <ScalarProperty Name="PROJECT_ID" ColumnName="PROJECT_ID" />
+                <ScalarProperty Name="PROJECT_NAME" ColumnName="PROJECT_NAME" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="BUDGET" ColumnName="BUDGET" />
+                <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TASKS">
+            <EntityTypeMapping TypeName="MainAdminModel.TASKS">
+              <MappingFragment StoreEntitySet="TASKS">
+                <ScalarProperty Name="TASK_ID" ColumnName="TASK_ID" />
+                <ScalarProperty Name="TASK_NAME" ColumnName="TASK_NAME" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="DURATION" ColumnName="DURATION" />
+                <ScalarProperty Name="PROJECT_ID" ColumnName="PROJECT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VACATIONS">
+            <EntityTypeMapping TypeName="MainAdminModel.VACATIONS">
+              <MappingFragment StoreEntitySet="VACATIONS">
+                <ScalarProperty Name="VACATION_ID" ColumnName="VACATION_ID" />
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="REASON" ColumnName="REASON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_COUNTRIES" FunctionName="Хранилище MainAdminModel.DELETE_FROM_COUNTRIES" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_DEPARTMENTS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_DEPARTMENTS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_EMPLOYEES" FunctionName="Хранилище MainAdminModel.DELETE_FROM_EMPLOYEES" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_JOBS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_JOBS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_LOCATIONS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_LOCATIONS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_PARTICIPATION" FunctionName="Хранилище MainAdminModel.DELETE_FROM_PARTICIPATION" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_PROJECTS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_PROJECTS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_TASKS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_TASKS" />
+          <FunctionImportMapping FunctionImportName="DELETE_FROM_VACATIONS" FunctionName="Хранилище MainAdminModel.DELETE_FROM_VACATIONS" />
+          <FunctionImportMapping FunctionImportName="EXPORT_JSON" FunctionName="Хранилище MainAdminModel.EXPORT_JSON" />
+          <FunctionImportMapping FunctionImportName="FIRE_EMPLOYEE" FunctionName="Хранилище MainAdminModel.FIRE_EMPLOYEE" />
+          <FunctionImportMapping FunctionImportName="HIRE_EMPLOYEE" FunctionName="Хранилище MainAdminModel.HIRE_EMPLOYEE" />
+          <FunctionImportMapping FunctionImportName="IMPORT_JSON" FunctionName="Хранилище MainAdminModel.IMPORT_JSON" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_COUNTRIES" FunctionName="Хранилище MainAdminModel.INSERT_INTO_COUNTRIES" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_DEPARTMENTS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_DEPARTMENTS" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_EMPLOYEES" FunctionName="Хранилище MainAdminModel.INSERT_INTO_EMPLOYEES" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_JOBS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_JOBS" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_LOCATIONS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_LOCATIONS" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_PARTICIPATION" FunctionName="Хранилище MainAdminModel.INSERT_INTO_PARTICIPATION" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_PROJECTS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_PROJECTS" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_TASKS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_TASKS" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_VACATIONS" FunctionName="Хранилище MainAdminModel.INSERT_INTO_VACATIONS" />
+          <FunctionImportMapping FunctionImportName="PROMOTE_EMPLOYEE" FunctionName="Хранилище MainAdminModel.PROMOTE_EMPLOYEE" />
+          <FunctionImportMapping FunctionImportName="UPDATE_COUNTRIES" FunctionName="Хранилище MainAdminModel.UPDATE_COUNTRIES" />
+          <FunctionImportMapping FunctionImportName="UPDATE_DEPARTMENTS" FunctionName="Хранилище MainAdminModel.UPDATE_DEPARTMENTS" />
+          <FunctionImportMapping FunctionImportName="UPDATE_EMPLOYEES" FunctionName="Хранилище MainAdminModel.UPDATE_EMPLOYEES" />
+          <FunctionImportMapping FunctionImportName="UPDATE_JOBS" FunctionName="Хранилище MainAdminModel.UPDATE_JOBS" />
+          <FunctionImportMapping FunctionImportName="UPDATE_LOCATIONS" FunctionName="Хранилище MainAdminModel.UPDATE_LOCATIONS" />
+          <FunctionImportMapping FunctionImportName="UPDATE_PARTICIPATION" FunctionName="Хранилище MainAdminModel.UPDATE_PARTICIPATION" />
+          <FunctionImportMapping FunctionImportName="UPDATE_PROJECTS" FunctionName="Хранилище MainAdminModel.UPDATE_PROJECTS" />
+          <FunctionImportMapping FunctionImportName="UPDATE_TASKS" FunctionName="Хранилище MainAdminModel.UPDATE_TASKS" />
+          <FunctionImportMapping FunctionImportName="UPDATE_VACATIONS" FunctionName="Хранилище MainAdminModel.UPDATE_VACATIONS" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
