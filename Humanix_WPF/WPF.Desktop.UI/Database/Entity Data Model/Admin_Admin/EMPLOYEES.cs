@@ -15,7 +15,7 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
     public partial class EMPLOYEES
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EMPLOYEES()
+        public EMPLOYEES() 
         {
             this.PARTICIPATION = new HashSet<PARTICIPATION>();
             this.VACATIONS = new HashSet<VACATIONS>();

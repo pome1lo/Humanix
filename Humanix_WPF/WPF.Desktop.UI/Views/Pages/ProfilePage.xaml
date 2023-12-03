@@ -6,14 +6,25 @@
       xmlns:vm="clr-namespace:WPF.Desktop.UI.ViewModels"
       xmlns:local="clr-namespace:WPF.Desktop.UI.Views.Pages"
       mc:Ignorable="d" 
+      Background="Transparent"
+      Height="396"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProfilePage">
     <Page.DataContext>
         <vm:ProfileViewModel/>
     </Page.DataContext>
-    <StackPanel HorizontalAlignment="Center">
-        <TextBlock FontSize="50" Text="PROFILE"/>
-        <TextBlock FontSize="50" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock FontSize="50" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
-    </StackPanel>
+    <Border CornerRadius="12">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel>
+                <TextBlock FontSize="50" Text="PROFILE"/>
+                <TextBlock FontSize="20" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock FontSize="20" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock FontSize="20" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock FontSize="20" Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel>
+                
+            </StackPanel>
+        </StackPanel>
+    </Border>
 </Page>

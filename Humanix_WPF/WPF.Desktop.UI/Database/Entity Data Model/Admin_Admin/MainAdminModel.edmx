@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище Model" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище Model" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="18.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="COUNTRIES">
           <Key>
             <PropertyRef Name="COUNTRY_ID" />
@@ -317,10 +317,7 @@
           <Parameter Name="P_END_DATE" Type="date" Mode="In" />
           <Parameter Name="P_REASON" Type="varchar2" Mode="In" />
         </Function>
-        <Function Name="LOGIN_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" ReturnType="number">
-          <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
-          <Parameter Name="P_PASSWORD" Type="varchar2" Mode="In" />
-        </Function>
+        
         <Function Name="PROMOTE_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
           <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
           <Parameter Name="P_NEW_JOB_ID" Type="varchar2" Mode="In" />
@@ -437,8 +434,7 @@
             <End Role="VACATIONS" EntitySet="VACATIONS" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -709,36 +705,36 @@
             <End Role="TASKS" EntitySet="TASKS" />
           </AssociationSet>
           <FunctionImport Name="DELETE_FROM_COUNTRIES">
-            <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
+          <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DELETE_FROM_DEPARTMENTS">
-            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
+          <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="DELETE_FROM_EMPLOYEES">
-            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+          <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="DELETE_FROM_JOBS">
-            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
+          <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DELETE_FROM_LOCATIONS">
-            <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
+          <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="DELETE_FROM_PARTICIPATION">
             <Parameter Name="P_EMP_EMAIL" Mode="In" Type="String" />
             <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="DELETE_FROM_PROJECTS">
-            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
+          <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="DELETE_FROM_TASKS">
-            <Parameter Name="P_TASK_ID" Mode="In" Type="Decimal" />
+          <Parameter Name="P_TASK_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="DELETE_FROM_VACATIONS">
-            <Parameter Name="P_VACATION_ID" Mode="In" Type="Decimal" />
+          <Parameter Name="P_VACATION_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="EXPORT_JSON" />
           <FunctionImport Name="FIRE_EMPLOYEE">
-            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
+          <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="HIRE_EMPLOYEE">
             <Parameter Name="P_FIRST_NAME" Mode="In" Type="String" />
@@ -755,7 +751,7 @@
           </FunctionImport>
           <FunctionImport Name="IMPORT_JSON" />
           <FunctionImport Name="INSERT_INTO_COUNTRIES">
-            <Parameter Name="P_COUNTRY_NAME" Mode="In" Type="String" />
+          <Parameter Name="P_COUNTRY_NAME" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_DEPARTMENTS">
             <Parameter Name="P_DEPARTMENT_NAME" Mode="In" Type="String" />
@@ -880,6 +876,10 @@
             <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_REASON" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="LOGIN_EMPLOYEE" IsComposable="true" EntitySet="EMPLOYEES" ReturnType="Collection(Model.EMPLOYEES)">
+            <Parameter Name="P_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="P_PASSWORD" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
       </Schema>

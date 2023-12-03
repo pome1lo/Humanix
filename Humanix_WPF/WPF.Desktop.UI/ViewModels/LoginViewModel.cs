@@ -1,4 +1,5 @@
 ﻿using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Linq;
 using System.Windows.Input;
 using WPF.Desktop.UI.Commands;
@@ -13,7 +14,7 @@ namespace WPF.Desktop.UI.ViewModels
 
         private DelegateCommand<LoginWindow> loginCommand;
 
-        private EMPLOYEES inputEmployee = new EMPLOYEES();
+        private EMPLOYEES InputEmployee { get; set; } = new EMPLOYEES();
 
         #endregion
 
@@ -21,20 +22,20 @@ namespace WPF.Desktop.UI.ViewModels
 
         public string Email
         {
-            get => inputEmployee.EMAIL;
+            get => InputEmployee.EMAIL;
             set
             {
-                inputEmployee.EMAIL = value;
+                InputEmployee.EMAIL = value;
                 OnPropertyChanged(nameof(Email));
             }
         }
 
         public string Password
         {
-            get => inputEmployee.PASSWORD_HASH;
+            get => InputEmployee.PASSWORD_HASH;
             set
             {
-                inputEmployee.PASSWORD_HASH = value;
+                InputEmployee.PASSWORD_HASH = value;
                 OnPropertyChanged(nameof(Password));
             }
         }
@@ -51,17 +52,26 @@ namespace WPF.Desktop.UI.ViewModels
                 {
                     loginCommand = new DelegateCommand<LoginWindow>((LoginWindow view) =>
                     {
-                        base.db = new MainAdminEntity();
+                        base.Db = new MainAdminEntity();
 
                         var sql = "SELECT login_employee(:p_email, :p_password) FROM dual";
-                        var result = db.Database.SqlQuery<int>(sql,
+                        var result = Db.Database.SqlQuery<int>(sql,
                             new OracleParameter("p_email", Email),
                             new OracleParameter("p_password", Password))
                         .SingleOrDefault();
 
 
 
-                        SetCurrentUser(((MainAdminEntity)db).EMPLOYEES.FirstOrDefault(x => x.EMP_ID == 5));
+                        SetCurrentUser(((MainAdminEntity)Db).EMPLOYEES.FirstOrDefault(x => x.EMP_ID == 5));
+                        //SetCurrentUser(new EMPLOYEES() { 
+                        //    FIRST_NAME= "Alexey",
+                        //    LAST_NAME="Puzikov",
+                        //    HIRE_DATE=DateTime.Now,
+                        //    SALARY=3000,
+                        //    PHONE_NUMBER="3758963582459",
+                            
+                        //});
+                        
                         ShowMainWindow();
                         view.Close();
                     });

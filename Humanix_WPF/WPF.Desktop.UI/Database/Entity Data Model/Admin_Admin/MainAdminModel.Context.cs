@@ -640,5 +640,19 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UPDATE_VACATIONS", p_VACATION_IDParameter, p_EMP_EMAILParameter, p_START_DATEParameter, p_END_DATEParameter, p_REASONParameter);
         }
+    
+        [DbFunction("MainAdminEntity", "LOGIN_EMPLOYEE")]
+        public virtual IQueryable<EMPLOYEES> LOGIN_EMPLOYEE(string p_EMAIL, string p_PASSWORD)
+        {
+            var p_EMAILParameter = p_EMAIL != null ?
+                new ObjectParameter("P_EMAIL", p_EMAIL) :
+                new ObjectParameter("P_EMAIL", typeof(string));
+    
+            var p_PASSWORDParameter = p_PASSWORD != null ?
+                new ObjectParameter("P_PASSWORD", p_PASSWORD) :
+                new ObjectParameter("P_PASSWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EMPLOYEES>("[MainAdminEntity].[LOGIN_EMPLOYEE](@P_EMAIL, @P_PASSWORD)", p_EMAILParameter, p_PASSWORDParameter);
+        }
     }
 }

@@ -24,5 +24,18 @@ namespace WPF.Desktop.UI.Views
         {
             InitializeComponent();
         }
+
+        private void RollUp(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void GridMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
     }
 }

@@ -12,16 +12,11 @@ namespace WPF.Desktop.UI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         protected static EMPLOYEES CurrentUser { get; private set; }
-        protected DbContext db { get; set; }
+        protected DbContext Db { get; set; }
 
         private static Frame MainFrame = new Frame();
 

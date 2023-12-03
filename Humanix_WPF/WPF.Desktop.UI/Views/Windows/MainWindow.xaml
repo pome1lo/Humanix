@@ -4,14 +4,134 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Desktop.UI"
+        xmlns:vm="clr-namespace:WPF.Desktop.UI.ViewModels"
+        xmlns:control="clr-namespace:Wpf.CustomControlLibrary.Controls;assembly=Wpf.CustomControlLibrary"
         mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        Style="{StaticResource MaterialDesignWindow}"
+        MouseDown="GridMouseDown"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBlock HorizontalAlignment="Center" FontSize="50">MAIN</TextBlock>
-        <DockPanel VerticalAlignment="Top">
-            <Frame NavigationUIVisibility="Hidden" x:Name="MainFrame"/>
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    <Border CornerRadius="12">
+        <Border CornerRadius="10" BorderThickness="2" Background="#262626">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#363636" Offset="0"/>
+                    <GradientStop Color="#9400D3" Offset="0.75"/>
+                    <GradientStop Color="#4B0082" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <DockPanel VerticalAlignment="Top">
+                <Grid Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Column="0">
+                        <Image Source="/Resources/Images/Logo_small.png" Width="50" Margin="0 20 0 0"/>
+                        <control:HeaderButton Command="{Binding OpenProfilePage}" ImgSource="/Resources/Images/Profile.png"/>
+                        <control:HeaderButton Command="{Binding OpenDepartmentsPage}" ImgSource="/Resources/Images/Departments.png"/>
+                        <control:HeaderButton Command="{Binding OpenParticipationPage}" ImgSource="/Resources/Images/participation.png"/>
+                        <control:HeaderButton Command="{Binding OpenVacationsPage}" ImgSource="/Resources/Images/vacations.png"/>
+                        <control:HeaderButton Command="{Binding OpenAdminPage}" ImgSource="/Resources/Images/Admin.png" Margin="0 60 0 0"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Vertical" Grid.Column="1">
+                        <DockPanel Height="50">
 
-            <!--Content="{Binding Path=DisplayPage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"-->
-        </DockPanel>
-    </Grid>
+                            <Grid HorizontalAlignment="Right" Width="100" RenderTransformOrigin="0.5,0.5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="button2" Click="RollUp"        
+                Command="{Binding ExitCommand}"
+                BorderThickness="0" 
+                Content="―"
+                FontSize="10"
+                FontWeight="Bold"
+                FontFamily="Montserrat"
+                Cursor="Hand"
+                Background="Transparent"
+                HorizontalAlignment="Right" Width="25" RenderTransformOrigin="0.5,0.5">
+                                    <Button.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Button.RenderTransform>
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Foreground" Value="DarkGray"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Width="18" Height="18"
+                CornerRadius="9"
+                Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center" 
+                                HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <Button x:Name="button3" Command="{Binding ExitCommand}"                          
+                                    BorderThickness="0"
+                                    Content="✕"
+                                    Foreground="White"
+                                    FontSize="12"
+                                    FontFamily="Montserrat"
+                                    Cursor="Hand"
+                                    Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+                                    <Button.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Button.RenderTransform>
+
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="DarkRed"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="Red"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Width="18" Height="18" CornerRadius="9" Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </DockPanel>
+                        <DockPanel VerticalAlignment="Top">
+                            <Frame NavigationUIVisibility="Hidden" x:Name="MainFrame"/>
+                        </DockPanel>
+                    </StackPanel>
+                </Grid>
+            </DockPanel>
+        </Border>
+    </Border>
 </Window>

@@ -1,0 +1,25 @@
+﻿<Page x:Class="WPF.Desktop.UI.Views.Pages.VacationsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:WPF.Desktop.UI.ViewModels" 
+      xmlns:local="clr-namespace:WPF.Desktop.UI.Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      
+      Title="VacationsPage">
+    <Page.DataContext>
+        <vm:VacationsViewModel/>
+    </Page.DataContext>
+    <Grid>
+        <DataGrid ItemsSource="{Binding Vacations, UpdateSourceTrigger=PropertyChanged}" Height="395" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="№" Binding="{Binding Path=VACATION_ID}"/>
+                <DataGridTextColumn Header="Start date" Binding="{Binding Path=START_DATE}"/>
+                <DataGridTextColumn Header="End date" Binding="{Binding Path=END_DATE}"/>
+                <DataGridTextColumn Header="Reason" Binding="{Binding Path=REASON}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

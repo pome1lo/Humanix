@@ -23,5 +23,18 @@ namespace WPF.Desktop.UI.Views
         {
             InitializeComponent();
         }
+
+        private void RollUp(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void LogViewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
     }
 }
