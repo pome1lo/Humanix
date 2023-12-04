@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin;
 using WPF.Desktop.UI.Views;
 using WPF.Desktop.UI.Views.Pages;
+using WPF.Desktop.UI.Views.Windows;
 
 namespace WPF.Desktop.UI.ViewModels
 {
@@ -21,20 +22,23 @@ namespace WPF.Desktop.UI.ViewModels
         private static Frame MainFrame = new Frame();
 
 
-        protected void SetCurrentUser(EMPLOYEES empl)
+
+        protected static void ShowEmployeesDetails(EMPLOYEES emp)
         {
-            CurrentUser = empl;
+            var view = new EmployeesDetails();
+            var viewModel = new EmployeesDetailsViewModel(emp, view);
+            view.DataContext = viewModel;
+            view.ShowDialog();
         }
 
         protected static void ShowMainWindow()
         {
-
-
             MainWindow view = new MainWindow();
             MainFrame = view.MainFrame;
             ShowPage(new ProfilePage());
             view.Show();
         }
+        protected void SetCurrentUser(EMPLOYEES empl) => CurrentUser = empl;
         protected static void ShowPage(Page page) => MainFrame.Content = page;
     }
 }

@@ -10,6 +10,7 @@ namespace WPF.Desktop.UI.ViewModels
     {
         #region Fields
 
+        private DelegateCommand exitCommand;
         private DelegateCommand openAdminPage;
         private DelegateCommand openProfilePage;
         private DelegateCommand openVacationsPage;
@@ -92,6 +93,20 @@ namespace WPF.Desktop.UI.ViewModels
                     });
                 }
                 return openAdminPage;
+            }
+        }
+
+        public ICommand ExitCommand
+        {
+            get
+            {
+                if (exitCommand == null)
+                {
+                    exitCommand = new DelegateCommand(
+                        System.Windows.Application.Current.Shutdown
+                    );
+                }
+                return exitCommand;
             }
         }
 

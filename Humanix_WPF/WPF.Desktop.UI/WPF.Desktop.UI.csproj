@@ -133,6 +133,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\EmployeesDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -220,6 +224,7 @@
       <DependentUpon>UserModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\EmployeesDetailsViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\DepartmentsViewModel.cs" />
@@ -241,6 +246,9 @@
     </Compile>
     <Compile Include="Views\Pages\VacationsPage.xaml.cs">
       <DependentUpon>VacationsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\EmployeesDetails.xaml.cs">
+      <DependentUpon>EmployeesDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -306,6 +314,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.Context.tt">
@@ -355,10 +364,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CustomControls\CustomControls.csproj">
-      <Project>{09a59390-f5ad-41ba-ad7e-04c9a1ea7481}</Project>
-      <Name>CustomControls</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Wpf.CustomControlLibrary\Wpf.CustomControlLibrary.csproj">
       <Project>{28e8c5ed-6299-42ea-b786-c91f05439f5d}</Project>
       <Name>Wpf.CustomControlLibrary</Name>

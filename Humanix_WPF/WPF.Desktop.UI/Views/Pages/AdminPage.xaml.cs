@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin;
 
 namespace WPF.Desktop.UI.Views.Pages
 {
@@ -23,6 +24,14 @@ namespace WPF.Desktop.UI.Views.Pages
         public AdminPage()
         {
             InitializeComponent();
+        }
+
+        private void TabControlSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EmployeesTabItem.IsSelected)
+            {
+                
+            }
         }
     }
 }

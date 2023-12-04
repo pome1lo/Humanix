@@ -1,5 +1,4 @@
 ﻿using Oracle.ManagedDataAccess.Client;
-using System;
 using System.Linq;
 using System.Windows.Input;
 using WPF.Desktop.UI.Commands;
@@ -13,6 +12,7 @@ namespace WPF.Desktop.UI.ViewModels
         #region Fields
 
         private DelegateCommand<LoginWindow> loginCommand;
+        private DelegateCommand exitCommand;
 
         private EMPLOYEES InputEmployee { get; set; } = new EMPLOYEES();
 
@@ -69,14 +69,28 @@ namespace WPF.Desktop.UI.ViewModels
                         //    HIRE_DATE=DateTime.Now,
                         //    SALARY=3000,
                         //    PHONE_NUMBER="3758963582459",
-                            
+
                         //});
-                        
+
                         ShowMainWindow();
                         view.Close();
                     });
                 }
                 return loginCommand;
+            }
+        }
+
+        public ICommand ExitCommand
+        {
+            get
+            {
+                if (exitCommand == null)
+                {
+                    exitCommand = new DelegateCommand(
+                        System.Windows.Application.Current.Shutdown
+                        );
+                }
+                return exitCommand;
             }
         }
 
