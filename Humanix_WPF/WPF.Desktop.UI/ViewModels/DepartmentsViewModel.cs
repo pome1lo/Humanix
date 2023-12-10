@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin;
 
 namespace WPF.Desktop.UI.ViewModels
@@ -7,12 +8,12 @@ namespace WPF.Desktop.UI.ViewModels
     {
         #region Property
 
-        public ICollection<EMPLOYEES> Departments
+        public IEnumerable<EMPLOYEES> Departments
         {
-            get => CurrentUser.DEPARTMENTS.EMPLOYEES;
+            get => CurrentUser.DEPARTMENTS.EMPLOYEES.ToList();
             set
             {
-                CurrentUser.DEPARTMENTS.EMPLOYEES = value;
+                CurrentUser.DEPARTMENTS.EMPLOYEES = value.ToList();
                 OnPropertyChanged(nameof(Departments));
             }
         }

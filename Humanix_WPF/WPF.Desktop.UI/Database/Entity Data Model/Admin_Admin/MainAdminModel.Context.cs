@@ -136,7 +136,7 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("FIRE_EMPLOYEE", p_EMP_IDParameter);
         }
     
-        public virtual int HIRE_EMPLOYEE(string p_FIRST_NAME, string p_LAST_NAME, string p_EMAIL, string p_PHONE_NUMBER, Nullable<System.DateTime> p_HIRE_DATE, string p_JOB_ID, Nullable<decimal> p_SALARY, Nullable<decimal> p_COMMISSION_PCT, Nullable<decimal> p_MANAGER_ID, Nullable<decimal> p_DEPARTMENT_ID, string p_PASSWORD_HASH)
+        public virtual int HIRE_EMPLOYEE(string p_FIRST_NAME, string p_LAST_NAME, string p_EMAIL, string p_PHONE_NUMBER, string p_JOB_ID, Nullable<decimal> p_SALARY, Nullable<decimal> p_COMMISSION_PCT, Nullable<decimal> p_MANAGER_ID, Nullable<decimal> p_DEPARTMENT_ID, string p_PASSWORD_HASH)
         {
             var p_FIRST_NAMEParameter = p_FIRST_NAME != null ?
                 new ObjectParameter("P_FIRST_NAME", p_FIRST_NAME) :
@@ -153,10 +153,6 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
             var p_PHONE_NUMBERParameter = p_PHONE_NUMBER != null ?
                 new ObjectParameter("P_PHONE_NUMBER", p_PHONE_NUMBER) :
                 new ObjectParameter("P_PHONE_NUMBER", typeof(string));
-    
-            var p_HIRE_DATEParameter = p_HIRE_DATE.HasValue ?
-                new ObjectParameter("P_HIRE_DATE", p_HIRE_DATE) :
-                new ObjectParameter("P_HIRE_DATE", typeof(System.DateTime));
     
             var p_JOB_IDParameter = p_JOB_ID != null ?
                 new ObjectParameter("P_JOB_ID", p_JOB_ID) :
@@ -182,7 +178,7 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
                 new ObjectParameter("P_PASSWORD_HASH", p_PASSWORD_HASH) :
                 new ObjectParameter("P_PASSWORD_HASH", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HIRE_EMPLOYEE", p_FIRST_NAMEParameter, p_LAST_NAMEParameter, p_EMAILParameter, p_PHONE_NUMBERParameter, p_HIRE_DATEParameter, p_JOB_IDParameter, p_SALARYParameter, p_COMMISSION_PCTParameter, p_MANAGER_IDParameter, p_DEPARTMENT_IDParameter, p_PASSWORD_HASHParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HIRE_EMPLOYEE", p_FIRST_NAMEParameter, p_LAST_NAMEParameter, p_EMAILParameter, p_PHONE_NUMBERParameter, p_JOB_IDParameter, p_SALARYParameter, p_COMMISSION_PCTParameter, p_MANAGER_IDParameter, p_DEPARTMENT_IDParameter, p_PASSWORD_HASHParameter);
         }
     
         public virtual int IMPORT_JSON()
@@ -216,7 +212,7 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_INTO_DEPARTMENTS", p_DEPARTMENT_NAMEParameter, p_MANAGER_IDParameter, p_LOCATION_IDParameter);
         }
     
-        public virtual int INSERT_INTO_EMPLOYEES(string p_FIRST_NAME, string p_LAST_NAME, string p_EMAIL, string p_PHONE_NUMBER, Nullable<System.DateTime> p_HIRE_DATE, string p_JOB_ID, Nullable<decimal> p_SALARY, Nullable<decimal> p_COMMISSION_PCT, Nullable<decimal> p_MANAGER_ID, Nullable<decimal> p_DEPARTMENT_ID, string p_PASSWORD_HASH)
+        public virtual int INSERT_INTO_EMPLOYEES(string p_FIRST_NAME, string p_LAST_NAME, string p_EMAIL, string p_PHONE_NUMBER, string p_JOB_ID, Nullable<decimal> p_SALARY, Nullable<decimal> p_COMMISSION_PCT, Nullable<decimal> p_MANAGER_ID, Nullable<decimal> p_DEPARTMENT_ID, string p_PASSWORD_HASH)
         {
             var p_FIRST_NAMEParameter = p_FIRST_NAME != null ?
                 new ObjectParameter("P_FIRST_NAME", p_FIRST_NAME) :
@@ -233,10 +229,6 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
             var p_PHONE_NUMBERParameter = p_PHONE_NUMBER != null ?
                 new ObjectParameter("P_PHONE_NUMBER", p_PHONE_NUMBER) :
                 new ObjectParameter("P_PHONE_NUMBER", typeof(string));
-    
-            var p_HIRE_DATEParameter = p_HIRE_DATE.HasValue ?
-                new ObjectParameter("P_HIRE_DATE", p_HIRE_DATE) :
-                new ObjectParameter("P_HIRE_DATE", typeof(System.DateTime));
     
             var p_JOB_IDParameter = p_JOB_ID != null ?
                 new ObjectParameter("P_JOB_ID", p_JOB_ID) :
@@ -262,7 +254,7 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
                 new ObjectParameter("P_PASSWORD_HASH", p_PASSWORD_HASH) :
                 new ObjectParameter("P_PASSWORD_HASH", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_INTO_EMPLOYEES", p_FIRST_NAMEParameter, p_LAST_NAMEParameter, p_EMAILParameter, p_PHONE_NUMBERParameter, p_HIRE_DATEParameter, p_JOB_IDParameter, p_SALARYParameter, p_COMMISSION_PCTParameter, p_MANAGER_IDParameter, p_DEPARTMENT_IDParameter, p_PASSWORD_HASHParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_INTO_EMPLOYEES", p_FIRST_NAMEParameter, p_LAST_NAMEParameter, p_EMAILParameter, p_PHONE_NUMBERParameter, p_JOB_IDParameter, p_SALARYParameter, p_COMMISSION_PCTParameter, p_MANAGER_IDParameter, p_DEPARTMENT_IDParameter, p_PASSWORD_HASHParameter);
         }
     
         public virtual int INSERT_INTO_JOBS(string p_JOB_TITLE, Nullable<decimal> p_MIN_SALARY, Nullable<decimal> p_MAX_SALARY)
@@ -307,8 +299,12 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_INTO_LOCATIONS", p_STREET_ADDRESSParameter, p_POSTAL_CODEParameter, p_CITYParameter, p_STATE_PROVINCEParameter, p_COUNTRY_IDParameter);
         }
     
-        public virtual int INSERT_INTO_PARTICIPATION(Nullable<decimal> p_PROJECT_ID, string p_ROLE, Nullable<decimal> p_HOURS)
+        public virtual int INSERT_INTO_PARTICIPATION(string p_EMP_EMAIL, Nullable<decimal> p_PROJECT_ID, string p_ROLE, Nullable<decimal> p_HOURS)
         {
+            var p_EMP_EMAILParameter = p_EMP_EMAIL != null ?
+                new ObjectParameter("P_EMP_EMAIL", p_EMP_EMAIL) :
+                new ObjectParameter("P_EMP_EMAIL", typeof(string));
+    
             var p_PROJECT_IDParameter = p_PROJECT_ID.HasValue ?
                 new ObjectParameter("P_PROJECT_ID", p_PROJECT_ID) :
                 new ObjectParameter("P_PROJECT_ID", typeof(decimal));
@@ -321,7 +317,7 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
                 new ObjectParameter("P_HOURS", p_HOURS) :
                 new ObjectParameter("P_HOURS", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_INTO_PARTICIPATION", p_PROJECT_IDParameter, p_ROLEParameter, p_HOURSParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_INTO_PARTICIPATION", p_EMP_EMAILParameter, p_PROJECT_IDParameter, p_ROLEParameter, p_HOURSParameter);
         }
     
         public virtual int INSERT_INTO_PROJECTS(string p_PROJECT_NAME, Nullable<System.DateTime> p_START_DATE, Nullable<System.DateTime> p_END_DATE, Nullable<decimal> p_BUDGET, Nullable<decimal> p_DEPARTMENT_ID)
@@ -370,12 +366,8 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_INTO_TASKS", p_TASK_NAMEParameter, p_DESCRIPTIONParameter, p_DURATIONParameter, p_PROJECT_IDParameter);
         }
     
-        public virtual int INSERT_INTO_VACATIONS(Nullable<decimal> p_VACATION_ID, string p_EMP_EMAIL, Nullable<System.DateTime> p_START_DATE, Nullable<System.DateTime> p_END_DATE, string p_REASON)
+        public virtual int INSERT_INTO_VACATIONS(string p_EMP_EMAIL, Nullable<System.DateTime> p_START_DATE, Nullable<System.DateTime> p_END_DATE, string p_REASON)
         {
-            var p_VACATION_IDParameter = p_VACATION_ID.HasValue ?
-                new ObjectParameter("P_VACATION_ID", p_VACATION_ID) :
-                new ObjectParameter("P_VACATION_ID", typeof(decimal));
-    
             var p_EMP_EMAILParameter = p_EMP_EMAIL != null ?
                 new ObjectParameter("P_EMP_EMAIL", p_EMP_EMAIL) :
                 new ObjectParameter("P_EMP_EMAIL", typeof(string));
@@ -392,7 +384,7 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
                 new ObjectParameter("P_REASON", p_REASON) :
                 new ObjectParameter("P_REASON", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_INTO_VACATIONS", p_VACATION_IDParameter, p_EMP_EMAILParameter, p_START_DATEParameter, p_END_DATEParameter, p_REASONParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_INTO_VACATIONS", p_EMP_EMAILParameter, p_START_DATEParameter, p_END_DATEParameter, p_REASONParameter);
         }
     
         public virtual int PROMOTE_EMPLOYEE(Nullable<decimal> p_EMP_ID, string p_NEW_JOB_ID)
@@ -442,7 +434,7 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UPDATE_DEPARTMENTS", p_DEPARTMENT_IDParameter, p_DEPARTMENT_NAMEParameter, p_MANAGER_IDParameter, p_LOCATION_IDParameter);
         }
     
-        public virtual int UPDATE_EMPLOYEES(Nullable<decimal> p_EMP_ID, string p_FIRST_NAME, string p_LAST_NAME, string p_EMAIL, string p_PHONE_NUMBER, Nullable<System.DateTime> p_HIRE_DATE, string p_JOB_ID, Nullable<decimal> p_SALARY, Nullable<decimal> p_COMMISSION_PCT, Nullable<decimal> p_MANAGER_ID, Nullable<decimal> p_DEPARTMENT_ID)
+        public virtual int UPDATE_EMPLOYEES(Nullable<decimal> p_EMP_ID, string p_FIRST_NAME, string p_LAST_NAME, string p_EMAIL, string p_PHONE_NUMBER, string p_JOB_ID, Nullable<decimal> p_SALARY, Nullable<decimal> p_COMMISSION_PCT, Nullable<decimal> p_MANAGER_ID, Nullable<decimal> p_DEPARTMENT_ID)
         {
             var p_EMP_IDParameter = p_EMP_ID.HasValue ?
                 new ObjectParameter("P_EMP_ID", p_EMP_ID) :
@@ -464,10 +456,6 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
                 new ObjectParameter("P_PHONE_NUMBER", p_PHONE_NUMBER) :
                 new ObjectParameter("P_PHONE_NUMBER", typeof(string));
     
-            var p_HIRE_DATEParameter = p_HIRE_DATE.HasValue ?
-                new ObjectParameter("P_HIRE_DATE", p_HIRE_DATE) :
-                new ObjectParameter("P_HIRE_DATE", typeof(System.DateTime));
-    
             var p_JOB_IDParameter = p_JOB_ID != null ?
                 new ObjectParameter("P_JOB_ID", p_JOB_ID) :
                 new ObjectParameter("P_JOB_ID", typeof(string));
@@ -488,7 +476,7 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
                 new ObjectParameter("P_DEPARTMENT_ID", p_DEPARTMENT_ID) :
                 new ObjectParameter("P_DEPARTMENT_ID", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UPDATE_EMPLOYEES", p_EMP_IDParameter, p_FIRST_NAMEParameter, p_LAST_NAMEParameter, p_EMAILParameter, p_PHONE_NUMBERParameter, p_HIRE_DATEParameter, p_JOB_IDParameter, p_SALARYParameter, p_COMMISSION_PCTParameter, p_MANAGER_IDParameter, p_DEPARTMENT_IDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UPDATE_EMPLOYEES", p_EMP_IDParameter, p_FIRST_NAMEParameter, p_LAST_NAMEParameter, p_EMAILParameter, p_PHONE_NUMBERParameter, p_JOB_IDParameter, p_SALARYParameter, p_COMMISSION_PCTParameter, p_MANAGER_IDParameter, p_DEPARTMENT_IDParameter);
         }
     
         public virtual int UPDATE_JOBS(string p_JOB_ID, string p_JOB_TITLE, Nullable<decimal> p_MIN_SALARY, Nullable<decimal> p_MAX_SALARY)

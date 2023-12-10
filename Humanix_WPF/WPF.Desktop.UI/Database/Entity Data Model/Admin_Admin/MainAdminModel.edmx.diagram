@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2b280eb88447482fbbe0deaaad7f2326" Name="Diagram1" ShowGrid="true" DisplayType="false" ZoomLevel="61">
-        <EntityTypeShape EntityType="Model.COUNTRIES" Width="2.125" PointX="0.5" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DEPARTMENTS" Width="2.125" PointX="3.875" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EMPLOYEES" Width="2.125" PointX="7" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.JOBS" Width="2.125" PointX="2.375" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.LOCATIONS" Width="2.125" PointX="3.375" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PARTICIPATION" Width="2.125" PointX="12.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PROJECTS" Width="2.125" PointX="7.25" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.TASKS" Width="2.125" PointX="10.125" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.VACATIONS" Width="2.125" PointX="9.875" PointY="3.625" IsExpanded="true" />
+      <Diagram DiagramId="2b280eb88447482fbbe0deaaad7f2326" Name="Diagram1" ShowGrid="true" DisplayType="false" ZoomLevel="127">
+        <EntityTypeShape EntityType="Model.COUNTRIES" Width="2.125" PointX="0.5" PointY="4.125" IsExpanded="true" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Model.DEPARTMENTS" Width="2.125" PointX="3.875" PointY="3.375" IsExpanded="true" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Model.EMPLOYEES" Width="2.125" PointX="6.625" PointY="2.625" IsExpanded="true" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Model.JOBS" Width="2.125" PointX="2.375" PointY="0.625" IsExpanded="true" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Model.LOCATIONS" Width="2.125" PointX="3.375" PointY="7.625" IsExpanded="true" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Model.PARTICIPATION" Width="2.125" PointX="12.75" PointY="5" IsExpanded="true" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Model.PROJECTS" Width="2.125" PointX="7.25" PointY="8.375" IsExpanded="true" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Model.TASKS" Width="2.125" PointX="10.125" PointY="8.375" IsExpanded="true" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Model.VACATIONS" Width="2.125" PointX="9.875" PointY="3.625" IsExpanded="true" FillColor="0, 192, 0" />
         <AssociationConnector Association="Model.FK_LOCATIONS_COUNTRIES" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_DEPARTMENTS_LOCATIONS" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EMPLOYEES_DEPARTMENTS" ManuallyRouted="false" />

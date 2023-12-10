@@ -15,7 +15,7 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
     public partial class EMPLOYEES
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EMPLOYEES() 
+        public EMPLOYEES()
         {
             this.PARTICIPATION = new HashSet<PARTICIPATION>();
             this.VACATIONS = new HashSet<VACATIONS>();
@@ -26,7 +26,6 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
         public string LAST_NAME { get; set; }
         public string EMAIL { get; set; }
         public string PHONE_NUMBER { get; set; }
-        public System.DateTime HIRE_DATE { get; set; }
         public string JOB_ID { get; set; }
         public Nullable<decimal> SALARY { get; set; }
         public Nullable<decimal> COMMISSION_PCT { get; set; }

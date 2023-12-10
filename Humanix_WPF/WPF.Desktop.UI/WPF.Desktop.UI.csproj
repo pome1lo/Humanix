@@ -113,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Resources\Styles\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\AdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -347,6 +351,9 @@
       <DependentUpon>UserModel.edmx</DependentUpon>
       <LastGenOutput>UserModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Images\ProfileDefault.jpg" />
+    <Resource Include="Resources\Images\key-icon.png" />
+    <Resource Include="Resources\Images\user-icon.png" />
     <Resource Include="Resources\Images\Admin.png" />
     <Resource Include="Resources\Images\Profile.png" />
     <Resource Include="Resources\Images\departments.png" />
@@ -367,6 +374,10 @@
     <ProjectReference Include="..\Wpf.CustomControlLibrary\Wpf.CustomControlLibrary.csproj">
       <Project>{28e8c5ed-6299-42ea-b786-c91f05439f5d}</Project>
       <Name>Wpf.CustomControlLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wpf.DataValidationLibrary\Wpf.DataValidationLibrary.csproj">
+      <Project>{65EB480B-C550-425E-8CA6-6CF527CEB667}</Project>
+      <Name>Wpf.DataValidationLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

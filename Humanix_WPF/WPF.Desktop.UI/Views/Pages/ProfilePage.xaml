@@ -14,16 +14,40 @@
         <vm:ProfileViewModel/>
     </Page.DataContext>
     <Border CornerRadius="12">
-        <StackPanel Orientation="Horizontal">
-            <StackPanel>
-                <TextBlock FontSize="50" Text="PROFILE"/>
-                <TextBlock FontSize="20" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock FontSize="20" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock FontSize="20" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock FontSize="20" Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 -20 0 0">
+            <StackPanel Orientation="Horizontal" Height="100" HorizontalAlignment="Center">
+                <Border Width="50" Height="50">
+                    <Border.Background>
+                        <ImageBrush ImageSource="/Resources/Images/Logo_icon.png"/>
+                    </Border.Background>
+                </Border>
+                <TextBlock Foreground="White" Margin="10 0 0 0" FontSize="25" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
             </StackPanel>
-            <StackPanel>
-                
+            <StackPanel Width="500" Margin="0 -15 0 0">
+
+                <TextBlock Text="First name" Margin="5 0 0 0" Foreground="White" FontWeight="Medium"/>
+                <TextBox Foreground="White" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" 
+                            Style="{DynamicResource MaterialDesignOutlinedTextBox}" Margin="5"/>
+                <TextBlock Text="{Binding ErrorFirstNameMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+
+                <TextBlock Text="Last name" Margin="5 0 0 0" Foreground="White" FontWeight="Medium"/>
+                <TextBox Foreground="White" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{DynamicResource MaterialDesignOutlinedTextBox}" Margin="5"/>
+                <TextBlock Text="{Binding ErrorLastNameMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+
+                <!--<TextBlock Text="Phone" Margin="5 0 0 0" Foreground="White" FontWeight="Medium"/>
+                <TextBox Foreground="White" Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{DynamicResource MaterialDesignOutlinedTextBox}" Margin="5"/>
+                <TextBlock Text="{Binding ErrorPhoneMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>-->
+
+                <TextBlock Text="Email" Margin="5 0 0 0" Foreground="White" FontWeight="Medium"/>
+                <TextBox Foreground="White" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{DynamicResource MaterialDesignOutlinedTextBox}" Margin="5"/>
+                <TextBlock Text="{Binding ErrorEmailMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+
+                <Button Command="{Binding SaveChangesCommand}"
+                    Content="Save changes" Margin="5 10 5 25"/>
+
             </StackPanel>
         </StackPanel>
     </Border>

@@ -12,6 +12,9 @@
         <vm:ParticipationViewModel/>
     </Page.DataContext>
     <Grid>
+        <DataGrid ItemsSource="{Binding test}">
+            
+        </DataGrid>
         <DataGrid ItemsSource="{Binding Participations, UpdateSourceTrigger=PropertyChanged}" Height="395" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Projct name" Binding="{Binding Path=PROJECTS.PROJECT_NAME}"/>

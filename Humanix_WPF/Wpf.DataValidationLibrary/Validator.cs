@@ -24,7 +24,10 @@ namespace Wpf.DataValidationLibrary
             BankPeriod,
             BankNumber,
             Image,
-            Date
+            Date,
+            Commission,
+            Salary,
+            Numbers
         }
 
         public bool Verify(ValidationBased validationBased, string value, string property)
@@ -74,12 +77,30 @@ namespace Wpf.DataValidationLibrary
                     regex = @"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d\d$";
                     errorMessage = "Incorrect date";
                     break;
+
+                case ValidationBased.Salary:
+                    regex = @"^\d{1,6}(\.\d{1,2})?$";
+                    errorMessage = "Incorrect date";
+                    break;
+                case ValidationBased.Commission:
+                    regex = @"^\d{2}$";
+                    errorMessage = "Incorrect date";
+                    break;
+                case ValidationBased.Numbers:
+                    regex = @"^\d{12}$";
+                    errorMessage = "Incorrect date";
+                    break;
             }
             return Validate(regex, errorMessage, value, property);
         }
 
         public bool Validate(string regex, string errorMessage, string value, string property)
         {
+            if (String.IsNullOrEmpty(value))
+            {
+                SetPropertyValue(Instance, property, errorMessage);
+                return false;
+            }
             Regex reg = new Regex(regex);
             if (!reg.IsMatch(value))
             {

@@ -21,8 +21,8 @@
                 </TabItem.Header>
                 <TabItem.Content>
                     <StackPanel>
-                        <DataGrid ItemsSource="{Binding EMPLOYEES, UpdateSourceTrigger=PropertyChanged}" 
-                                  SelectedItem="{Binding SelectedEmployee, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="350"/>
+                        <DataGrid ItemsSource="{Binding EMPLOYEES, UpdateSourceTrigger=PropertyChanged}" Height="350"
+                                  CurrentItem="{Binding SelectedEmployee, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </StackPanel>
                 </TabItem.Content>
             </TabItem>

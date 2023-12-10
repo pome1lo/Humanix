@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using WPF.Desktop.UI.Commands;
 using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin;
 using WPF.Desktop.UI.Views;
@@ -8,6 +9,18 @@ namespace WPF.Desktop.UI.ViewModels
 {
     internal class MainViewModel : ViewModelBase
     {
+        #region Constructor
+
+        public MainViewModel(bool isCurrentUserAdmin)
+        {
+            if (isCurrentUserAdmin)
+            {
+                visibilityAdminButton = Visibility.Visible;
+            }
+        }
+
+        #endregion
+
         #region Fields
 
         private DelegateCommand exitCommand;
@@ -16,6 +29,22 @@ namespace WPF.Desktop.UI.ViewModels
         private DelegateCommand openVacationsPage;
         private DelegateCommand openDepartmentsPage;
         private DelegateCommand openParticipationPage;
+
+        private Visibility visibilityAdminButton = Visibility.Collapsed;
+
+        #endregion
+
+        #region Property
+
+        public Visibility VisibilityAdminButton
+        {
+            get => visibilityAdminButton;
+            set
+            {
+                visibilityAdminButton = value;
+                OnPropertyChanged(nameof(VisibilityAdminButton));
+            }
+        }
 
         #endregion
 

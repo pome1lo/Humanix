@@ -14,10 +14,7 @@
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource MaterialDesignWindow}"
         MouseDown="GridMouseDown"
-        Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <vm:MainViewModel/>
-    </Window.DataContext>
+        Title="MainWindow" Height="450" Width="800"> 
     <Border CornerRadius="12">
         <Border CornerRadius="10" BorderThickness="2" Background="#262626">
             <Border.BorderBrush>
@@ -39,7 +36,9 @@
                         <control:HeaderButton Command="{Binding OpenDepartmentsPage}" ImgSource="/Resources/Images/Departments.png"/>
                         <control:HeaderButton Command="{Binding OpenParticipationPage}" ImgSource="/Resources/Images/participation.png"/>
                         <control:HeaderButton Command="{Binding OpenVacationsPage}" ImgSource="/Resources/Images/vacations.png"/>
-                        <control:HeaderButton Command="{Binding OpenAdminPage}" ImgSource="/Resources/Images/Admin.png" Margin="0 60 0 0"/>
+                        <control:HeaderButton Command="{Binding OpenAdminPage}"
+                                              Visibility="{Binding VisibilityAdminButton}"
+                                              ImgSource="/Resources/Images/Admin.png" Margin="0 60 0 0"/>
                     </StackPanel>
                     <StackPanel  Orientation="Vertical" Grid.Column="1">
                         <DockPanel Height="50">

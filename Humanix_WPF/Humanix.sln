@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Desktop.UI", "WPF.Deskt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.CustomControlLibrary", "Wpf.CustomControlLibrary\Wpf.CustomControlLibrary.csproj", "{28E8C5ED-6299-42EA-B786-C91F05439F5D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.DataValidationLibrary", "Wpf.DataValidationLibrary\Wpf.DataValidationLibrary.csproj", "{65EB480B-C550-425E-8CA6-6CF527CEB667}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{28E8C5ED-6299-42EA-B786-C91F05439F5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28E8C5ED-6299-42EA-B786-C91F05439F5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28E8C5ED-6299-42EA-B786-C91F05439F5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65EB480B-C550-425E-8CA6-6CF527CEB667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65EB480B-C550-425E-8CA6-6CF527CEB667}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65EB480B-C550-425E-8CA6-6CF527CEB667}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65EB480B-C550-425E-8CA6-6CF527CEB667}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

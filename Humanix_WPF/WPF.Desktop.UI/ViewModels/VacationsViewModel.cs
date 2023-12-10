@@ -5,7 +5,7 @@ namespace WPF.Desktop.UI.ViewModels
 {
     internal class VacationsViewModel : ViewModelBase
     {
-        #region Property
+        #region Property 
 
         public ICollection<VACATIONS> Vacations
         {

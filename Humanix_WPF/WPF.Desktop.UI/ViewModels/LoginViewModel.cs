@@ -1,8 +1,10 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using WPF.Desktop.UI.Commands;
 using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin;
+using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_User;
 using WPF.Desktop.UI.Views;
 
 namespace WPF.Desktop.UI.ViewModels
@@ -14,6 +16,8 @@ namespace WPF.Desktop.UI.ViewModels
         private DelegateCommand<LoginWindow> loginCommand;
         private DelegateCommand exitCommand;
 
+        private string errorPasswordMessage = string.Empty;
+        private string errorEmailMessage = string.Empty;
         private EMPLOYEES InputEmployee { get; set; } = new EMPLOYEES();
 
         #endregion
@@ -40,6 +44,30 @@ namespace WPF.Desktop.UI.ViewModels
             }
         }
 
+        #region Errors
+
+        public string ErrorEmailMessage
+        {
+            get => errorEmailMessage;
+            set
+            {
+                errorEmailMessage = value;
+                OnPropertyChanged(nameof(ErrorEmailMessage));
+            }
+        }
+
+        public string ErrorPasswordMessage
+        {
+            get => errorPasswordMessage;
+            set
+            {
+                errorPasswordMessage = value;
+                OnPropertyChanged(nameof(ErrorPasswordMessage));
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Commands
@@ -52,28 +80,28 @@ namespace WPF.Desktop.UI.ViewModels
                 {
                     loginCommand = new DelegateCommand<LoginWindow>((LoginWindow view) =>
                     {
-                        base.Db = new MainAdminEntity();
+                        var entity = new MainAdminEntity();
+                        {
+                            //var sql = "SELECT login_employee(:p_email, :p_password) FROM dual";
+                            //var result = Db.Database.SqlQuery<int>(sql,
+                            //    new OracleParameter("p_email", Email),
+                            //    new OracleParameter("p_password", Password))
+                            //.SingleOrDefault();
 
-                        var sql = "SELECT login_employee(:p_email, :p_password) FROM dual";
-                        var result = Db.Database.SqlQuery<int>(sql,
-                            new OracleParameter("p_email", Email),
-                            new OracleParameter("p_password", Password))
-                        .SingleOrDefault();
+                            int result = 3;
 
-
-
-                        SetCurrentUser(((MainAdminEntity)Db).EMPLOYEES.FirstOrDefault(x => x.EMP_ID == 5));
-                        //SetCurrentUser(new EMPLOYEES() { 
-                        //    FIRST_NAME= "Alexey",
-                        //    LAST_NAME="Puzikov",
-                        //    HIRE_DATE=DateTime.Now,
-                        //    SALARY=3000,
-                        //    PHONE_NUMBER="3758963582459",
-
-                        //});
-
-                        ShowMainWindow();
-                        view.Close();
+                            if (result != 0)
+                            {
+                                SetCurrentUser(entity.EMPLOYEES.FirstOrDefault(x => x.EMP_ID == result));
+                                ShowMainWindow();
+                                view.Close();
+                            }
+                            else
+                            {
+                                ErrorEmailMessage = "Invalid email";
+                                ErrorPasswordMessage = "Invalid password";
+                            }
+                        }
                     });
                 }
                 return loginCommand;

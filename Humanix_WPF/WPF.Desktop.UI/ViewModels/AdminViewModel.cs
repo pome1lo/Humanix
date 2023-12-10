@@ -17,8 +17,8 @@ namespace WPF.Desktop.UI.ViewModels
             set
             {
                 selectedEmployee = value;
-                ShowEmployeesDetails(value);
                 OnPropertyChanged(nameof(SelectedEmployee));
+                ShowEmployeesDetails(selectedEmployee);
             }
         }
 

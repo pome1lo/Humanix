@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Data.Entity;
 using System.Windows.Controls;
 using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin;
 using WPF.Desktop.UI.Views;
@@ -17,9 +16,10 @@ namespace WPF.Desktop.UI.ViewModels
         }
 
         protected static EMPLOYEES CurrentUser { get; private set; }
-        protected DbContext Db { get; set; }
 
         private static Frame MainFrame = new Frame();
+
+
 
 
 
@@ -33,12 +33,21 @@ namespace WPF.Desktop.UI.ViewModels
 
         protected static void ShowMainWindow()
         {
-            MainWindow view = new MainWindow();
+            var view = new MainWindow();
+            var viewModel = new MainViewModel(IsCurrentUserAdmin());
+            view.DataContext = viewModel;
             MainFrame = view.MainFrame;
             ShowPage(new ProfilePage());
             view.Show();
         }
-        protected void SetCurrentUser(EMPLOYEES empl) => CurrentUser = empl;
+
+        private static bool IsCurrentUserAdmin()
+        {
+            return CurrentUser.DEPARTMENTS.DEPARTMENT_NAME == "Human Resources";
+        }
+
+        protected void SetCurrentUser(EMPLOYEES empl) => ViewModelBase.CurrentUser = empl;
+
         protected static void ShowPage(Page page) => MainFrame.Content = page;
     }
 }

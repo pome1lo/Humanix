@@ -30,7 +30,6 @@
           <Property Name="LAST_NAME" Type="varchar2" MaxLength="25" Nullable="false" />
           <Property Name="EMAIL" Type="varchar2" MaxLength="25" Nullable="false" />
           <Property Name="PHONE_NUMBER" Type="varchar2" MaxLength="15" />
-          <Property Name="HIRE_DATE" Type="date" Nullable="false" />
           <Property Name="JOB_ID" Type="varchar2" MaxLength="10" Nullable="false" />
           <Property Name="SALARY" Type="number" Precision="8" Scale="2" />
           <Property Name="COMMISSION_PCT" Type="number" Precision="2" Scale="2" />
@@ -250,7 +249,6 @@
           <Parameter Name="P_LAST_NAME" Type="varchar2" Mode="In" />
           <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
           <Parameter Name="P_PHONE_NUMBER" Type="varchar2" Mode="In" />
-          <Parameter Name="P_HIRE_DATE" Type="date" Mode="In" />
           <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
           <Parameter Name="P_SALARY" Type="number" Mode="In" />
           <Parameter Name="P_COMMISSION_PCT" Type="number" Mode="In" />
@@ -258,7 +256,6 @@
           <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
           <Parameter Name="P_PASSWORD_HASH" Type="varchar2" Mode="In" />
         </Function>
-        <Function Name="IMPORT_JSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" />
         <Function Name="INSERT_INTO_COUNTRIES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
           <Parameter Name="P_COUNTRY_NAME" Type="varchar2" Mode="In" />
         </Function>
@@ -272,7 +269,6 @@
           <Parameter Name="P_LAST_NAME" Type="varchar2" Mode="In" />
           <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
           <Parameter Name="P_PHONE_NUMBER" Type="varchar2" Mode="In" />
-          <Parameter Name="P_HIRE_DATE" Type="date" Mode="In" />
           <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
           <Parameter Name="P_SALARY" Type="number" Mode="In" />
           <Parameter Name="P_COMMISSION_PCT" Type="number" Mode="In" />
@@ -293,6 +289,7 @@
           <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
         </Function>
         <Function Name="INSERT_INTO_PARTICIPATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_EMP_EMAIL" Type="varchar2" Mode="In" />
           <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
           <Parameter Name="P_ROLE" Type="varchar2" Mode="In" />
           <Parameter Name="P_HOURS" Type="number" Mode="In" />
@@ -311,7 +308,6 @@
           <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
         </Function>
         <Function Name="INSERT_INTO_VACATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_VACATION_ID" Type="number" Mode="In" />
           <Parameter Name="P_EMP_EMAIL" Type="nvarchar2" Mode="In" />
           <Parameter Name="P_START_DATE" Type="date" Mode="In" />
           <Parameter Name="P_END_DATE" Type="date" Mode="In" />
@@ -338,7 +334,6 @@
           <Parameter Name="P_LAST_NAME" Type="varchar2" Mode="In" />
           <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
           <Parameter Name="P_PHONE_NUMBER" Type="varchar2" Mode="In" />
-          <Parameter Name="P_HIRE_DATE" Type="date" Mode="In" />
           <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
           <Parameter Name="P_SALARY" Type="number" Mode="In" />
           <Parameter Name="P_COMMISSION_PCT" Type="number" Mode="In" />
@@ -467,7 +462,6 @@
           <Property Name="LAST_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EMAIL" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PHONE_NUMBER" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="HIRE_DATE" Type="DateTime" Nullable="false" />
           <Property Name="JOB_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SALARY" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="COMMISSION_PCT" Type="Decimal" Precision="2" Scale="2" />
@@ -741,7 +735,6 @@
             <Parameter Name="P_LAST_NAME" Mode="In" Type="String" />
             <Parameter Name="P_EMAIL" Mode="In" Type="String" />
             <Parameter Name="P_PHONE_NUMBER" Mode="In" Type="String" />
-            <Parameter Name="P_HIRE_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
             <Parameter Name="P_SALARY" Mode="In" Type="Decimal" />
             <Parameter Name="P_COMMISSION_PCT" Mode="In" Type="Decimal" />
@@ -763,7 +756,6 @@
             <Parameter Name="P_LAST_NAME" Mode="In" Type="String" />
             <Parameter Name="P_EMAIL" Mode="In" Type="String" />
             <Parameter Name="P_PHONE_NUMBER" Mode="In" Type="String" />
-            <Parameter Name="P_HIRE_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
             <Parameter Name="P_SALARY" Mode="In" Type="Decimal" />
             <Parameter Name="P_COMMISSION_PCT" Mode="In" Type="Decimal" />
@@ -784,6 +776,7 @@
             <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_PARTICIPATION">
+            <Parameter Name="P_EMP_EMAIL" Mode="In" Type="String" />
             <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
             <Parameter Name="P_ROLE" Mode="In" Type="String" />
             <Parameter Name="P_HOURS" Mode="In" Type="Decimal" />
@@ -802,7 +795,6 @@
             <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_VACATIONS">
-            <Parameter Name="P_VACATION_ID" Mode="In" Type="Decimal" />
             <Parameter Name="P_EMP_EMAIL" Mode="In" Type="String" />
             <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
@@ -828,7 +820,6 @@
             <Parameter Name="P_LAST_NAME" Mode="In" Type="String" />
             <Parameter Name="P_EMAIL" Mode="In" Type="String" />
             <Parameter Name="P_PHONE_NUMBER" Mode="In" Type="String" />
-            <Parameter Name="P_HIRE_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
             <Parameter Name="P_SALARY" Mode="In" Type="Decimal" />
             <Parameter Name="P_COMMISSION_PCT" Mode="In" Type="Decimal" />
@@ -914,7 +905,6 @@
                 <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
                 <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
                 <ScalarProperty Name="PHONE_NUMBER" ColumnName="PHONE_NUMBER" />
-                <ScalarProperty Name="HIRE_DATE" ColumnName="HIRE_DATE" />
                 <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
                 <ScalarProperty Name="SALARY" ColumnName="SALARY" />
                 <ScalarProperty Name="COMMISSION_PCT" ColumnName="COMMISSION_PCT" />
@@ -1002,7 +992,6 @@
           <FunctionImportMapping FunctionImportName="EXPORT_JSON" FunctionName="Хранилище Model.EXPORT_JSON" />
           <FunctionImportMapping FunctionImportName="FIRE_EMPLOYEE" FunctionName="Хранилище Model.FIRE_EMPLOYEE" />
           <FunctionImportMapping FunctionImportName="HIRE_EMPLOYEE" FunctionName="Хранилище Model.HIRE_EMPLOYEE" />
-          <FunctionImportMapping FunctionImportName="IMPORT_JSON" FunctionName="Хранилище Model.IMPORT_JSON" />
           <FunctionImportMapping FunctionImportName="INSERT_INTO_COUNTRIES" FunctionName="Хранилище Model.INSERT_INTO_COUNTRIES" />
           <FunctionImportMapping FunctionImportName="INSERT_INTO_DEPARTMENTS" FunctionName="Хранилище Model.INSERT_INTO_DEPARTMENTS" />
           <FunctionImportMapping FunctionImportName="INSERT_INTO_EMPLOYEES" FunctionName="Хранилище Model.INSERT_INTO_EMPLOYEES" />
