@@ -5,14 +5,13 @@ CREATE TABLE employees (
     last_name VARCHAR2(25) NOT NULL, -- Фамилия сотрудника
     email VARCHAR2(25) PRIMARY KEY , -- Электронная почта сотрудника
     phone_number VARCHAR2(15), -- Номер телефона сотрудника
-    hire_date DATE NOT NULL, -- Дата найма сотрудника
     job_id VARCHAR2(10) NOT NULL, -- Идентификатор должности сотрудника
     salary NUMBER(8,2), -- Зарплата сотрудника
     commission_pct NUMBER(2,2), -- Процент комиссии сотрудника
     manager_id NUMBER(6), -- Идентификатор менеджера сотрудника
     department_id NUMBER(4), -- Идентификатор отдела сотрудника
-    password_hash VARCHAR2(128)
-  --CONSTRAINT employees_pk PRIMARY KEY (emp_id, email)
+    password_hash VARCHAR2(128), -- Пароль сотрудника
+    salt VARCHAR2(128) -- Соль для пароля сотрудника
 ) TABLESPACE USERS_TBS;
 
 -- Создаем таблицу должностей с первичным ключом job_id
@@ -94,6 +93,8 @@ ALTER TABLE employees ADD CONSTRAINT fk_employees_jobs FOREIGN KEY (job_id) REFE
 
 -- Связываем таблицу employees с самой собой по атрибуту manager_id
 ALTER TABLE employees ADD CONSTRAINT fk_employees_managers FOREIGN KEY (manager_id) REFERENCES employees (emp_id);
+------  сверху
+---
 
 -- Связываем таблицу employees с таблицей departments по атрибуту department_id
 ALTER TABLE employees ADD CONSTRAINT fk_employees_departments FOREIGN KEY (department_id) REFERENCES departments (department_id);
@@ -118,7 +119,6 @@ ALTER TABLE participation ADD CONSTRAINT fk_participation_projects FOREIGN KEY (
 
 -- Связываем таблицу vacations с таблицей employees по атрибуту emp_id
 ALTER TABLE vacations ADD CONSTRAINT fk_vacations_emp_id FOREIGN KEY (emp_email) REFERENCES employees(email);
-
 
 DROP TABLE participation;
 DROP TABLE tasks;

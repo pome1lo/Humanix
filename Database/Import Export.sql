@@ -43,8 +43,6 @@ EXCEPTION
 END export_json;
 /
 
-
-
 CREATE OR REPLACE PROCEDURE import_json IS
     v_file UTL_FILE.FILE_TYPE;
     v_data CLOB;
@@ -100,14 +98,11 @@ EXCEPTION
 END import_json;
 /
 
-
 BEGIN
     export_json;
     import_json;
 END; /
 
-
 -- DELETE FROM PARTICIPATION;
 -- DELETE FROM VACATIONS;
 -- DELETE FROM EMPLOYEES;
--- COMMIT;

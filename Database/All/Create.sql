@@ -50,14 +50,12 @@ CREATE PROFILE admin_profile LIMIT
   COMPOSITE_LIMIT    UNLIMITED;
 
 
-
-
 -- Создаем таблицу сотрудников с первичным ключом emp_id
 CREATE TABLE employees (
-    emp_id NUMBER(6) PRIMARY KEY, -- Идентификатор сотрудника
+    emp_id NUMBER(6) NOT NULL ,--PRIMARY KEY , -- Идентификатор сотрудника
     first_name VARCHAR2(20), -- Имя сотрудника
     last_name VARCHAR2(25) NOT NULL, -- Фамилия сотрудника
-    email VARCHAR2(25) NOT NULL, -- Электронная почта сотрудника
+    email VARCHAR2(25) PRIMARY KEY , -- Электронная почта сотрудника
     phone_number VARCHAR2(15), -- Номер телефона сотрудника
     hire_date DATE NOT NULL, -- Дата найма сотрудника
     job_id VARCHAR2(10) NOT NULL, -- Идентификатор должности сотрудника
@@ -66,8 +64,8 @@ CREATE TABLE employees (
     manager_id NUMBER(6), -- Идентификатор менеджера сотрудника
     department_id NUMBER(4), -- Идентификатор отдела сотрудника
     password_hash VARCHAR2(128)
+  --CONSTRAINT employees_pk PRIMARY KEY (emp_id, email)
 ) TABLESPACE USERS_TBS;
-
 
 -- Создаем таблицу должностей с первичным ключом job_id
 CREATE TABLE jobs (
@@ -198,7 +196,6 @@ GRANT ALL PRIVILEGES ON projects TO admin_role;
 GRANT ALL PRIVILEGES ON tasks TO admin_role;
 GRANT ALL PRIVILEGES ON participation TO admin_role;
 GRANT ALL PRIVILEGES ON employees TO admin_role;
-
 
 
 -- Создание пользователя с ролью пользователя и профилем пользователя

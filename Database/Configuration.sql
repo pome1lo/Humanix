@@ -128,7 +128,8 @@ GRANT EXECUTE ON delete_from_participation TO admin_user;
 GRANT EXECUTE ON fire_employee TO admin_user;
 GRANT EXECUTE ON promote_employee TO admin_user;
 GRANT EXECUTE ON hire_employee TO admin_user;
-
+GRANT EXECUTE ON EXPORT_JSON TO admin_user;
+GRANT EXECUTE ON IMPORT_JSON TO admin_user;
 GRANT EXECUTE ON ENCRYPT TO admin_user;
 GRANT EXECUTE ON DECRYPT TO admin_user;
 
