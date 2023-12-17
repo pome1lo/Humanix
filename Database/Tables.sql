@@ -11,7 +11,8 @@ CREATE TABLE employees (
     manager_id NUMBER(6), -- Идентификатор менеджера сотрудника
     department_id NUMBER(4), -- Идентификатор отдела сотрудника
     password_hash VARCHAR2(128), -- Пароль сотрудника
-    salt VARCHAR2(128) -- Соль для пароля сотрудника
+    salt VARCHAR2(128), -- Соль для пароля сотрудника
+    IsAuthentic NUMBER(1) NOT NULL
 ) TABLESPACE USERS_TBS;
 
 -- Создаем таблицу должностей с первичным ключом job_id

@@ -19,12 +19,13 @@ BEGIN
             'last_name' VALUE v_data.last_name,
             'email' VALUE v_data.email,
             'phone_number' VALUE v_data.phone_number,
-            'hire_date' VALUE TO_CHAR(v_data.hire_date, 'YYYY-MM-DD'),
             'job_id' VALUE v_data.job_id,
             'salary' VALUE v_data.salary,
             'commission_pct' VALUE v_data.commission_pct,
             'manager_id' VALUE v_data.manager_id,
-            'department_id' VALUE v_data.department_id
+            'department_id' VALUE v_data.department_id,
+            'password_hash' VALUE v_data.PASSWORD_HASH,
+            'isauthentic' value v_data.ISAUTHENTIC
         );
 
         -- Записываем JSON в файл
@@ -79,13 +80,13 @@ BEGIN
         v_emp_rec.last_name := v_json_obj.get_string('last_name');
         v_emp_rec.email := v_json_obj.get_string('email');
         v_emp_rec.phone_number := v_json_obj.get_string('phone_number');
-        v_emp_rec.hire_date := TO_DATE(v_json_obj.get_string('hire_date'), 'YYYY-MM-DD');
         v_emp_rec.job_id := v_json_obj.get_string('job_id');
         v_emp_rec.salary := v_json_obj.get_number('salary');
         v_emp_rec.commission_pct := v_json_obj.get_number('commission_pct');
         v_emp_rec.manager_id := v_json_obj.get_number('manager_id');
         v_emp_rec.department_id := v_json_obj.get_number('department_id');
         v_emp_rec.password_hash := v_json_obj.get_string('password_hash');
+        v_emp_rec.ISAUTHENTIC := v_json_obj.get_string('isauthentic');
 
         INSERT INTO employees VALUES v_emp_rec;
     END LOOP;
@@ -103,6 +104,7 @@ BEGIN
     import_json;
 END; /
 
+SELECT * FROM EMPLOYEES;
 -- DELETE FROM PARTICIPATION;
 -- DELETE FROM VACATIONS;
 -- DELETE FROM EMPLOYEES;
