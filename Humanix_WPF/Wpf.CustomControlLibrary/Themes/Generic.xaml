@@ -213,7 +213,7 @@
                     <Border Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                        <wv:WebView2 Source="https://yandex.by/maps/org/hotfix_coffee/102442428345/?indoorLevel=1&amp;ll=27.558664%2C53.891495&amp;z=17.4"/>
+                        <wv:WebView2 Source="https://yandex.ru/maps/?um=constructor%3Af5a47f86a93817b39db662f4fea03f2f6ed05e2a02038f08d3859c340654a0b4&amp;source=constructorLink"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

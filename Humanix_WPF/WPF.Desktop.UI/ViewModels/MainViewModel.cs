@@ -21,6 +21,7 @@ namespace WPF.Desktop.UI.ViewModels
 
         #region Fields
 
+        private DelegateCommand openMapPage;
         private DelegateCommand exitCommand;
         private DelegateCommand openAdminPage;
         private DelegateCommand openProfilePage;
@@ -120,6 +121,21 @@ namespace WPF.Desktop.UI.ViewModels
                     });
                 }
                 return openAdminPage;
+            }
+        }
+        
+        public ICommand OpenMapPage
+        {
+            get
+            {
+                if (openMapPage == null)
+                {
+                    openMapPage = new DelegateCommand(() =>
+                    {
+                        ShowPage(new MapPage());
+                    });
+                }
+                return openMapPage;
             }
         }
 
