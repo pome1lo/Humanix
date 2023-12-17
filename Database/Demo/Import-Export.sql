@@ -97,3 +97,13 @@ EXCEPTION
         RAISE;
 END import_json;
 /
+
+BEGIN
+    export_json;
+    import_json;
+END; /
+
+SELECT * FROM EMPLOYEES;
+-- DELETE FROM PARTICIPATION;
+-- DELETE FROM VACATIONS;
+-- DELETE FROM EMPLOYEES;

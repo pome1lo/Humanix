@@ -1,7 +1,5 @@
 CREATE OR REPLACE TRIGGER emp_id_trg
     BEFORE INSERT ON employees FOR EACH ROW
-    DECLARE
-        v_salt VARCHAR2(128);
     BEGIN
         :NEW.salt := generate_salt(:NEW.email);
         SELECT emp_id_seq.NEXTVAL INTO :new.emp_id FROM dual;

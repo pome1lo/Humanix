@@ -63,7 +63,7 @@ INSERT_INTO_TASKS ('Task A', 'Complete research for project', 40, 1);
 INSERT_INTO_TASKS ('Task B', 'Develop project plan', 20, 2);
 INSERT_INTO_TASKS ('Task C', 'Design user interface', 30, 3);
 INSERT_INTO_TASKS ('Task D', 'Develop backend functionality', 60, 4);
-INSERT_INTO_TASKS ('Task E', 'Test and debug software', 50, 5);
+INSERT_INTO_TASKS ('Task E', 'Demo and debug software', 50, 5);
 INSERT_INTO_TASKS ('Task F', 'Create user documentation', 20, 5);
 INSERT_INTO_TASKS ('Task G', 'Develop marketing plan', 30, 6);
 INSERT_INTO_TASKS ('Task H', 'Create advertising materials', 40, 7);
