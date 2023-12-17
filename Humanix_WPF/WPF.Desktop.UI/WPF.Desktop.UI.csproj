@@ -70,6 +70,7 @@
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
@@ -371,6 +372,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AuthNumberGenerator\AuthNumberGenerator.csproj">
+      <Project>{4ab5eb8b-c381-43e2-9a15-dfde15bf0a3f}</Project>
+      <Name>AuthNumberGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NodeMailer\NodeMailer.csproj">
+      <Project>{968a12d9-950e-43be-a563-6b98fed37acb}</Project>
+      <Name>NodeMailer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wpf.CustomControlLibrary\Wpf.CustomControlLibrary.csproj">
       <Project>{28e8c5ed-6299-42ea-b786-c91f05439f5d}</Project>
       <Name>Wpf.CustomControlLibrary</Name>

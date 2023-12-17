@@ -1,4 +1,7 @@
 ﻿using NodeMailer;
+using NodeMailer.Models;
+using System.Configuration;
+using AuthNumberGenerator;
 
 namespace NUnit.Tests.Tests
 {
@@ -10,10 +13,20 @@ namespace NUnit.Tests.Tests
         }
 
         [Test]
-        public void SendMail()
+        public async Task SendMail()
         {
-            MailBuilder builder = new("humanix.wms@mail.ru");
-            Assert.IsTrue(builder.SendEmail());
+            SmtpSettings smtp = new SmtpSettings();
+
+            smtp.Server = ConfigurationManager.AppSettings["SmtpServer"];
+            smtp.Port = Int32.Parse(ConfigurationManager.AppSettings["SmtpPort"]);
+            smtp.User = ConfigurationManager.AppSettings["SmtpUser"];
+            smtp.Password = ConfigurationManager.AppSettings["SmtpPassword"];
+
+            var code = RandomNumberGenerator.Generate().ToString();
+
+            MailBuilder builder = new("humanix.wms@mail.ru", code, smtp);
+            
+            Assert.IsTrue(await builder.SendEmail());
         }
     }
 }

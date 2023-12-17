@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using WPF.Desktop.UI.Commands;
-using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin;
-using WPF.Desktop.UI.Views;
 using WPF.Desktop.UI.Views.Pages;
 
 namespace WPF.Desktop.UI.ViewModels
@@ -61,7 +59,7 @@ namespace WPF.Desktop.UI.ViewModels
                         ShowPage(new VacationsPage());
                     });
                 }
-                return openVacationsPage; 
+                return openVacationsPage;
             }
         }
 
@@ -76,10 +74,10 @@ namespace WPF.Desktop.UI.ViewModels
                         ShowPage(new ParticipationPage());
                     });
                 }
-                return openParticipationPage; 
+                return openParticipationPage;
             }
         }
-        
+
         public ICommand OpenDepartmentsPage
         {
             get
@@ -91,7 +89,7 @@ namespace WPF.Desktop.UI.ViewModels
                         ShowPage(new DepartmentPage());
                     });
                 }
-                return openDepartmentsPage; 
+                return openDepartmentsPage;
             }
         }
 
@@ -108,7 +106,7 @@ namespace WPF.Desktop.UI.ViewModels
                 }
                 return openProfilePage;
             }
-        } 
+        }
 
         public ICommand OpenAdminPage
         {

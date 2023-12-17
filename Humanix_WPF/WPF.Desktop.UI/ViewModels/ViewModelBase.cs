@@ -19,10 +19,6 @@ namespace WPF.Desktop.UI.ViewModels
 
         private static Frame MainFrame = new Frame();
 
-
-
-
-
         protected static void ShowEmployeesDetails(EMPLOYEES emp)
         {
             var view = new EmployeesDetails();

@@ -36,7 +36,16 @@
           <Property Name="MANAGER_ID" Type="number" Precision="6" Scale="0" />
           <Property Name="DEPARTMENT_ID" Type="number" Precision="4" Scale="0" />
           <Property Name="PASSWORD_HASH" Type="varchar2" MaxLength="128" />
+          <Property Name="SALT" Type="varchar2" MaxLength="128" />
+          <Property Name="ISAUTHENTIC" Type="number" Precision="1" Scale="0" Nullable="false" />
         </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "ADMIN.JOB_STATUS" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="JOB_STATUS">
+          <Property Name="STATUS" Type="nvarchar2" MaxLength="50" />
+          <Property Name="ERROR_MESSAGE" Type="nvarchar2" MaxLength="500" />
+          <Property Name="DATETIME" Type="date" />
+        </EntityType>-->
         <EntityType Name="JOBS">
           <Key>
             <PropertyRef Name="JOB_ID" />
@@ -46,6 +55,18 @@
           <Property Name="MIN_SALARY" Type="number" Precision="6" Scale="0" />
           <Property Name="MAX_SALARY" Type="number" Precision="6" Scale="0" />
         </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "ADMIN.LAB_14_FINISH" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="LAB_14_FINISH">
+          <Property Name="A" Type="number" Precision="38" Scale="0" />
+          <Property Name="B" Type="number" Precision="38" Scale="0" />
+        </EntityType>-->
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "ADMIN.LAB_14_START" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="LAB_14_START">
+          <Property Name="A" Type="number" Precision="38" Scale="0" />
+          <Property Name="B" Type="number" Precision="38" Scale="0" />
+        </EntityType>-->
         <EntityType Name="LOCATIONS">
           <Key>
             <PropertyRef Name="LOCATION_ID" />
@@ -208,6 +229,7 @@
         </Association>
         <Function Name="DECRYPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" ReturnType="varchar2">
           <Parameter Name="P_ENCRYPTED_TEXT" Type="raw" Mode="In" />
+          <Parameter Name="P_SALT" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="DELETE_FROM_COUNTRIES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
           <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
@@ -239,10 +261,14 @@
         </Function>
         <Function Name="ENCRYPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" ReturnType="raw">
           <Parameter Name="P_PLAIN_TEXT" Type="varchar2" Mode="In" />
+          <Parameter Name="P_SALT" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="EXPORT_JSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" />
         <Function Name="FIRE_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
           <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
+        </Function>
+        <Function Name="GENERATE_SALT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" ReturnType="varchar2">
+          <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="HIRE_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
           <Parameter Name="P_FIRST_NAME" Type="varchar2" Mode="In" />
@@ -256,7 +282,9 @@
           <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
           <Parameter Name="P_PASSWORD_HASH" Type="varchar2" Mode="In" />
         </Function>
+        <Function Name="IMPORT_JSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" />
         <Function Name="INSERT_INTO_COUNTRIES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
           <Parameter Name="P_COUNTRY_NAME" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="INSERT_INTO_DEPARTMENTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
@@ -277,6 +305,7 @@
           <Parameter Name="P_PASSWORD_HASH" Type="varchar2" Mode="In" />
         </Function>
         <Function Name="INSERT_INTO_JOBS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
           <Parameter Name="P_JOB_TITLE" Type="varchar2" Mode="In" />
           <Parameter Name="P_MIN_SALARY" Type="number" Mode="In" />
           <Parameter Name="P_MAX_SALARY" Type="number" Mode="In" />
@@ -314,74 +343,20 @@
           <Parameter Name="P_REASON" Type="varchar2" Mode="In" />
         </Function>
         
-        <Function Name="PROMOTE_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
-          <Parameter Name="P_NEW_JOB_ID" Type="varchar2" Mode="In" />
-        </Function>
-        <Function Name="UPDATE_COUNTRIES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
-          <Parameter Name="P_COUNTRY_NAME" Type="varchar2" Mode="In" />
-        </Function>
-        <Function Name="UPDATE_DEPARTMENTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
-          <Parameter Name="P_DEPARTMENT_NAME" Type="varchar2" Mode="In" />
-          <Parameter Name="P_MANAGER_ID" Type="number" Mode="In" />
-          <Parameter Name="P_LOCATION_ID" Type="number" Mode="In" />
-        </Function>
-        <Function Name="UPDATE_EMPLOYEES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_EMP_ID" Type="number" Mode="In" />
-          <Parameter Name="P_FIRST_NAME" Type="varchar2" Mode="In" />
-          <Parameter Name="P_LAST_NAME" Type="varchar2" Mode="In" />
-          <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
-          <Parameter Name="P_PHONE_NUMBER" Type="varchar2" Mode="In" />
-          <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
-          <Parameter Name="P_SALARY" Type="number" Mode="In" />
-          <Parameter Name="P_COMMISSION_PCT" Type="number" Mode="In" />
-          <Parameter Name="P_MANAGER_ID" Type="number" Mode="In" />
-          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
-        </Function>
-        <Function Name="UPDATE_JOBS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_JOB_ID" Type="varchar2" Mode="In" />
-          <Parameter Name="P_JOB_TITLE" Type="varchar2" Mode="In" />
-          <Parameter Name="P_MIN_SALARY" Type="number" Mode="In" />
-          <Parameter Name="P_MAX_SALARY" Type="number" Mode="In" />
-        </Function>
-        <Function Name="UPDATE_LOCATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_LOCATION_ID" Type="number" Mode="In" />
-          <Parameter Name="P_STREET_ADDRESS" Type="varchar2" Mode="In" />
-          <Parameter Name="P_POSTAL_CODE" Type="varchar2" Mode="In" />
-          <Parameter Name="P_CITY" Type="varchar2" Mode="In" />
-          <Parameter Name="P_STATE_PROVINCE" Type="varchar2" Mode="In" />
-          <Parameter Name="P_COUNTRY_ID" Type="char" Mode="In" />
-        </Function>
-        <Function Name="UPDATE_PARTICIPATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_EMP_EMAIL" Type="nvarchar2" Mode="In" />
-          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
-          <Parameter Name="P_ROLE" Type="varchar2" Mode="In" />
-          <Parameter Name="P_HOURS" Type="number" Mode="In" />
-        </Function>
-        <Function Name="UPDATE_PROJECTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
-          <Parameter Name="P_PROJECT_NAME" Type="varchar2" Mode="In" />
-          <Parameter Name="P_START_DATE" Type="date" Mode="In" />
-          <Parameter Name="P_END_DATE" Type="date" Mode="In" />
-          <Parameter Name="P_BUDGET" Type="number" Mode="In" />
-          <Parameter Name="P_DEPARTMENT_ID" Type="number" Mode="In" />
-        </Function>
-        <Function Name="UPDATE_TASKS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_TASK_ID" Type="number" Mode="In" />
-          <Parameter Name="P_TASK_NAME" Type="varchar2" Mode="In" />
-          <Parameter Name="P_DESCRIPTION" Type="varchar2" Mode="In" />
-          <Parameter Name="P_DURATION" Type="number" Mode="In" />
-          <Parameter Name="P_PROJECT_ID" Type="number" Mode="In" />
-        </Function>
-        <Function Name="UPDATE_VACATIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
-          <Parameter Name="P_VACATION_ID" Type="number" Mode="In" />
-          <Parameter Name="P_EMP_EMAIL" Type="nvarchar2" Mode="In" />
-          <Parameter Name="P_START_DATE" Type="date" Mode="In" />
-          <Parameter Name="P_END_DATE" Type="date" Mode="In" />
-          <Parameter Name="P_REASON" Type="varchar2" Mode="In" />
-        </Function>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <EntityContainer Name="Хранилище ModelContainer">
           <EntitySet Name="COUNTRIES" EntityType="Self.COUNTRIES" Schema="ADMIN" store:Type="Tables" />
           <EntitySet Name="DEPARTMENTS" EntityType="Self.DEPARTMENTS" Schema="ADMIN" store:Type="Tables" />
@@ -468,6 +443,8 @@
           <Property Name="MANAGER_ID" Type="Int32" />
           <Property Name="DEPARTMENT_ID" Type="Int16" />
           <Property Name="PASSWORD_HASH" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="SALT" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ISAUTHENTIC" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DEPARTMENTS" Relationship="Self.FK_EMPLOYEES_DEPARTMENTS" FromRole="EMPLOYEES" ToRole="DEPARTMENTS" />
           <NavigationProperty Name="JOBS" Relationship="Self.FK_EMPLOYEES_JOBS" FromRole="EMPLOYEES" ToRole="JOBS" />
           <NavigationProperty Name="PARTICIPATION" Relationship="Self.FK_PARTICIPATION_EMPLOYEES" FromRole="EMPLOYEES" ToRole="PARTICIPATION" />
@@ -744,7 +721,8 @@
           </FunctionImport>
           <FunctionImport Name="IMPORT_JSON" />
           <FunctionImport Name="INSERT_INTO_COUNTRIES">
-          <Parameter Name="P_COUNTRY_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
+            <Parameter Name="P_COUNTRY_NAME" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_DEPARTMENTS">
             <Parameter Name="P_DEPARTMENT_NAME" Mode="In" Type="String" />
@@ -764,6 +742,7 @@
             <Parameter Name="P_PASSWORD_HASH" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="INSERT_INTO_JOBS">
+            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
             <Parameter Name="P_JOB_TITLE" Mode="In" Type="String" />
             <Parameter Name="P_MIN_SALARY" Mode="In" Type="Decimal" />
             <Parameter Name="P_MAX_SALARY" Mode="In" Type="Decimal" />
@@ -799,78 +778,6 @@
             <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_REASON" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="PROMOTE_EMPLOYEE">
-            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_NEW_JOB_ID" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UPDATE_COUNTRIES">
-            <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
-            <Parameter Name="P_COUNTRY_NAME" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UPDATE_DEPARTMENTS">
-            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_DEPARTMENT_NAME" Mode="In" Type="String" />
-            <Parameter Name="P_MANAGER_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="UPDATE_EMPLOYEES">
-            <Parameter Name="P_EMP_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_FIRST_NAME" Mode="In" Type="String" />
-            <Parameter Name="P_LAST_NAME" Mode="In" Type="String" />
-            <Parameter Name="P_EMAIL" Mode="In" Type="String" />
-            <Parameter Name="P_PHONE_NUMBER" Mode="In" Type="String" />
-            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
-            <Parameter Name="P_SALARY" Mode="In" Type="Decimal" />
-            <Parameter Name="P_COMMISSION_PCT" Mode="In" Type="Decimal" />
-            <Parameter Name="P_MANAGER_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="UPDATE_JOBS">
-            <Parameter Name="P_JOB_ID" Mode="In" Type="String" />
-            <Parameter Name="P_JOB_TITLE" Mode="In" Type="String" />
-            <Parameter Name="P_MIN_SALARY" Mode="In" Type="Decimal" />
-            <Parameter Name="P_MAX_SALARY" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="UPDATE_LOCATIONS">
-            <Parameter Name="P_LOCATION_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_STREET_ADDRESS" Mode="In" Type="String" />
-            <Parameter Name="P_POSTAL_CODE" Mode="In" Type="String" />
-            <Parameter Name="P_CITY" Mode="In" Type="String" />
-            <Parameter Name="P_STATE_PROVINCE" Mode="In" Type="String" />
-            <Parameter Name="P_COUNTRY_ID" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UPDATE_PARTICIPATION">
-            <Parameter Name="P_EMP_EMAIL" Mode="In" Type="String" />
-            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_ROLE" Mode="In" Type="String" />
-            <Parameter Name="P_HOURS" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="UPDATE_PROJECTS">
-            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_PROJECT_NAME" Mode="In" Type="String" />
-            <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="P_BUDGET" Mode="In" Type="Decimal" />
-            <Parameter Name="P_DEPARTMENT_ID" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="UPDATE_TASKS">
-            <Parameter Name="P_TASK_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_TASK_NAME" Mode="In" Type="String" />
-            <Parameter Name="P_DESCRIPTION" Mode="In" Type="String" />
-            <Parameter Name="P_DURATION" Mode="In" Type="Decimal" />
-            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="UPDATE_VACATIONS">
-            <Parameter Name="P_VACATION_ID" Mode="In" Type="Decimal" />
-            <Parameter Name="P_EMP_EMAIL" Mode="In" Type="String" />
-            <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="P_REASON" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="LOGIN_EMPLOYEE" IsComposable="true" EntitySet="EMPLOYEES" ReturnType="Collection(Model.EMPLOYEES)">
-            <Parameter Name="P_EMAIL" Mode="In" Type="String" />
-            <Parameter Name="P_PASSWORD" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
       </Schema>
@@ -911,6 +818,8 @@
                 <ScalarProperty Name="MANAGER_ID" ColumnName="MANAGER_ID" />
                 <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
                 <ScalarProperty Name="PASSWORD_HASH" ColumnName="PASSWORD_HASH" />
+                <ScalarProperty Name="SALT" ColumnName="SALT" />
+                <ScalarProperty Name="ISAUTHENTIC" ColumnName="ISAUTHENTIC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -992,6 +901,7 @@
           <FunctionImportMapping FunctionImportName="EXPORT_JSON" FunctionName="Хранилище Model.EXPORT_JSON" />
           <FunctionImportMapping FunctionImportName="FIRE_EMPLOYEE" FunctionName="Хранилище Model.FIRE_EMPLOYEE" />
           <FunctionImportMapping FunctionImportName="HIRE_EMPLOYEE" FunctionName="Хранилище Model.HIRE_EMPLOYEE" />
+          <FunctionImportMapping FunctionImportName="IMPORT_JSON" FunctionName="Хранилище Model.IMPORT_JSON" />
           <FunctionImportMapping FunctionImportName="INSERT_INTO_COUNTRIES" FunctionName="Хранилище Model.INSERT_INTO_COUNTRIES" />
           <FunctionImportMapping FunctionImportName="INSERT_INTO_DEPARTMENTS" FunctionName="Хранилище Model.INSERT_INTO_DEPARTMENTS" />
           <FunctionImportMapping FunctionImportName="INSERT_INTO_EMPLOYEES" FunctionName="Хранилище Model.INSERT_INTO_EMPLOYEES" />
@@ -1001,16 +911,6 @@
           <FunctionImportMapping FunctionImportName="INSERT_INTO_PROJECTS" FunctionName="Хранилище Model.INSERT_INTO_PROJECTS" />
           <FunctionImportMapping FunctionImportName="INSERT_INTO_TASKS" FunctionName="Хранилище Model.INSERT_INTO_TASKS" />
           <FunctionImportMapping FunctionImportName="INSERT_INTO_VACATIONS" FunctionName="Хранилище Model.INSERT_INTO_VACATIONS" />
-          <FunctionImportMapping FunctionImportName="PROMOTE_EMPLOYEE" FunctionName="Хранилище Model.PROMOTE_EMPLOYEE" />
-          <FunctionImportMapping FunctionImportName="UPDATE_COUNTRIES" FunctionName="Хранилище Model.UPDATE_COUNTRIES" />
-          <FunctionImportMapping FunctionImportName="UPDATE_DEPARTMENTS" FunctionName="Хранилище Model.UPDATE_DEPARTMENTS" />
-          <FunctionImportMapping FunctionImportName="UPDATE_EMPLOYEES" FunctionName="Хранилище Model.UPDATE_EMPLOYEES" />
-          <FunctionImportMapping FunctionImportName="UPDATE_JOBS" FunctionName="Хранилище Model.UPDATE_JOBS" />
-          <FunctionImportMapping FunctionImportName="UPDATE_LOCATIONS" FunctionName="Хранилище Model.UPDATE_LOCATIONS" />
-          <FunctionImportMapping FunctionImportName="UPDATE_PARTICIPATION" FunctionName="Хранилище Model.UPDATE_PARTICIPATION" />
-          <FunctionImportMapping FunctionImportName="UPDATE_PROJECTS" FunctionName="Хранилище Model.UPDATE_PROJECTS" />
-          <FunctionImportMapping FunctionImportName="UPDATE_TASKS" FunctionName="Хранилище Model.UPDATE_TASKS" />
-          <FunctionImportMapping FunctionImportName="UPDATE_VACATIONS" FunctionName="Хранилище Model.UPDATE_VACATIONS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

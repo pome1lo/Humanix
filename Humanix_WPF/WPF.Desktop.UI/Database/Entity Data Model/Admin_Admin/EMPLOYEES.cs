@@ -32,6 +32,8 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
         public Nullable<int> MANAGER_ID { get; set; }
         public Nullable<short> DEPARTMENT_ID { get; set; }
         public string PASSWORD_HASH { get; set; }
+        public string SALT { get; set; }
+        public bool ISAUTHENTIC { get; set; }
     
         public virtual DEPARTMENTS DEPARTMENTS { get; set; }
         public virtual JOBS JOBS { get; set; }

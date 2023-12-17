@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -9,7 +9,6 @@ using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin;
 using WPF.Desktop.UI.Database.Entity_Data_Model.User_User;
 using WPF.Desktop.UI.Views.Pages;
 using WPF.Desktop.UI.Views.Windows;
-using static System.Net.Mime.MediaTypeNames;
 using static Wpf.DataValidationLibrary.Validator;
 
 namespace WPF.Desktop.UI.ViewModels
@@ -169,7 +168,7 @@ namespace WPF.Desktop.UI.ViewModels
                 OnPropertyChanged(nameof(Jobs));
             }
         }
-        
+
         public ICollection<DEPARTMENTS> Departments
         {
             get => _departments;
@@ -179,7 +178,7 @@ namespace WPF.Desktop.UI.ViewModels
                 OnPropertyChanged(nameof(Departments));
             }
         }
-         
+
         public Visibility VisibilitySaveChangesButton
         {
             get => visibilitySaveChangesButton;
@@ -188,7 +187,7 @@ namespace WPF.Desktop.UI.ViewModels
                 visibilitySaveChangesButton = value;
                 OnPropertyChanged(nameof(VisibilitySaveChangesButton));
             }
-        } 
+        }
 
         public Visibility VisibilityOtherButtons
         {
@@ -329,18 +328,18 @@ namespace WPF.Desktop.UI.ViewModels
                             {
                                 MessageBox.Show("конградиласьён");
 
-                                admin.UPDATE_EMPLOYEES(
-                                    selectedEmployees.EMP_ID,
-                                    selectedEmployees.FIRST_NAME,
-                                    selectedEmployees.LAST_NAME,
-                                    selectedEmployees.EMAIL,
-                                    selectedEmployees.PHONE_NUMBER,
-                                    selectedEmployees.JOB_ID,
-                                    selectedEmployees.SALARY,
-                                    selectedEmployees.COMMISSION_PCT / 100,
-                                    selectedEmployees.MANAGER_ID,
-                                    selectedEmployees.DEPARTMENT_ID
-                                );
+                                var sql = "update_employees(:p_emp_id, :p_first_name, :p_last_name, :p_email, :p_phone_number, :p_job_id, :p_salary, :p_commission_pct, :p_manager_id, :p_department_id)";
+                                var result = admin.Database.SqlQuery<int>(sql,
+                                    new OracleParameter("p_emp_id", selectedEmployees.EMP_ID),
+                                    new OracleParameter("p_first_name", selectedEmployees.FIRST_NAME),
+                                    new OracleParameter("p_last_name", selectedEmployees.LAST_NAME),
+                                    new OracleParameter("p_email", selectedEmployees.EMAIL),
+                                    new OracleParameter("p_phone_number", selectedEmployees.PHONE_NUMBER),
+                                    new OracleParameter("p_job_id", selectedEmployees.JOB_ID),
+                                    new OracleParameter("p_salary", selectedEmployees.SALARY),
+                                    new OracleParameter("p_commission_pct", selectedEmployees.COMMISSION_PCT / 100),
+                                    new OracleParameter("p_manager_id", selectedEmployees.MANAGER_ID),
+                                    new OracleParameter("p_department_id", selectedEmployees.DEPARTMENT_ID));
 
                                 View.Close();
                                 ShowPage(new AdminPage());
@@ -372,7 +371,7 @@ namespace WPF.Desktop.UI.ViewModels
                 return exitCommand;
             }
         }
-        
+
         public ICommand FireEmployeeCommand
         {
             get
@@ -389,7 +388,7 @@ namespace WPF.Desktop.UI.ViewModels
                 return fireEmployeeCommand;
             }
         }
-        
+
         public ICommand HireEmployeeCommand
         {
             get
