@@ -307,10 +307,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>UserModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="Database\Entity Data Model\Admin_User\AdminModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AdminModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <EntityDeploy Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MainAdminModel.Designer.cs</LastGenOutput>
@@ -318,6 +314,10 @@
     <None Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.edmx.diagram">
       <DependentUpon>MainAdminModel.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="Database\Entity Data Model\Admin_User\AdminModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AdminModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <None Include="Database\Entity Data Model\Admin_User\AdminModel.edmx.diagram">
       <DependentUpon>AdminModel.edmx</DependentUpon>
     </None>
@@ -339,10 +339,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Utilities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Database\Entity Data Model\Admin_Admin\MainAdminModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -356,8 +353,8 @@
     </Content>
     <Content Include="Database\Entity Data Model\Admin_User\AdminModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AdminModel.edmx</DependentUpon>
       <LastGenOutput>AdminModel.Context.cs</LastGenOutput>
+      <DependentUpon>AdminModel.edmx</DependentUpon>
     </Content>
     <Content Include="Database\Entity Data Model\Admin_User\AdminModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

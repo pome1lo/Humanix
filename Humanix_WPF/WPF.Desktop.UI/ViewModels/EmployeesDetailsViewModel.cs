@@ -1,4 +1,5 @@
 ﻿using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -20,14 +21,17 @@ namespace WPF.Desktop.UI.ViewModels
         {
             this.View = view;
             selectedEmployees = employees.EMP_ID != 0 ? employees : new EMPLOYEES();
-            VisibilityOtherButtons = employees.EMP_ID == 0 ? Visibility.Visible : Visibility.Collapsed;
-            VisibilitySaveChangesButton = employees.EMP_ID == 0 ? Visibility.Collapsed : Visibility.Visible;
+
+            VisibilityFireButton = selectedEmployees.EMP_ID == 0 ? Visibility.Collapsed :
+                (selectedEmployees.EMP_ID == CurrentUser.EMP_ID ? Visibility.Collapsed : Visibility.Visible);
+            
+            VisibilitySaveChangesButton = selectedEmployees.EMP_ID == 0 ? Visibility.Collapsed : Visibility.Visible;
+            VisibilityHireButton = selectedEmployees.EMP_ID != 0 ? Visibility.Collapsed : Visibility.Visible;
+
             admin = new MainAdminEntity();
             validator = new Validator(this);
             Jobs = admin.JOBS.ToList();
-            Departments = admin.DEPARTMENTS.ToList();
-            //Jobs = context.Database.SqlQuery<JOBS>("SELECT * FROM ADMIN.JOBS").ToList();
-            //Departments = context.Database.SqlQuery<DEPARTMENTS>("SELECT * FROM ADMIN.DEPARTMENTS").ToList();
+            Departments = admin.DEPARTMENTS.ToList(); 
         }
 
         #endregion
@@ -49,7 +53,8 @@ namespace WPF.Desktop.UI.ViewModels
         private ICollection<DEPARTMENTS> _departments;
 
         private Visibility visibilitySaveChangesButton;
-        private Visibility visibilityOtherButtons;
+        private Visibility visibilityFireButton;
+        private Visibility visibilityHireButton;
 
         private string errorEmailMessage;
         private string errorFirstNameMessage;
@@ -187,13 +192,23 @@ namespace WPF.Desktop.UI.ViewModels
             }
         }
 
-        public Visibility VisibilityOtherButtons
+        public Visibility VisibilityFireButton
         {
-            get => visibilityOtherButtons;
+            get => visibilityFireButton;
             set
             {
-                visibilityOtherButtons = value;
-                OnPropertyChanged(nameof(VisibilityOtherButtons));
+                visibilityFireButton = value;
+                OnPropertyChanged(nameof(VisibilityFireButton));
+            }
+        }
+
+        public Visibility VisibilityHireButton
+        {
+            get => visibilityHireButton;
+            set
+            {
+                visibilityHireButton = value;
+                OnPropertyChanged(nameof(VisibilityHireButton));
             }
         }
 
@@ -304,8 +319,42 @@ namespace WPF.Desktop.UI.ViewModels
                 validator.Verify(ValidationBased.Numbers, Number, nameof(ErrorNumberMessage)) &
                 validator.Verify(ValidationBased.Salary, Salary.ToString(), nameof(ErrorSalaryMessage)) &
                 validator.Verify(ValidationBased.Commission, Commission.ToString(), nameof(ErrorCommisionMessage)) &
-                Department != null &
-                Job != null;
+                DepartmentCheck() &
+                JobCheck() &
+                PasswordCheck();
+        }
+
+        private bool PasswordCheck()
+        {
+            if (String.IsNullOrEmpty(Password))
+            {
+                ErrorPasswordMessage = "Is empty";
+                return false;
+            }
+            ErrorPasswordMessage = "";
+            return true;
+        }
+
+        private bool JobCheck()
+        {
+            if (Department == null)
+            {
+                ErrorDepartmentsMessage = "Department is empty";
+                return false;
+            }
+            ErrorDepartmentsMessage = "";
+            return true;
+        }
+
+        private bool DepartmentCheck()
+        {
+            if (Job == null)
+            {
+                ErrorJobsMessage = "Jobs is empty";
+                return false;
+            }
+            ErrorJobsMessage = "";
+            return true;
         }
 
         #endregion
@@ -323,11 +372,8 @@ namespace WPF.Desktop.UI.ViewModels
                         if (IsDataCorrect())
                         {
                             if (IsDataCorrect())
-                            {
-                                MessageBox.Show("конградиласьён");
-
-                                var sql = "update_employees(:p_emp_id, :p_first_name, :p_last_name, :p_email, :p_phone_number, :p_job_id, :p_salary, :p_commission_pct, :p_manager_id, :p_department_id)";
-                                var result = admin.Database.SqlQuery<int>(sql,
+                            { 
+                                admin.Database.ExecuteSqlCommand("BEGIN update_employees(:p_emp_id, :p_first_name, :p_last_name, :p_email, :p_phone_number, :p_job_id, :p_salary, :p_commission_pct, :p_manager_id, :p_department_id); END;",
                                     new OracleParameter("p_emp_id", selectedEmployees.EMP_ID),
                                     new OracleParameter("p_first_name", selectedEmployees.FIRST_NAME),
                                     new OracleParameter("p_last_name", selectedEmployees.LAST_NAME),
@@ -337,14 +383,12 @@ namespace WPF.Desktop.UI.ViewModels
                                     new OracleParameter("p_salary", selectedEmployees.SALARY),
                                     new OracleParameter("p_commission_pct", selectedEmployees.COMMISSION_PCT / 100),
                                     new OracleParameter("p_manager_id", selectedEmployees.MANAGER_ID),
-                                    new OracleParameter("p_department_id", selectedEmployees.DEPARTMENT_ID));
+                                    new OracleParameter("p_department_id", selectedEmployees.DEPARTMENT_ID)
+                                );
+                                
 
                                 View.Close();
                                 ShowPage(new AdminPage());
-                            }
-                            else
-                            {
-                                MessageBox.Show("Ошибка");
                             }
                         }
                     });
@@ -396,8 +440,7 @@ namespace WPF.Desktop.UI.ViewModels
                     hireEmployeeCommand = new DelegateCommand(() =>
                     {
                         if (IsDataCorrect())
-                        {
-                            MessageBox.Show("конградиласьён");
+                        { 
                             admin.HIRE_EMPLOYEE(
                                 selectedEmployees.FIRST_NAME,
                                 selectedEmployees.LAST_NAME,
@@ -412,11 +455,7 @@ namespace WPF.Desktop.UI.ViewModels
                             );
                             View.Close();
                             ShowPage(new AdminPage());
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ошибка");
-                        }
+                        } 
                     });
                 }
                 return hireEmployeeCommand;

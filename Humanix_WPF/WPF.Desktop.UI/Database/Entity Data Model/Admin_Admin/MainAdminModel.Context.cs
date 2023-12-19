@@ -394,5 +394,14 @@ namespace WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_INTO_VACATIONS", p_EMP_EMAILParameter, p_START_DATEParameter, p_END_DATEParameter, p_REASONParameter);
         }
+    
+        public virtual int HANDLE_ERROR(Nullable<decimal> p_ERROR_CODE)
+        {
+            var p_ERROR_CODEParameter = p_ERROR_CODE.HasValue ?
+                new ObjectParameter("P_ERROR_CODE", p_ERROR_CODE) :
+                new ObjectParameter("P_ERROR_CODE", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("HANDLE_ERROR", p_ERROR_CODEParameter);
+        }
     }
 }

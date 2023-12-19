@@ -111,37 +111,39 @@ Background="{TemplateBinding Background}">
                         <TextBlock Text="Email" Margin="10 0 0 0"/>
                         <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Style="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}" Margin="10"/>
-                        <TextBlock Text="{Binding ErrorEmailMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ErrorEmailMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="11 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
 
                         <TextBlock Text="First name" Margin="10 0 0 0"/>
                         <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Style="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"  Margin="10"/>
-                        <TextBlock Text="{Binding ErrorFirstNameMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ErrorFirstNameMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="11 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
 
                         <TextBlock Text="Last name" Margin="10 0 0 0"/>
                         <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Style="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"  Margin="10"/>
-                        <TextBlock Text="{Binding ErrorLastNameMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ErrorLastNameMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="11 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
 
                         <TextBlock Text="Number" Margin="10 0 0 0"/>
                         <TextBox Text="{Binding Number, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Style="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"  Margin="10"/>
-                        <TextBlock Text="{Binding ErrorNumberMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ErrorNumberMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="11 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
 
                         <TextBlock Text="Commission %" Margin="10 0 0 0"/>
                         <TextBox Text="{Binding Commission, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
                         Style="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"  Margin="10"/>
-                        <TextBlock Text="{Binding ErrorCommisionMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ErrorCommisionMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="11 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
 
                         <TextBlock Text="Salary" Margin="10 0 0 0"/>
                         <TextBox Text="{Binding Salary, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Style="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"  Margin="10"/>
-                        <TextBlock Text="{Binding ErrorSalaryMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ErrorSalaryMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="11 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
 
-                        <TextBlock Text="Password" Margin="10 0 0 0"/>
+                        <TextBlock Text="Password" Margin="10 0 0 0" Visibility="{Binding VisibilityHireButton, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        Visibility="{Binding VisibilityHireButton, UpdateSourceTrigger=PropertyChanged}"
                         Style="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"  Margin="10"/>
-                        <TextBlock Text="{Binding ErrorPasswordMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ErrorPasswordMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="11 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"
+                        Visibility="{Binding VisibilityHireButton, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <TextBlock Text="Jobs" Margin="10 0 0 0"/>
                         <ComboBox ItemsSource="{Binding Jobs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  Margin="0 5 0 5" 
@@ -154,7 +156,7 @@ Background="{TemplateBinding Background}">
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBlock Text="{Binding ErrorJobsMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ErrorJobsMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="11 0 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
 
                         <TextBlock Text="Departments" Margin="10 0 0 0"/>
                         <ComboBox ItemsSource="{Binding Departments, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 5 0 0"
@@ -167,14 +169,14 @@ Background="{TemplateBinding Background}">
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBlock Text="{Binding ErrorDepartmentsMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="5 -3 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ErrorDepartmentsMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" Margin="11 5 0 0" FontFamily="Montserrat" TextWrapping="Wrap"/>
 
                         <Button Command="{Binding HireEmployeeCommand}" Margin="10 10 0 0"
-                            Visibility="{Binding VisibilityOtherButtons, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding VisibilityHireButton, UpdateSourceTrigger=PropertyChanged}"
                             Content="Hire"/>
 
                         <Button Command="{Binding FireEmployeeCommand}" Margin="10 10 10 0"
-                            Visibility="{Binding VisibilitySaveChangesButton, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding VisibilityFireButton, UpdateSourceTrigger=PropertyChanged}"
                             Content="Fire"/>
 
                         <Button Command="{Binding SaveChangesCommand}"

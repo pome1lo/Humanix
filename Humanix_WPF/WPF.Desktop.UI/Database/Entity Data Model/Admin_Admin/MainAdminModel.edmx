@@ -39,13 +39,6 @@
           <Property Name="SALT" Type="varchar2" MaxLength="128" />
           <Property Name="ISAUTHENTIC" Type="number" Precision="1" Scale="0" Nullable="false" />
         </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6013: Первичный ключ в таблице или представлении "ADMIN.JOB_STATUS" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
-        <EntityType Name="JOB_STATUS">
-          <Property Name="STATUS" Type="nvarchar2" MaxLength="50" />
-          <Property Name="ERROR_MESSAGE" Type="nvarchar2" MaxLength="500" />
-          <Property Name="DATETIME" Type="date" />
-        </EntityType>-->
         <EntityType Name="JOBS">
           <Key>
             <PropertyRef Name="JOB_ID" />
@@ -55,18 +48,6 @@
           <Property Name="MIN_SALARY" Type="number" Precision="6" Scale="0" />
           <Property Name="MAX_SALARY" Type="number" Precision="6" Scale="0" />
         </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6013: Первичный ключ в таблице или представлении "ADMIN.LAB_14_FINISH" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
-        <EntityType Name="LAB_14_FINISH">
-          <Property Name="A" Type="number" Precision="38" Scale="0" />
-          <Property Name="B" Type="number" Precision="38" Scale="0" />
-        </EntityType>-->
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6013: Первичный ключ в таблице или представлении "ADMIN.LAB_14_START" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
-        <EntityType Name="LAB_14_START">
-          <Property Name="A" Type="number" Precision="38" Scale="0" />
-          <Property Name="B" Type="number" Precision="38" Scale="0" />
-        </EntityType>-->
         <EntityType Name="LOCATIONS">
           <Key>
             <PropertyRef Name="LOCATION_ID" />
@@ -140,18 +121,6 @@
             </Principal>
             <Dependent Role="EMPLOYEES">
               <PropertyRef Name="DEPARTMENT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EMPLOYEES_JOBS">
-          <End Role="JOBS" Type="Self.JOBS" Multiplicity="1" />
-          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JOBS">
-              <PropertyRef Name="JOB_ID" />
-            </Principal>
-            <Dependent Role="EMPLOYEES">
-              <PropertyRef Name="JOB_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -270,6 +239,9 @@
         <Function Name="GENERATE_SALT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN" ReturnType="varchar2">
           <Parameter Name="P_EMAIL" Type="varchar2" Mode="In" />
         </Function>
+        <Function Name="HANDLE_ERROR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
+          <Parameter Name="P_ERROR_CODE" Type="number" Mode="In" />
+        </Function>
         <Function Name="HIRE_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ADMIN">
           <Parameter Name="P_FIRST_NAME" Type="varchar2" Mode="In" />
           <Parameter Name="P_LAST_NAME" Type="varchar2" Mode="In" />
@@ -373,10 +345,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_EMPLOYEES_DEPARTMENTS" Association="Self.FK_EMPLOYEES_DEPARTMENTS">
             <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
-            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EMPLOYEES_JOBS" Association="Self.FK_EMPLOYEES_JOBS">
-            <End Role="JOBS" EntitySet="JOBS" />
             <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
           </AssociationSet>
           <AssociationSet Name="FK_LOCATIONS_COUNTRIES" Association="Self.FK_LOCATIONS_COUNTRIES">
@@ -779,6 +747,9 @@
             <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
             <Parameter Name="P_REASON" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="HANDLE_ERROR">
+            <Parameter Name="P_ERROR_CODE" Mode="In" Type="Decimal" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -911,6 +882,7 @@
           <FunctionImportMapping FunctionImportName="INSERT_INTO_PROJECTS" FunctionName="Хранилище Model.INSERT_INTO_PROJECTS" />
           <FunctionImportMapping FunctionImportName="INSERT_INTO_TASKS" FunctionName="Хранилище Model.INSERT_INTO_TASKS" />
           <FunctionImportMapping FunctionImportName="INSERT_INTO_VACATIONS" FunctionName="Хранилище Model.INSERT_INTO_VACATIONS" />
+          <FunctionImportMapping FunctionImportName="HANDLE_ERROR" FunctionName="Хранилище Model.HANDLE_ERROR" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

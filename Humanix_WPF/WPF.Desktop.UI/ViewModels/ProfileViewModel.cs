@@ -152,20 +152,7 @@ namespace WPF.Desktop.UI.ViewModels
                                     new OracleParameter("p_department_id", CurrentUser.DEPARTMENT_ID)
                                 );
 
-                                ShowPage(new ProfilePage());
-                                //var sql = "update_employees(:p_emp_id, :p_first_name, :p_last_name, :p_email, :p_phone_number, :p_job_id, :p_salary, :p_commission_pct, :p_manager_id, :p_department_id)";
-                                //var result = admin.Database.SqlQuery<int>(sql,
-                                //    new OracleParameter("p_emp_id", CurrentUser.EMP_ID),
-                                //    new OracleParameter("p_first_name", FirstName),
-                                //    new OracleParameter("p_last_name", LastName),
-                                //    new OracleParameter("p_email", Email),
-                                //    new OracleParameter("p_phone_number", CurrentUser.PHONE_NUMBER),
-                                //    new OracleParameter("p_job_id", CurrentUser.JOB_ID),
-                                //    new OracleParameter("p_salary", CurrentUser.SALARY),
-                                //    new OracleParameter("p_commission_pct", CurrentUser.COMMISSION_PCT),
-                                //    new OracleParameter("p_manager_id", CurrentUser.MANAGER_ID),
-                                //    new OracleParameter("p_department_id", CurrentUser.DEPARTMENT_ID));
-
+                                ShowPage(new ProfilePage()); 
                                 MessageBox.Show("Your data has been successfully changed");
                             }
                         }
