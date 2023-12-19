@@ -6,7 +6,6 @@ using System.Windows.Input;
 using Wpf.DataValidationLibrary;
 using WPF.Desktop.UI.Commands;
 using WPF.Desktop.UI.Database.Entity_Data_Model.Admin_Admin;
-using WPF.Desktop.UI.Database.Entity_Data_Model.User_User;
 using WPF.Desktop.UI.Views.Pages;
 using WPF.Desktop.UI.Views.Windows;
 using static Wpf.DataValidationLibrary.Validator;
@@ -25,11 +24,10 @@ namespace WPF.Desktop.UI.ViewModels
             VisibilitySaveChangesButton = employees.EMP_ID == 0 ? Visibility.Collapsed : Visibility.Visible;
             admin = new MainAdminEntity();
             validator = new Validator(this);
-            using (var context = new UserEntity())
-            {
-                Jobs = context.Database.SqlQuery<JOBS>("SELECT * FROM ADMIN.JOBS").ToList();
-                Departments = context.Database.SqlQuery<DEPARTMENTS>("SELECT * FROM ADMIN.DEPARTMENTS").ToList();
-            }
+            Jobs = admin.JOBS.ToList();
+            Departments = admin.DEPARTMENTS.ToList();
+            //Jobs = context.Database.SqlQuery<JOBS>("SELECT * FROM ADMIN.JOBS").ToList();
+            //Departments = context.Database.SqlQuery<DEPARTMENTS>("SELECT * FROM ADMIN.DEPARTMENTS").ToList();
         }
 
         #endregion
@@ -426,6 +424,5 @@ namespace WPF.Desktop.UI.ViewModels
         }
 
         #endregion
-
     }
 }
