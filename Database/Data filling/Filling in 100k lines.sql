@@ -2,14 +2,21 @@ DELETE FROM EMPLOYEES;
 DELETE FROM PARTICIPATION;
 DELETE FROM VACATIONS;
 
-select * FROM EMPLOYEES WHERE LAST_NAME= 'fwypBJuddX';
+DROP TABLE EMPLOYEES;
+DROP TABLE PARTICIPATION;
+DROP TABLE VACATIONS;
 
-select * from EMPLOYEES;
+CREATE INDEX idx_email ON EMPLOYEES (EMAIL);
+DROP INDEX idx_email;
+select * from ADMIN.EMPLOYEES;
+COMMIT;
+select * FROM EMPLOYEES WHERE EMAIL= 'email171@example.com';
+
 
 DECLARE
   v_counter NUMBER := 0;
 BEGIN
-  WHILE v_counter <= 100000 LOOP
+    WHILE v_counter <= 100000 LOOP
     INSERT INTO employees (first_name, last_name, email, phone_number, job_id, salary, commission_pct, manager_id, department_id, ISAUTHENTIC) VALUES (
       DBMS_RANDOM.STRING('A', 10),
       DBMS_RANDOM.STRING('A', 10),

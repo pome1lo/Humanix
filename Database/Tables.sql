@@ -69,7 +69,6 @@ CREATE TABLE tasks (
 -- Создаем таблицу участия сотрудников в проектах с составным первичным ключом из emp_id и project_id
 CREATE TABLE participation (
     emp_email VARCHAR2(25), -- Электронная почта сотрудника
-    --emp_id NUMBER(6) NOT NULL, -- Идентификатор сотрудника, участвующего в проекте
     project_id NUMBER(4) NOT NULL, -- Идентификатор проекта, в котором участвует сотрудник
     role VARCHAR2(50), -- Роль сотрудника в проекте
     hours NUMBER(4), -- Количество часов, затраченных сотрудником на проект
@@ -91,11 +90,6 @@ CREATE TABLE vacations (
 
 -- Связываем таблицу employees с таблицей jobs по атрибуту job_id
 ALTER TABLE employees ADD CONSTRAINT fk_employees_jobs FOREIGN KEY (job_id) REFERENCES jobs (job_id);
-
--- Связываем таблицу employees с самой собой по атрибуту manager_id
-ALTER TABLE employees ADD CONSTRAINT fk_employees_managers FOREIGN KEY (manager_id) REFERENCES employees (emp_id);
-------  сверху
----
 
 -- Связываем таблицу employees с таблицей departments по атрибуту department_id
 ALTER TABLE employees ADD CONSTRAINT fk_employees_departments FOREIGN KEY (department_id) REFERENCES departments (department_id);
@@ -121,12 +115,22 @@ ALTER TABLE participation ADD CONSTRAINT fk_participation_projects FOREIGN KEY (
 -- Связываем таблицу vacations с таблицей employees по атрибуту emp_id
 ALTER TABLE vacations ADD CONSTRAINT fk_vacations_emp_id FOREIGN KEY (emp_email) REFERENCES employees(email);
 
-DROP TABLE participation;
-DROP TABLE tasks;
-DROP TABLE projects;
-DROP TABLE vacations;
-DROP TABLE employees;
-DROP TABLE departments;
-DROP TABLE jobs;
-DROP TABLE locations;
-DROP TABLE countries;
+DELETE FROM ADMIN.participation;
+DELETE FROM ADMIN.tasks;
+DELETE FROM ADMIN.projects;
+DELETE FROM ADMIN.vacations;
+DELETE FROM ADMIN.employees;
+DELETE FROM ADMIN.departments;
+DELETE FROM ADMIN.jobs;
+DELETE FROM ADMIN.locations;
+DELETE FROM ADMIN.countries;
+
+DROP TABLE ADMIN.participation;
+DROP TABLE ADMIN.tasks;
+DROP TABLE ADMIN.projects;
+DROP TABLE ADMIN.vacations;
+DROP TABLE ADMIN.employees;
+DROP TABLE ADMIN.departments;
+DROP TABLE ADMIN.jobs;
+DROP TABLE ADMIN.locations;
+DROP TABLE ADMIN.countries;

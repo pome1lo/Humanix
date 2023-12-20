@@ -54,12 +54,12 @@ DECLARE
     salt VARCHAR2(128);
 BEGIN
     raw_text := 'Hello, World!';
-    salt := generate_salt('somesalt');
+    salt := ADMIN.generate_salt('somesalt');
     DBMS_OUTPUT.PUT_LINE('Encrypted salt: ' || salt);
-    encrypted_text := encrypt(raw_text, salt);
-    decrypted_text := decrypt(encrypted_text, salt);
+    encrypted_text := ADMIN.encrypt(raw_text, salt);
+    decrypted_text := ADMIN.decrypt(encrypted_text, salt);
     DBMS_OUTPUT.PUT_LINE('Decrypted text: ' || decrypted_text);
 END;
 /
 
-SELECT * FROM EMPLOYEES;
+SELECT * FROM ADMIN.EMPLOYEES;

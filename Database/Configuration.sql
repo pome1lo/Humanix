@@ -77,7 +77,6 @@ GRANT ALL PRIVILEGES ON participation TO admin_role;
 GRANT ALL PRIVILEGES ON employees TO admin_role;
 
 
-
 -- Создание пользователя с ролью пользователя и профилем пользователя
 CREATE USER user_user IDENTIFIED BY user_password
     DEFAULT TABLESPACE USERS_TBS
@@ -125,6 +124,7 @@ GRANT EXECUTE ON delete_from_vacations TO admin_user;
 GRANT EXECUTE ON delete_from_tasks TO admin_user;
 GRANT EXECUTE ON delete_from_participation TO admin_user;
 
+GRANT EXECUTE ON SEPARATE_STRING TO admin_user;
 GRANT EXECUTE ON fire_employee TO admin_user;
 GRANT EXECUTE ON promote_employee TO admin_user;
 GRANT EXECUTE ON hire_employee TO admin_user;

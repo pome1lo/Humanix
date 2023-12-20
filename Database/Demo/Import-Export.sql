@@ -5,9 +5,17 @@ CREATE OR REPLACE PROCEDURE export_json AS
     v_file  UTL_FILE.FILE_TYPE;
     v_data  employees%ROWTYPE;
     v_json  VARCHAR2(32767);
+    v_count NUMBER := 0;
+    v_total NUMBER := 0;
 BEGIN
+    -- Получаем общее количество записей
+    SELECT COUNT(*) INTO v_total FROM employees;
+
     -- Открываем файл для записи
-    v_file := UTL_FILE.FOPEN('MY_DIRECTORY', 'employees_export.json', 'w', 32767);
+    v_file := UTL_FILE.FOPEN('MY_DIRECTORY', 'employees.json', 'w', 32767);
+
+    -- Записываем открывающую квадратную скобку
+    UTL_FILE.PUT_LINE(v_file, '[');
 
     -- Начинаем цикл по всем записям в таблице employees
     FOR v_data IN (SELECT * FROM employees) LOOP
@@ -27,10 +35,23 @@ BEGIN
             'isauthentic' value v_data.ISAUTHENTIC
         );
 
+     -- Увеличиваем счетчик
+        v_count := v_count + 1;
+
         -- Записываем JSON в файл
-        UTL_FILE.PUT_LINE(v_file, v_json);
+        IF v_count < v_total THEN
+            UTL_FILE.PUT_LINE(v_file, v_json || ',');
+        ELSE
+            UTL_FILE.PUT_LINE(v_file, v_json);
+        END IF;
+
+        -- Записываем JSON в файл
+--         UTL_FILE.PUT_LINE(v_file, v_json);
     END LOOP;
 
+
+    -- Записываем закрывающую квадратную скобку
+    UTL_FILE.PUT_LINE(v_file, ']');
     -- Закрываем файл
     UTL_FILE.FCLOSE(v_file);
 EXCEPTION
@@ -52,7 +73,7 @@ CREATE OR REPLACE PROCEDURE import_json IS
     v_emp_rec employees%ROWTYPE;
 BEGIN
     -- Открываем файл для чтения
-    v_file := UTL_FILE.FOPEN('MY_DIRECTORY', 'employees_import.json', 'r');
+    v_file := UTL_FILE.FOPEN('MY_DIRECTORY', 'employees.json', 'r');
 
     -- Читаем данные из файла
     BEGIN
@@ -99,11 +120,11 @@ END import_json;
 /
 
 BEGIN
-    export_json;
-    import_json;
+    --ADMIN.export_json;
+    ADMIN.import_json;
 END; /
 
-SELECT * FROM EMPLOYEES;
--- DELETE FROM PARTICIPATION;
--- DELETE FROM VACATIONS;
--- DELETE FROM EMPLOYEES;
+SELECT * FROM ADMIN.EMPLOYEES;
+-- DELETE FROM ADMIN.PARTICIPATION;
+-- DELETE FROM ADMIN.VACATIONS;
+ DELETE FROM ADMIN.EMPLOYEES;

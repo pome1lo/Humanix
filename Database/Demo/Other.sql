@@ -44,18 +44,18 @@ END promote_employee;
 /
 
 
-begin HIRE_EMPLOYEE('TEST_TEST', 'OLD', 'HIRE_TEST', '1234567890','AD_PRES', 50000, 0.1, NULL, 1, 'password1137'); end;
-SELECT * FROM EMPLOYEES WHERE FIRST_NAME = 'TEST_TEST';
+begin ADMIN.HIRE_EMPLOYEE('TEST_TEST', 'OLD', 'HIRE_TEST', '1234567890','AD_PRES', 50000, 0.1, NULL, 1, 'password1137'); end;
+SELECT * FROM ADMIN.EMPLOYEES WHERE FIRST_NAME = 'TEST_TEST';
 
-begin promote_employee(12, 'PU_CLERK'); end;
-SELECT * FROM EMPLOYEES WHERE FIRST_NAME = 'TEST_TEST';
+begin ADMIN.promote_employee(12, 'PU_CLERK'); end;
+SELECT * FROM ADMIN.EMPLOYEES WHERE FIRST_NAME = 'TEST_TEST';
 
-begin SetIsAuthentic('HIRE_TEST'); end;
-SELECT * FROM EMPLOYEES WHERE EMP_ID = 12;
+begin ADMIN.SetIsAuthentic('HIRE_TEST'); end;
+SELECT * FROM ADMIN.EMPLOYEES WHERE EMP_ID = 12;
 
 DECLARE v_num number;
 begin
-    v_num :=login_employee('HIRE_TEST', 'password1137');
+    v_num := ADMIN.login_employee('HIRE_TEST', 'password1137');
     DBMS_OUTPUT.PUT_LINE(v_num);
 end;
 
@@ -63,5 +63,4 @@ end;
 begin FIRE_EMPLOYEE(12); end;
 SELECT * FROM EMPLOYEES WHERE FIRST_NAME = 'TEST_TEST';
 
-
-SELECT * FROM EMPLOYEES;
+SELECT * FROM ADMIN.EMPLOYEES;
