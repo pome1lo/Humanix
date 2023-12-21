@@ -146,7 +146,7 @@ namespace WPF.Desktop.UI.ViewModels
                 User = System.Configuration.ConfigurationManager.AppSettings["SmtpUser"],
                 Password = System.Configuration.ConfigurationManager.AppSettings["SmtpPassword"]
             };
-            await new MailBuilder("humanix.wms@mail.ru", authCode.ToString(), smtp).SendEmail();
+            await new MailBuilder(InputEmployee.EMAIL, authCode.ToString(), smtp).SendEmail();
         }
          
         private void SetIsAuthentic()

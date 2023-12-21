@@ -1,4 +1,5 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using Microsoft.Web.WebView2.Core;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace WPF.Desktop.UI.ViewModels
     internal class EmployeesDetailsViewModel : ViewModelBase
     {
         #region Constructor
+
 
         public EmployeesDetailsViewModel(EMPLOYEES employees, EmployeesDetails view)
         {
